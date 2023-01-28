@@ -13,6 +13,9 @@ import sudoku.services.ClientService;
 import sudoku.servicesImpls.ClientServiceImpl;
 import javax.swing.*;
 
+/**
+ * Контролер на игралния прозорец.
+ */
 public class PlaySudokuController {
 
     @FXML
@@ -72,6 +75,10 @@ public class PlaySudokuController {
     @FXML
     private GridPane zeroRowZeroColGrid;
 
+    /**
+     * Отваря инструкциите на играта.
+     * @param event - събитие.
+     */
     @FXML
     void onHelpBtnClicked(MouseEvent event) {
         String title = "Помощ";
@@ -88,6 +95,11 @@ public class PlaySudokuController {
         JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
     }
 
+    /**
+     * Създава нова игра от същата трудност.
+     * @param event - събитие.
+     * @throws RemoteException
+     */
     @FXML
     void onNewGameBtnClicked(MouseEvent event) throws RemoteException {
         /* TODO: да се измисли как да се взема сегашното ниво на трудност и никнейма на играча
@@ -105,16 +117,27 @@ public class PlaySudokuController {
         }
     }
 
+    /**
+     * Премества един ход напред.
+     * @param event - събитие.
+     */
     @FXML
     void onRedoBtnClicked(MouseEvent event) {
         // TODO: да се имплементира
     }
 
+    /**
+     * Връща един ход назад.
+     * @param event - събитие.
+     */
     @FXML
     void onUndoBtnClicked(MouseEvent event) {
         // TODO: да се имплементира
     }
 
+    /**
+     * Инициализира контролера.
+     */
     @FXML
     void initialize() {
         assert firstRowFirstColGrid != null : "fx:id=\"firstRowFirstColGrid\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
@@ -135,6 +158,10 @@ public class PlaySudokuController {
         assert zeroRowZeroColGrid != null : "fx:id=\"zeroRowZeroColGrid\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
     }
 
+    /**
+     * Сетър за никнейм.
+     * @param nickname
+     */
     public void setNickname(String nickname) {
         nicknameLabel = new Text();
         nicknameLabel.setText(nickname);

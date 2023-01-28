@@ -4,7 +4,6 @@ import server.entities.Player;
 import server.entities.SudokuLevel;
 import server.services.SudokuService;
 import server.servicesImpls.SudokuServiceImpl;
-import sudoku.PlayerApp;
 import sudoku.services.ClientService;
 import javax.swing.*;
 import java.io.FileWriter;
@@ -17,9 +16,21 @@ import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Клас, който имплементира ClientService
+ */
 public class ClientServiceImpl implements ClientService {
 
     private final Logger logger = Logger.getLogger(ClientServiceImpl.class.getName());
+
+    /**
+     * Проверява дали дадена позиция е безопасна.
+     * @param board - дъска.
+     * @param rowI - индекс на ред.
+     * @param colI - индекс на колона.
+     * @param cellValue - стойност.
+     * @return true - при безопасна,false - при небезопасна
+     */
     private boolean isSafe(int[][] board,
                            int rowI, int colI,
                            int cellValue) {
@@ -51,6 +62,12 @@ public class ClientServiceImpl implements ClientService {
         return true;
     }
 
+    /**
+     * Решава судоку пъзела.
+     * @param board - дъска.
+     * @param numberOfRowsCols - брой редове/колони
+     * @return true - при решено судоку, false - при нерешено судоку
+     */
     private boolean solveSudoku(
             int[][] board, int numberOfRowsCols) {
         int rowIndex = -1;
@@ -140,6 +157,14 @@ public class ClientServiceImpl implements ClientService {
         logClientGameOutcome(player.getNickname(), game.getLevel(), game.getCurrentScore(), game.isWon(), toatalMinutes);
     }
 
+    /**
+     * Логва резултата (победа/загуба) на играта.
+     * @param nickname - никнейм.
+     * @param level - ниво на трудност.
+     * @param totalScore - краен резултат.
+     * @param isWon - дали е победа или не.
+     * @param totalMinutes - брой на минути за решаване.
+     */
     private void logClientGameOutcome(String nickname, SudokuLevel level, int totalScore, boolean isWon,
                                      int totalMinutes) {
         String fileName = nickname + "_sudoku_outcome.txt";

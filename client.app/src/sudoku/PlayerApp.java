@@ -8,8 +8,16 @@ import javafx.stage.Stage;
 
 import java.util.Objects;
 
+/**
+ * Стартова точка на клиентското приложение.
+ */
 public class PlayerApp extends Application {
 
+    /**
+     * Стартира клиентското приложение.
+     * @param stage
+     * @throws Exception
+     */
     @Override
     public void start(Stage stage) throws Exception {
         Parent root
