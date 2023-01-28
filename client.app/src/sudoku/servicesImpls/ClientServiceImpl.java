@@ -6,12 +6,10 @@ import server.services.SudokuService;
 import server.servicesImpls.SudokuServiceImpl;
 import sudoku.PlayerApp;
 import sudoku.services.ClientService;
-
 import javax.swing.*;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.rmi.AccessException;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -20,6 +18,74 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ClientServiceImpl implements ClientService {
+
+    private final Logger logger = Logger.getLogger(ClientServiceImpl.class.getName());
+    private boolean isSafe(int[][] board,
+                           int rowI, int colI,
+                           int cellValue) {
+        for (int colIndex = 0; colIndex < board.length; ++colIndex) {
+            if (board[rowI][colIndex] == cellValue || board[rowI][colIndex] < 0 || board[rowI][colIndex] > 9) {
+                return false;
+            }
+        }
+        for (int rowIndex = 0; rowIndex < board.length; ++rowIndex) {
+            if (board[rowIndex][colI] == cellValue) {
+                return false;
+            }
+        }
+
+        int sqrt = (int)Math.sqrt(board.length);
+        int boxRowStartIndex = rowI - rowI % sqrt;
+        int boxColStartIndex = colI - colI % sqrt;
+
+        for (int rowIndex = boxRowStartIndex;
+             rowIndex < boxRowStartIndex + sqrt; rowIndex++) {
+            for (int colIndex = boxColStartIndex;
+                 colIndex < boxColStartIndex + sqrt; colIndex++) {
+                if (board[rowIndex][colIndex] == cellValue) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private boolean solveSudoku(
+            int[][] board, int numberOfRowsCols) {
+        int rowIndex = -1;
+        int colIndex = -1;
+        boolean isEmptyCell = true;
+        for (int rowI = 0; rowI < numberOfRowsCols; rowI++) {
+            for (int colI = 0; colI < numberOfRowsCols; colI++) {
+                if (board[rowI][colI] == 0) {
+                    rowIndex = rowI;
+                    colIndex = colI;
+
+                    isEmptyCell = false;
+                    break;
+                }
+            }
+            if (!isEmptyCell) {
+                break;
+            }
+        }
+        if (isEmptyCell) {
+            return true;
+        }
+        for (int currentCellValue = 1; currentCellValue <= numberOfRowsCols; currentCellValue++) {
+            if (isSafe(board, rowIndex, colIndex, currentCellValue)) {
+                board[rowIndex][colIndex] = currentCellValue;
+                if (solveSudoku(board, numberOfRowsCols)) {
+                    return true;
+                }
+                else {
+                    board[rowIndex][colIndex] = 0;
+                }
+            }
+        }
+        return false;
+    }
 
     @Override
     public int[][] initGame(SudokuLevel level, String nickname) throws RemoteException {
@@ -30,27 +96,32 @@ public class ClientServiceImpl implements ClientService {
             Registry r = LocateRegistry.getRegistry ("localhost",1099);
             SudokuService server = null;
             try {
-                // TODO: да проверя дали правилно се вика server-а и ако не защо
-                server = (SudokuService) r.lookup("SudokuGame");
-                SudokuService obj = new SudokuServiceImpl(player, game);
-                obj.fillValues();
-            } catch (NotBoundException | AccessException ex) {
-                Logger.getLogger(PlayerApp.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+                server = new SudokuServiceImpl(player,game);
+                server.fillValues();
 
+            } catch (AccessException ex) {
+                logger.log(Level.SEVERE, ex.getMessage());
+            } catch (IOException ex) {
+                logger.log(Level.SEVERE, ex.getMessage());
+            }
         } catch (RemoteException ex) {
-            ex.printStackTrace();
+            logger.log(Level.SEVERE, ex.getMessage());
         }
 
         return game.getBoard();
     }
 
     @Override
-    public int[][] makeSolution(SudokuLevel level, int[][] board) throws RemoteException {
-        // TODO: алгоритъм за решване на судоку на базат на back-tracking
-        return new int[0][];
+    public int[][] makeSolution(int[][] board, int N) throws RemoteException {
+        int[][] solved = new int[N][N];
+        if(solveSudoku(board, N)) {
+            for (int r = 0; r < N; r++) {
+                for (int d = 0; d < N; d++) {
+                    solved[r][d] = board[r][d];
+                }
+            }
+        }
+        return solved;
     }
 
     @Override
@@ -66,25 +137,25 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public void showMessage(String title, String message, Player player, Game game, int toatalMinutes) throws RemoteException {
         JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
-        try {
-            logClientGameOutcome(player.getNickname(), game.getLevel(), game.getCurrentScore(), game.isWon(), toatalMinutes);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        logClientGameOutcome(player.getNickname(), game.getLevel(), game.getCurrentScore(), game.isWon(), toatalMinutes);
     }
 
     private void logClientGameOutcome(String nickname, SudokuLevel level, int totalScore, boolean isWon,
-                                     int totalMinutes) throws IOException {
+                                     int totalMinutes) {
         String fileName = nickname + "_sudoku_outcome.txt";
         LocalDate currentDate = LocalDate.now();
 
-        FileWriter logger = new FileWriter(fileName);
-        logger.write(String.format("""
-                        \t%s
-                        \tNickname: %s, SudokuLevel: %s, TotalScore: %d,
-                        \tIsWon: %s, Minutes: %d
-                        """, currentDate, nickname,
-                level,totalScore, isWon, totalMinutes));
-        logger.close();
+        try {
+            FileWriter writer = new FileWriter(fileName);
+            writer.write(String.format("""
+                            \t%s
+                            \tNickname: %s, SudokuLevel: %s, TotalScore: %d,
+                            \tIsWon: %s, Minutes: %d
+                            """, currentDate, nickname,
+                    level, totalScore, isWon, totalMinutes));
+            writer.close();
+        } catch (IOException ioEx) {
+            logger.log(Level.SEVERE, ioEx.getMessage());
+        }
     }
 }

@@ -9,7 +9,7 @@ import java.rmi.RemoteException;
 public interface ClientService extends Remote {
     int[][] initGame(SudokuLevel level, String nickname) throws RemoteException;
 
-    int[][] makeSolution(SudokuLevel level, int[][] board) throws RemoteException;
+    int[][] makeSolution(int[][] board, int N) throws RemoteException;
 
     void updateGridBoard(int[][] updatedGridBoard) throws RemoteException;
 

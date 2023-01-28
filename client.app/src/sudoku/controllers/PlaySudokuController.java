@@ -1,21 +1,20 @@
 package sudoku.controllers;
 
-import java.awt.*;
+import javafx.scene.control.Button;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 import server.entities.SudokuLevel;
 import sudoku.services.ClientService;
 import sudoku.servicesImpls.ClientServiceImpl;
-
 import javax.swing.*;
 
 public class PlaySudokuController {
 
-    // TODO: да оправя дизайна, така че да мога да променям текстовете на етикетите
     @FXML
     private ResourceBundle resources;
 
@@ -38,13 +37,16 @@ public class PlaySudokuController {
     private Button newGameButton;
 
     @FXML
-    private Label nicknameLabel;
+    private Text nicknameLabel;
 
     @FXML
     private Button redoButton;
 
     @FXML
-    private Label scoreLabel;
+    private Text scoreLabel;
+
+    @FXML
+    private Text sudokuLevelLbl;
 
     @FXML
     private GridPane secondRowFirstColGrid;
@@ -56,7 +58,7 @@ public class PlaySudokuController {
     private GridPane secondRowZeroColGrid;
 
     @FXML
-    private Label timeLabel;
+    private Text timeLabel;
 
     @FXML
     private Button undoButton;
@@ -131,5 +133,10 @@ public class PlaySudokuController {
         assert zeroRowFirstColGrid != null : "fx:id=\"zeroRowFirstColGrid\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
         assert zeroRowSecondColGrid != null : "fx:id=\"zeroRowSecondColGrid\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
         assert zeroRowZeroColGrid != null : "fx:id=\"zeroRowZeroColGrid\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
+    }
+
+    public void setNickname(String nickname) {
+        nicknameLabel = new Text();
+        nicknameLabel.setText(nickname);
     }
 }
