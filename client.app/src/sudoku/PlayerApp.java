@@ -6,12 +6,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class StartPoint extends Application {
+import java.util.Objects;
+
+public class PlayerApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
         Parent root
-                = FXMLLoader.load(getClass().getResource("PlaySudoku.fxml"));
+                = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("fxmls/HomeViewSudoku.fxml")));
 
         Scene scene = new Scene(root);
 
@@ -19,6 +21,7 @@ public class StartPoint extends Application {
         stage.sizeToScene();
         stage.resizableProperty().setValue(Boolean.FALSE);
         stage.setScene(scene);
+
         stage.show();
     }
 

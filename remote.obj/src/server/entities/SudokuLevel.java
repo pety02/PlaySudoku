@@ -5,8 +5,8 @@ public enum SudokuLevel {
     MEDIUM(0, 40),
     HARD(0, 60);
 
-    private int minEmptyCells;
-    private int maxEmptyCells;
+    private final int minEmptyCells;
+    private final int maxEmptyCells;
 
     public int getMinEmptyCells() {
         return minEmptyCells;

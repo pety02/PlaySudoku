@@ -11,76 +11,83 @@ public class SudokuServiceImpl extends UnicastRemoteObject implements SudokuServ
     private Game game;
     private Player player;
 
-    public SudokuServiceImpl(Player player, Game game) throws RemoteException{
-        this.player = player;
-        this.game = game;
+    public SudokuServiceImpl(Player player, Game game) throws RemoteException {
+        setPlayer(player);
+        setGame(game);
     }
 
     public SudokuServiceImpl() throws RemoteException {
-        this.player = new Player("guest");
-        this.game = new Game(this.player.getNickname());
+        setPlayer(new Player());
+        setGame(new Game());
     }
 
     @Override
-    public void fillValues()
-    {
+    public void fillValues() {
         fillDiagonal();
-        game.getValidator().fillRemaining(0, game.getSqrtOfN());
+        game.getValidator().fillRemaining(0, game.getValidator().getSqrtOfNumberOfRowsCols());
         removeKDigits();
     }
 
     @Override
-    public void fillDiagonal()
-    {
-
-        for (int i = 0; i<game.getN(); i=i+game.getSqrtOfN())
-
-            fillBox(i, i);
+    public void fillDiagonal() {
+        for (int index = 0; index < game.getValidator().getNumberOfRowsCols();
+             index = index + game.getValidator().getSqrtOfNumberOfRowsCols()) {
+            fillBox(index, index);
+        }
     }
 
     @Override
-    public void fillBox(int row,int col)
-    {
-        int num;
-        for (int i=0; i<game.getSqrtOfN(); i++)
-        {
-            for (int j=0; j<game.getSqrtOfN(); j++)
-            {
-                do
-                {
-                    num = randomGenerator(game.getN());
+    public void fillBox(int rowI,int colI) {
+        int number;
+        for (int rowIndex = 0; rowIndex < game.getValidator().getSqrtOfNumberOfRowsCols(); ++rowIndex) {
+            for (int colIndex = 0; colIndex < game.getValidator().getSqrtOfNumberOfRowsCols(); ++colIndex) {
+                do {
+                    number = randomGenerator(game.getValidator().getNumberOfRowsCols());
                 }
-                while (!game.getValidator().unUsedInBox(row, col, num));
-
-                game.getBoard()[row+i][col+j] = num;
+                while (!game.getValidator().unUsedInBox(rowI, colI, number));
+                game.getBoard()[rowI + rowIndex][colI + colIndex] = number;
             }
         }
     }
 
     @Override
-    public int randomGenerator(int num)
+    public int randomGenerator(int number)
     {
-        return (int) Math.floor((Math.random()*num+1));
+        return (int) Math.floor((Math.random() * number + 1));
     }
 
     @Override
-    public void removeKDigits()
-    {
-        int count = game.getEmptyCells();
-        while (count != 0)
-        {
-            int cellId = randomGenerator(game.getN()*game.getN())-1;
+    public void removeKDigits() {
+        int counter = game.getEmptyCells();
+        while (counter != 0) {
+            int cellId = randomGenerator(game.getValidator().getNumberOfRowsCols()
+                    * game.getValidator().getNumberOfRowsCols()) - 1;
 
-            int i = (cellId/game.getN());
-            int j = cellId%9;
-            if (j != 0)
-                j = j - 1;
+            int rowIndex = cellId / game.getValidator().getNumberOfRowsCols();
+            int colIndex = cellId % 9;
+            if (colIndex != 0)
+                colIndex = colIndex - 1;
 
-            if (game.getBoard()[i][j] != 0)
-            {
-                count--;
-                game.getBoard()[i][j] = 0;
+            if (game.getBoard()[rowIndex][colIndex] != 0) {
+                counter--;
+                game.getBoard()[rowIndex][colIndex] = 0;
             }
         }
+    }
+
+    public void setGame(Game game) {
+        this.game = (game != null) ? game : new Game();
+    }
+
+    public void setPlayer(Player player) {
+        this.player = (player != null) ? player : new Player();
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 }
