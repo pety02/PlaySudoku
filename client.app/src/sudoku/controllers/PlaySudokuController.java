@@ -1,10 +1,7 @@
 package sudoku.controllers;
 
-import javafx.scene.control.Button;
-import java.net.URL;
-import java.rmi.RemoteException;
-import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -17,7 +14,11 @@ import server.entities.Player;
 import server.entities.SudokuLevel;
 import sudoku.services.ClientService;
 import sudoku.servicesImpls.ClientServiceImpl;
+
 import javax.swing.*;
+import java.net.URL;
+import java.rmi.RemoteException;
+import java.util.ResourceBundle;
 
 /**
  * Контролер на игралния прозорец.
@@ -47,7 +48,7 @@ public class PlaySudokuController {
 
     @FXML
     private Button helpButton;
-    
+
     @FXML
     private Button newGameButton;
 
@@ -92,10 +93,12 @@ public class PlaySudokuController {
 
         int rowIndex = 0, colIndex = 0;
         for (int i = 0; i < data.getKey().getBoard().length; i++) {
+            GridPane innerGrid = (GridPane) sudokuGrid.getChildren().get(rowIndex);
             for (int j = 0; j < data.getKey().getBoard()[i].length; j++) {
-                ((TextField)((GridPane)pane.getChildren().get(rowIndex)).getChildren()
-                        .get(colIndex++)).setText(String.valueOf(data.getKey().getBoard()[i][j]));
+                ((TextField) innerGrid.getChildren().get(colIndex++))
+                        .setText(Integer.toString(data.getKey().getBoard()[i][j]));
             }
+            colIndex = 0;
             rowIndex++;
         }
 
@@ -106,6 +109,7 @@ public class PlaySudokuController {
 
     /**
      * Отваря инструкциите на играта.
+     *
      * @param event - събитие.
      */
     @FXML
@@ -126,14 +130,15 @@ public class PlaySudokuController {
 
     /**
      * Създава нова игра от същата трудност.
+     *
      * @param event - събитие.
      * @throws RemoteException
      */
     @FXML
     void onNewGameBtnClicked(MouseEvent event) throws RemoteException {
         ClientService cl = new ClientServiceImpl();
-        int[][] board = new int[9][];
-        switch(sudokuLevelLbl.getText()) {
+        int[][] board;
+        switch (sudokuLevelLbl.getText()) {
             case "MEDIUM" -> board = cl.initGame(SudokuLevel.MEDIUM, nicknameLabel.getText());
             case "HARD" -> board = cl.initGame(SudokuLevel.HARD, nicknameLabel.getText());
 
@@ -141,17 +146,22 @@ public class PlaySudokuController {
         }
 
         int rowIndex = 0, colIndex = 0;
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[i].length; j++) {
-                ((TextField)((GridPane)pane.getChildren().get(rowIndex)).getChildren()
-                        .get(colIndex++)).setText(String.valueOf(board[i][j]));
+        for (int[] boardRow : board) {
+            GridPane innerGrid = (GridPane) sudokuGrid.getChildren().get(rowIndex);
+            for (int boardCol : boardRow) {
+                if (boardCol != 0) {
+                    ((TextField) innerGrid.getChildren().get(colIndex)).setText(Integer.toString(boardCol));
+                }
+                colIndex++;
             }
+            colIndex = 0;
             rowIndex++;
         }
     }
 
     /**
      * Премества един ход напред.
+     *
      * @param event - събитие.
      */
     @FXML
@@ -161,6 +171,7 @@ public class PlaySudokuController {
 
     /**
      * Връща един ход назад.
+     *
      * @param event - събитие.
      */
     @FXML
