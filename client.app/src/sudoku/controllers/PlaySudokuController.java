@@ -1,24 +1,19 @@
 package sudoku.controllers;
 
-//import com.sun.javafx.collections.ImmutableObservableList;
-import javafx.event.Event;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-
-//import java.awt.*;
-//import java.awt.*;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Pair;
+import server.entities.Game;
+import server.entities.Player;
 import server.entities.SudokuLevel;
 import sudoku.services.ClientService;
 import sudoku.servicesImpls.ClientServiceImpl;
@@ -34,9 +29,6 @@ public class PlaySudokuController {
 
     @FXML
     private URL location;
-
-    @FXML
-    private javafx.scene.control.TextField t1;
 
     @FXML
     private AnchorPane pane;
@@ -95,61 +87,21 @@ public class PlaySudokuController {
     @FXML
     private GridPane zeroRowZeroColGrid;
 
-    public  PlaySudokuController () {
+    void receive(Stage s) {
+        Pair<Game, Player> data = (Pair<Game, Player>) s.getUserData();
 
-    }
-
-    //@FXML
-    void receive(Event actionEvent, Stage s, Scene sc) {
-        int[][] b = (int[][]) s.getUserData();
-        initialize();
-        //zeroRowZeroColGrid = new GridPane();
-
-        javafx.scene.control.TextField t1 = new TextField(String.valueOf(b[0][0]));
-        javafx.scene.control.TextField t2 = new TextField(String.valueOf(b[0][1]));
-        javafx.scene.control.TextField t3 = new TextField(String.valueOf(b[0][2]));
-        //((javafx.scene.control.TextField)zeroRowZeroColGrid.getChildren().get(0)).setText(String.valueOf(b[0][0]));
-        zeroRowZeroColGrid.addRow(0, t1, t2, t3);
-
-        t1 = new TextField(String.valueOf(b[1][0]));
-        t2 = new TextField(String.valueOf(b[1][1]));
-        t3 = new TextField(String.valueOf(b[1][2]));
-        zeroRowZeroColGrid.addRow(1, t1, t2, t3);
-
-        t1 = new TextField(String.valueOf(b[2][0]));
-        t2 = new TextField(String.valueOf(b[2][1]));
-        t3 = new TextField(String.valueOf(b[2][2]));
-        zeroRowZeroColGrid.addRow(2, t1, t2, t3);
-
-        zeroRowZeroColGrid.getChildren().add(new javafx.scene.control.TextField());
-        zeroRowZeroColGrid.getChildren().add(new javafx.scene.control.TextField());
-        zeroRowZeroColGrid.getChildren().add(new javafx.scene.control.TextField());
-        zeroRowZeroColGrid.getChildren().add(new javafx.scene.control.TextField());
-        zeroRowZeroColGrid.getChildren().add(new javafx.scene.control.TextField());
-        zeroRowZeroColGrid.getChildren().add(new javafx.scene.control.TextField());
-        zeroRowZeroColGrid.getChildren().add(new javafx.scene.control.TextField());
-        zeroRowZeroColGrid.getChildren().add(new javafx.scene.control.TextField());
-        zeroRowZeroColGrid.getChildren().forEach(t -> ((javafx.scene.control.TextField)t).setText("hey"));
-        sudokuGrid.getChildren().add(zeroRowZeroColGrid);
-        pane.getChildren().add(sudokuGrid);
-
-        //sudokuGrid = new GridPane();
-        //sudokuGrid.getChildren().add(zeroRowZeroColGrid);
-        //s.setScene(sc);
-        //s.show();
-    }
-
-    public PlaySudokuController(int[][] board) {
-        int index = 0;
-        firstRowFirstColGrid = new GridPane();
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                Node node = firstRowFirstColGrid.getChildren().get(index);
-                node = new TextArea();
-                ((TextArea)node).setText(String.valueOf(board[i][j]));
-                //firstRowFirstColGrid.getChildren().set(index++, t);
+        int rowIndex = 0, colIndex = 0;
+        for (int i = 0; i < data.getKey().getBoard().length; i++) {
+            for (int j = 0; j < data.getKey().getBoard()[i].length; j++) {
+                ((TextField)((GridPane)pane.getChildren().get(rowIndex)).getChildren()
+                        .get(colIndex++)).setText(String.valueOf(data.getKey().getBoard()[i][j]));
             }
+            rowIndex++;
         }
+
+        nicknameLabel.setText(data.getValue().getNickname());
+        scoreLabel.setText(String.valueOf(data.getKey().getCurrentScore()));
+        sudokuLevelLbl.setText(String.valueOf(data.getKey().getLevel()));
     }
 
     /**
@@ -179,18 +131,22 @@ public class PlaySudokuController {
      */
     @FXML
     void onNewGameBtnClicked(MouseEvent event) throws RemoteException {
-        /* TODO: да се измисли как да се взема сегашното ниво на трудност и никнейма на играча
-            и да се генерира нова игра от същото ниво на трудност.
-        */
-
         ClientService cl = new ClientServiceImpl();
-        int[][] board = cl.initGame(SudokuLevel.EASY, nicknameLabel.getText());
-        System.out.println(String.format("Nickname: %s, SudokuLevel: %s\n", nicknameLabel.getText(), SudokuLevel.EASY));
-        for (int[] ints : board) {
-            for (int anInt : ints) {
-                System.out.print(String.format("%d ", anInt));
+        int[][] board = new int[9][];
+        switch(sudokuLevelLbl.getText()) {
+            case "MEDIUM" -> board = cl.initGame(SudokuLevel.MEDIUM, nicknameLabel.getText());
+            case "HARD" -> board = cl.initGame(SudokuLevel.HARD, nicknameLabel.getText());
+
+            default -> board = cl.initGame(SudokuLevel.EASY, nicknameLabel.getText());
+        }
+
+        int rowIndex = 0, colIndex = 0;
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                ((TextField)((GridPane)pane.getChildren().get(rowIndex)).getChildren()
+                        .get(colIndex++)).setText(String.valueOf(board[i][j]));
             }
-            System.out.println();
+            rowIndex++;
         }
     }
 
@@ -233,24 +189,5 @@ public class PlaySudokuController {
         assert zeroRowFirstColGrid != null : "fx:id=\"zeroRowFirstColGrid\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
         assert zeroRowSecondColGrid != null : "fx:id=\"zeroRowSecondColGrid\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
         assert zeroRowZeroColGrid != null : "fx:id=\"zeroRowZeroColGrid\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
-//        pane = new AnchorPane();
-//        sudokuGrid = new GridPane();
-//        zeroRowZeroColGrid = new GridPane();
-//        t1 = new javafx.scene.control.TextField("heyyo");
-//        System.out.println(t1.getText());
-        //zeroRowZeroColGrid.addRow(0, new javafx.scene.control.TextField(), new javafx.scene.control.TextField(), new javafx.scene.control.TextField());
-        //zeroRowZeroColGrid.addRow(1, new javafx.scene.control.TextField(), new javafx.scene.control.TextField(), new javafx.scene.control.TextField());
-        //zeroRowZeroColGrid.addRow(2, new javafx.scene.control.TextField(), new javafx.scene.control.TextField(), new javafx.scene.control.TextField());
-        //zeroRowZeroColGrid.getChildren().add(t1);
-
-    }
-
-    /**
-     * Сетър за никнейм.
-     * @param nickname
-     */
-    public void setNickname(String nickname) {
-        nicknameLabel = new Text();
-        nicknameLabel.setText(nickname);
     }
 }

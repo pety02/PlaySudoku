@@ -18,6 +18,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.util.Pair;
+import server.entities.Game;
+import server.entities.Player;
 import server.entities.SudokuLevel;
 import sudoku.services.ClientService;
 import sudoku.servicesImpls.ClientServiceImpl;
@@ -55,13 +58,6 @@ public class HomeViewSudokuController {
     private int[][] makeBoard(SudokuLevel level) throws RemoteException {
         ClientService cl = new ClientServiceImpl();
         int[][] board = cl.initGame(level, nicknameTxtField.getText());
-        //System.out.println(String.format("Nickname: %s, SudokuLevel: %s\n", nicknameTxtField.getText(), level));
-        /*for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[i].length; j++) {
-                System.out.print(String.format("%d ", board[i][j]));
-            }
-            System.out.println();
-        }*/
 
         return board;
     }
@@ -70,27 +66,22 @@ public class HomeViewSudokuController {
      * Инициализира сцената със судоку пъзела.
      * @param actionEvent - събитие.
      */
-    //@FXML
-    private void sendSudokuScene(Event actionEvent, int[][] board) {
+    private void sendSudokuScene(Event actionEvent, Pair<Game, Player> data) {
         Stage s = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        s.close();
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxmls/PlaySudoku.fxml"));
             Parent root = loader.load();
-            s.setUserData(board);
             Scene sc = new Scene(root);
-            PlaySudokuController ctrl = new PlaySudokuController();
-//            ctrl.initialize();
-            loader.setController(ctrl);
-//            if(loader.getController().getClass()== PlaySudokuController.class){
-//                ((PlaySudokuController)loader.getController()).receive(actionEvent,s,sc);
-//            }
 
-            ctrl.receive(actionEvent, s, sc);
+            s.setUserData(data);
+            if(loader.getController().getClass() == PlaySudokuController.class){
+                ((PlaySudokuController)loader.getController()).receive(s);
+            }
+
             s.setScene(sc);
             s.showAndWait();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, LocalDate.now() + e.getMessage());
         }
     }
 
@@ -102,7 +93,14 @@ public class HomeViewSudokuController {
     public void onEasyGameBtnClicked(ActionEvent actionEvent) {
         try {
             int[][] b = makeBoard(SudokuLevel.EASY);
-            sendSudokuScene(actionEvent, b);
+            ClientService clientServiceImpl = new ClientServiceImpl();
+
+            Player player = new Player(nicknameTxtField.getText());
+            Game game = new Game(SudokuLevel.EASY, SudokuLevel.EASY.getMaxEmptyCells(),
+                    b, clientServiceImpl.makeSolution(b, b.length),0, player);
+
+            Pair<Game, Player> data = new Pair<>(game, player);
+            sendSudokuScene(actionEvent, data);
         } catch (RemoteException remoteEx) {
             logger.log(Level.SEVERE, LocalDate.now() + remoteEx.getMessage());
         }
@@ -117,7 +115,14 @@ public class HomeViewSudokuController {
     void onMediumGameBtnClicked(MouseEvent event) throws RemoteException {
         try {
             int[][] b = makeBoard(SudokuLevel.MEDIUM);
-            sendSudokuScene(event, b);
+            ClientService clientServiceImpl = new ClientServiceImpl();
+
+            Player player = new Player(nicknameTxtField.getText());
+            Game game = new Game(SudokuLevel.MEDIUM, SudokuLevel.MEDIUM.getMaxEmptyCells(),
+                    b, clientServiceImpl.makeSolution(b, b.length),0, player);
+
+            Pair<Game, Player> data = new Pair<>(game, player);
+            sendSudokuScene(event, data);
         } catch (RemoteException remoteEx) {
             logger.log(Level.SEVERE, LocalDate.now() + remoteEx.getMessage());
         }
@@ -132,7 +137,14 @@ public class HomeViewSudokuController {
     void onHardGameBtnClicked(MouseEvent event) throws RemoteException {
         try {
             int[][] b = makeBoard(SudokuLevel.HARD);
-            sendSudokuScene(event, b);
+            ClientService clientServiceImpl = new ClientServiceImpl();
+
+            Player player = new Player(nicknameTxtField.getText());
+            Game game = new Game(SudokuLevel.HARD, SudokuLevel.HARD.getMaxEmptyCells(),
+                    b, clientServiceImpl.makeSolution(b, b.length),0, player);
+
+            Pair<Game, Player> data = new Pair<>(game, player);
+            sendSudokuScene(event, data);
         } catch (RemoteException remoteEx) {
             logger.log(Level.SEVERE, LocalDate.now() + remoteEx.getMessage());
         }
