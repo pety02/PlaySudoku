@@ -1,13 +1,24 @@
 package sudoku.controllers;
 
+//import com.sun.javafx.collections.ImmutableObservableList;
+import javafx.event.Event;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+
+//import java.awt.*;
+//import java.awt.*;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import server.entities.SudokuLevel;
 import sudoku.services.ClientService;
 import sudoku.servicesImpls.ClientServiceImpl;
@@ -23,6 +34,15 @@ public class PlaySudokuController {
 
     @FXML
     private URL location;
+
+    @FXML
+    private javafx.scene.control.TextField t1;
+
+    @FXML
+    private AnchorPane pane;
+
+    @FXML
+    private GridPane sudokuGrid;
 
     @FXML
     private GridPane firstRowFirstColGrid;
@@ -74,6 +94,63 @@ public class PlaySudokuController {
 
     @FXML
     private GridPane zeroRowZeroColGrid;
+
+    public  PlaySudokuController () {
+
+    }
+
+    //@FXML
+    void receive(Event actionEvent, Stage s, Scene sc) {
+        int[][] b = (int[][]) s.getUserData();
+        initialize();
+        //zeroRowZeroColGrid = new GridPane();
+
+        javafx.scene.control.TextField t1 = new TextField(String.valueOf(b[0][0]));
+        javafx.scene.control.TextField t2 = new TextField(String.valueOf(b[0][1]));
+        javafx.scene.control.TextField t3 = new TextField(String.valueOf(b[0][2]));
+        //((javafx.scene.control.TextField)zeroRowZeroColGrid.getChildren().get(0)).setText(String.valueOf(b[0][0]));
+        zeroRowZeroColGrid.addRow(0, t1, t2, t3);
+
+        t1 = new TextField(String.valueOf(b[1][0]));
+        t2 = new TextField(String.valueOf(b[1][1]));
+        t3 = new TextField(String.valueOf(b[1][2]));
+        zeroRowZeroColGrid.addRow(1, t1, t2, t3);
+
+        t1 = new TextField(String.valueOf(b[2][0]));
+        t2 = new TextField(String.valueOf(b[2][1]));
+        t3 = new TextField(String.valueOf(b[2][2]));
+        zeroRowZeroColGrid.addRow(2, t1, t2, t3);
+
+        zeroRowZeroColGrid.getChildren().add(new javafx.scene.control.TextField());
+        zeroRowZeroColGrid.getChildren().add(new javafx.scene.control.TextField());
+        zeroRowZeroColGrid.getChildren().add(new javafx.scene.control.TextField());
+        zeroRowZeroColGrid.getChildren().add(new javafx.scene.control.TextField());
+        zeroRowZeroColGrid.getChildren().add(new javafx.scene.control.TextField());
+        zeroRowZeroColGrid.getChildren().add(new javafx.scene.control.TextField());
+        zeroRowZeroColGrid.getChildren().add(new javafx.scene.control.TextField());
+        zeroRowZeroColGrid.getChildren().add(new javafx.scene.control.TextField());
+        zeroRowZeroColGrid.getChildren().forEach(t -> ((javafx.scene.control.TextField)t).setText("hey"));
+        sudokuGrid.getChildren().add(zeroRowZeroColGrid);
+        pane.getChildren().add(sudokuGrid);
+
+        //sudokuGrid = new GridPane();
+        //sudokuGrid.getChildren().add(zeroRowZeroColGrid);
+        //s.setScene(sc);
+        //s.show();
+    }
+
+    public PlaySudokuController(int[][] board) {
+        int index = 0;
+        firstRowFirstColGrid = new GridPane();
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                Node node = firstRowFirstColGrid.getChildren().get(index);
+                node = new TextArea();
+                ((TextArea)node).setText(String.valueOf(board[i][j]));
+                //firstRowFirstColGrid.getChildren().set(index++, t);
+            }
+        }
+    }
 
     /**
      * Отваря инструкциите на играта.
@@ -156,6 +233,16 @@ public class PlaySudokuController {
         assert zeroRowFirstColGrid != null : "fx:id=\"zeroRowFirstColGrid\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
         assert zeroRowSecondColGrid != null : "fx:id=\"zeroRowSecondColGrid\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
         assert zeroRowZeroColGrid != null : "fx:id=\"zeroRowZeroColGrid\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
+//        pane = new AnchorPane();
+//        sudokuGrid = new GridPane();
+//        zeroRowZeroColGrid = new GridPane();
+//        t1 = new javafx.scene.control.TextField("heyyo");
+//        System.out.println(t1.getText());
+        //zeroRowZeroColGrid.addRow(0, new javafx.scene.control.TextField(), new javafx.scene.control.TextField(), new javafx.scene.control.TextField());
+        //zeroRowZeroColGrid.addRow(1, new javafx.scene.control.TextField(), new javafx.scene.control.TextField(), new javafx.scene.control.TextField());
+        //zeroRowZeroColGrid.addRow(2, new javafx.scene.control.TextField(), new javafx.scene.control.TextField(), new javafx.scene.control.TextField());
+        //zeroRowZeroColGrid.getChildren().add(t1);
+
     }
 
     /**
