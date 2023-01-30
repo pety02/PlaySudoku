@@ -9,7 +9,7 @@ import java.rmi.RemoteException;
 /**
  * Интерфейс, който наследява тоест разширява Remote интерфейса.
  */
-public interface ClientService extends Remote {
+public interface ClientService /*extends Remote*/ {
     /**
      * Инициализира дъската за игра.
      * @param level - ниво на трудност.
@@ -44,5 +44,5 @@ public interface ClientService extends Remote {
      * @param toatalMinutes - минути, за които е решено судокуто.
      * @throws RemoteException
      */
-    void showMessage(String title, String message, Player player, Game game, int toatalMinutes)throws RemoteException;
+    void showMessage(String title, String message, Player player, Game game, int toatalMinutes) throws RemoteException;
 }

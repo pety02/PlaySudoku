@@ -13,6 +13,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import server.entities.Game;
+import server.entities.GameTurn;
 import server.entities.Player;
 import server.entities.SudokuLevel;
 import sudoku.services.ClientService;
@@ -87,14 +88,26 @@ public class PlaySudokuController {
     @FXML
     private GridPane zeroRowZeroColGrid;
 
+    private Player currentPlayer;
+
+    private Game currentGame;
+
     void receive(Stage s) {
         Pair<Game, Player> data = (Pair<Game, Player>) s.getUserData();
 
+        currentPlayer = data.getValue();
+        currentGame = data.getKey();
+
         int rowIndex = 0, colIndex = 0;
-        for (int i = 0; i < data.getKey().getBoard().length; i++) {
-            for (int j = 0; j < data.getKey().getBoard()[i].length; j++) {
-                ((TextField)((GridPane)pane.getChildren().get(rowIndex)).getChildren()
-                        .get(colIndex++)).setText(String.valueOf(data.getKey().getBoard()[i][j]));
+        for (int i = 0; i < currentGame.getBoard().length; i++) {
+            for (int j = 0; j < currentGame.getBoard()[i].length; j++) {
+                if(currentGame.getBoard()[i][j] != 0) {
+                    TextField currentTextField = ((TextField)((GridPane)pane.getChildren()
+                            .get(rowIndex)).getChildren().get(colIndex++));
+                    currentTextField.setText(String.valueOf(currentGame.getBoard()[i][j]));
+                    currentTextField.setStyle("-fx-font-weight: bold;");
+                    currentTextField.setEditable(false);
+                }
             }
             rowIndex++;
         }
@@ -143,8 +156,11 @@ public class PlaySudokuController {
         int rowIndex = 0, colIndex = 0;
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
-                ((TextField)((GridPane)pane.getChildren().get(rowIndex)).getChildren()
-                        .get(colIndex++)).setText(String.valueOf(board[i][j]));
+                TextField currentTextField = ((TextField)((GridPane)pane.getChildren()
+                        .get(rowIndex)).getChildren().get(colIndex++));
+                currentTextField.setText(String.valueOf(currentGame.getBoard()[i][j]));
+                currentTextField.setStyle("-fx-font-weight: bold;");
+                currentTextField.setEditable(false);
             }
             rowIndex++;
         }
@@ -157,6 +173,38 @@ public class PlaySudokuController {
     @FXML
     void onRedoBtnClicked(MouseEvent event) {
         // TODO: да се имплементира
+        if(!currentGame.getUndoStack().isEmpty()) {
+            int value = currentGame.getUndoStack().peek().getValue();
+            int rowIndex = currentGame.getUndoStack().peek().getValue();
+            int colIndex = currentGame.getUndoStack().peek().getValue();
+
+            if(currentGame.getLastTurn() != null) {
+                GameTurn temp = currentGame.getUndoStack().peek();
+                currentGame.getUndoStack().pop();
+                currentGame.getUndoStack().push(currentGame.getLastTurn());
+                currentGame.setLastTurn(temp);
+            }
+            // сетва value на позиция [rowIndex,colIndex] в grid-а на дъската
+            if(0 <= rowIndex && rowIndex <= 2 && 0 <= colIndex && colIndex <= 2) {
+                ((TextField)zeroRowZeroColGrid.getChildren().get(colIndex)).setText(String.valueOf(value));
+            } else if (0 <= rowIndex && rowIndex <= 2 && 3 <= colIndex && colIndex <= 5) {
+                ((TextField)zeroRowFirstColGrid.getChildren().get(colIndex)).setText(String.valueOf(value));
+            }  else if (0 <= rowIndex && rowIndex <= 2 && 6 <= colIndex && colIndex <= 8) {
+                ((TextField)zeroRowSecondColGrid.getChildren().get(colIndex)).setText(String.valueOf(value));
+            } else if (3 <= rowIndex && rowIndex <= 5 && 0 <= colIndex && colIndex <= 2) {
+                ((TextField)firstRowZeroColGrid.getChildren().get(colIndex)).setText(String.valueOf(value));
+            } else if (3 <= rowIndex && rowIndex <= 5 && 3 <= colIndex && colIndex <= 5) {
+                ((TextField)firstRowFirstColGrid.getChildren().get(colIndex)).setText(String.valueOf(value));
+            } else if (3 <= rowIndex && rowIndex <= 5 && 6 <= colIndex && colIndex <= 8) {
+                ((TextField)firstRowSecondColGrid.getChildren().get(colIndex)).setText(String.valueOf(value));
+            } else if (6 <= rowIndex && rowIndex <= 8 && 0 <= colIndex && colIndex <= 2) {
+                ((TextField)secondRowZeroColGrid.getChildren().get(colIndex)).setText(String.valueOf(value));
+            } else if (6 <= rowIndex && rowIndex <= 8 && 3 <= colIndex && colIndex <= 5) {
+                ((TextField)secondRowFirstColGrid.getChildren().get(colIndex)).setText(String.valueOf(value));
+            } else {
+                ((TextField)secondRowSecondColGrid.getChildren().get(colIndex)).setText(String.valueOf(value));
+            }
+        }
     }
 
     /**
@@ -166,6 +214,38 @@ public class PlaySudokuController {
     @FXML
     void onUndoBtnClicked(MouseEvent event) {
         // TODO: да се имплементира
+        if(currentGame.getLastTurn() != null) {
+            int value = currentGame.getLastTurn().getValue();
+            int rowIndex = currentGame.getLastTurn().getValue();
+            int colIndex = currentGame.getLastTurn().getValue();
+
+            if(!currentGame.getUndoStack().isEmpty()) {
+                GameTurn temp = currentGame.getLastTurn();
+                currentGame.setLastTurn(currentGame.getUndoStack().peek());
+                currentGame.getUndoStack().pop();
+                currentGame.getUndoStack().push(temp);
+            }
+            // сетва value на позиция [rowIndex,colIndex] в grid-а на дъската
+            if(0 <= rowIndex && rowIndex <= 2 && 0 <= colIndex && colIndex <= 2) {
+                ((TextField)zeroRowZeroColGrid.getChildren().get(colIndex)).setText(String.valueOf(value));
+            } else if (0 <= rowIndex && rowIndex <= 2 && 3 <= colIndex && colIndex <= 5) {
+                ((TextField)zeroRowFirstColGrid.getChildren().get(colIndex)).setText(String.valueOf(value));
+            }  else if (0 <= rowIndex && rowIndex <= 2 && 6 <= colIndex && colIndex <= 8) {
+                ((TextField)zeroRowSecondColGrid.getChildren().get(colIndex)).setText(String.valueOf(value));
+            } else if (3 <= rowIndex && rowIndex <= 5 && 0 <= colIndex && colIndex <= 2) {
+                ((TextField)firstRowZeroColGrid.getChildren().get(colIndex)).setText(String.valueOf(value));
+            } else if (3 <= rowIndex && rowIndex <= 5 && 3 <= colIndex && colIndex <= 5) {
+                ((TextField)firstRowFirstColGrid.getChildren().get(colIndex)).setText(String.valueOf(value));
+            } else if (3 <= rowIndex && rowIndex <= 5 && 6 <= colIndex && colIndex <= 8) {
+                ((TextField)firstRowSecondColGrid.getChildren().get(colIndex)).setText(String.valueOf(value));
+            } else if (6 <= rowIndex && rowIndex <= 8 && 0 <= colIndex && colIndex <= 2) {
+                ((TextField)secondRowZeroColGrid.getChildren().get(colIndex)).setText(String.valueOf(value));
+            } else if (6 <= rowIndex && rowIndex <= 8 && 3 <= colIndex && colIndex <= 5) {
+                ((TextField)secondRowFirstColGrid.getChildren().get(colIndex)).setText(String.valueOf(value));
+            } else {
+                ((TextField)secondRowSecondColGrid.getChildren().get(colIndex)).setText(String.valueOf(value));
+            }
+        }
     }
 
     /**

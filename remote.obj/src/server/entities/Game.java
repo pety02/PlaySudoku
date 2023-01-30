@@ -1,5 +1,8 @@
 package server.entities;
 
+import java.util.Map;
+import java.util.Stack;
+
 /**
  * Клас, описващ играта като обект.
  */
@@ -11,6 +14,10 @@ public class Game {
     private int currentScore;
     private boolean isWon;
     private Player player;
+
+    private Stack<GameTurn> undoStack;
+
+    private GameTurn lastTurn;
 
     /**
      * Вътрешен клас, който да валидира клетките на судокуто.
@@ -164,6 +171,7 @@ public class Game {
         setCurrentScore(currentScore);
         setWon();
         setPlayer(player);
+        undoStack = new Stack<>();
     }
 
     /**
@@ -178,6 +186,7 @@ public class Game {
         setCurrentScore(0);
         setWon();
         setPlayer(new Player());
+        undoStack = new Stack<>();
     }
 
     /**
@@ -232,6 +241,14 @@ public class Game {
      */
     public Player getPlayer() {
         return player;
+    }
+
+    public Stack<GameTurn> getUndoStack() {
+        return undoStack;
+    }
+
+    public GameTurn getLastTurn() {
+        return lastTurn;
     }
 
     /**
@@ -294,6 +311,10 @@ public class Game {
      */
     public void setPlayer(Player player) {
         this.player = (player != null ) ? player : new Player();
+    }
+
+    public void setLastTurn(GameTurn lastTurn) {
+        this.lastTurn = lastTurn;
     }
 
     /**
