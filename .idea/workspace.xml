@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8d89f233-5602-488b-b3cd-b1bccbfdc7f7" name="Changes" comment="" />
+    <list default="true" id="8d89f233-5602-488b-b3cd-b1bccbfdc7f7" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/PlaySudoku.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client.app/client.app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/client.app/client.app.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client.app/src/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/client.app/src/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client.app/src/sudoku/controllers/HomeViewSudokuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/client.app/src/sudoku/controllers/HomeViewSudokuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client.app/src/sudoku/controllers/PlaySudokuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/client.app/src/sudoku/controllers/PlaySudokuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client.app/src/sudoku/services/ClientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/client.app/src/sudoku/services/ClientService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client.app/src/sudoku/servicesImpls/ClientServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/client.app/src/sudoku/servicesImpls/ClientServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/remote.obj/src/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/remote.obj/src/module-info.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -167,7 +181,7 @@
       <workItem from="1675036188542" duration="5804000" />
       <workItem from="1675093655481" duration="1554000" />
       <workItem from="1675108997537" duration="13275000" />
-      <workItem from="1675162539214" duration="307000" />
+      <workItem from="1675162539214" duration="446000" />
     </task>
     <task id="LOCAL-00001" summary="RMI Server setup and design to two main windows!">
       <created>1674862280944</created>
