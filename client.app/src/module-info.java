@@ -7,6 +7,8 @@ module client.app {
     requires java.desktop;
     requires remote.obj;
 
+    opens sudoku.controllers to javafx.fxml;
+
     exports sudoku;
     exports sudoku.services;
     exports sudoku.servicesImpls;

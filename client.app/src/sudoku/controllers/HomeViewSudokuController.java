@@ -1,12 +1,5 @@
 package sudoku.controllers;
 
-import java.io.IOException;
-import java.net.URL;
-import java.rmi.RemoteException;
-import java.time.LocalDate;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -24,6 +17,14 @@ import server.entities.Player;
 import server.entities.SudokuLevel;
 import sudoku.services.ClientService;
 import sudoku.servicesImpls.ClientServiceImpl;
+
+import java.io.IOException;
+import java.net.URL;
+import java.rmi.RemoteException;
+import java.time.LocalDate;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Контролер на заглавния прозорец.
@@ -52,34 +53,33 @@ public class HomeViewSudokuController {
 
     /**
      * Създава дъска и инициализира нейните стойности според нивото на трудност на предстоящата игра.
+     *
      * @param level - ниво на трудност.
      * @throws RemoteException
      */
     private int[][] makeBoard(SudokuLevel level) throws RemoteException {
         ClientService cl = new ClientServiceImpl();
-        int[][] board = cl.initGame(level, nicknameTxtField.getText());
 
-        return board;
+        return cl.initGame(level, nicknameTxtField.getText());
     }
 
     /**
      * Инициализира сцената със судоку пъзела.
+     *
      * @param actionEvent - събитие.
      */
     private void sendSudokuScene(Event actionEvent, Pair<Game, Player> data) {
         Stage s = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxmls/PlaySudoku.fxml"));
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/sudoku/fxmls/PlaySudoku.fxml"));
             Parent root = loader.load();
             Scene sc = new Scene(root);
-
             s.setUserData(data);
-            if(loader.getController().getClass() == PlaySudokuController.class){
-                ((PlaySudokuController)loader.getController()).receive(s);
+            if (loader.getController().getClass() == PlaySudokuController.class) {
+                ((PlaySudokuController) loader.getController()).receive(s);
             }
 
             s.setScene(sc);
-            s.showAndWait();
         } catch (IOException e) {
             logger.log(Level.SEVERE, LocalDate.now() + e.getMessage());
         }
@@ -87,6 +87,7 @@ public class HomeViewSudokuController {
 
     /**
      * Инициализира EASY Game.
+     *
      * @param actionEvent - събитие.
      */
     @FXML
@@ -97,7 +98,7 @@ public class HomeViewSudokuController {
 
             Player player = new Player(nicknameTxtField.getText());
             Game game = new Game(SudokuLevel.EASY, SudokuLevel.EASY.getMaxEmptyCells(),
-                    b, clientServiceImpl.makeSolution(b, b.length),0, player);
+                    b, clientServiceImpl.makeSolution(b, b.length), 0, player);
 
             Pair<Game, Player> data = new Pair<>(game, player);
             sendSudokuScene(actionEvent, data);
@@ -108,18 +109,18 @@ public class HomeViewSudokuController {
 
     /**
      * Инициализира MEDIUM Game.
+     *
      * @param event - събитие.
-     * @throws RemoteException
      */
     @FXML
-    void onMediumGameBtnClicked(MouseEvent event) throws RemoteException {
+    void onMediumGameBtnClicked(MouseEvent event) {
         try {
             int[][] b = makeBoard(SudokuLevel.MEDIUM);
             ClientService clientServiceImpl = new ClientServiceImpl();
 
             Player player = new Player(nicknameTxtField.getText());
             Game game = new Game(SudokuLevel.MEDIUM, SudokuLevel.MEDIUM.getMaxEmptyCells(),
-                    b, clientServiceImpl.makeSolution(b, b.length),0, player);
+                    b, clientServiceImpl.makeSolution(b, b.length), 0, player);
 
             Pair<Game, Player> data = new Pair<>(game, player);
             sendSudokuScene(event, data);
@@ -130,18 +131,18 @@ public class HomeViewSudokuController {
 
     /**
      * Инициализира HARD Game.
+     *
      * @param event - събитие.
-     * @throws RemoteException
      */
     @FXML
-    void onHardGameBtnClicked(MouseEvent event) throws RemoteException {
+    void onHardGameBtnClicked(MouseEvent event) {
         try {
             int[][] b = makeBoard(SudokuLevel.HARD);
             ClientService clientServiceImpl = new ClientServiceImpl();
 
             Player player = new Player(nicknameTxtField.getText());
             Game game = new Game(SudokuLevel.HARD, SudokuLevel.HARD.getMaxEmptyCells(),
-                    b, clientServiceImpl.makeSolution(b, b.length),0, player);
+                    b, clientServiceImpl.makeSolution(b, b.length), 0, player);
 
             Pair<Game, Player> data = new Pair<>(game, player);
             sendSudokuScene(event, data);

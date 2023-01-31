@@ -1,14 +1,15 @@
 package sudoku.servicesImpls;
+
 import server.entities.Game;
 import server.entities.Player;
 import server.entities.SudokuLevel;
 import server.services.SudokuService;
 import server.servicesImpls.SudokuServiceImpl;
 import sudoku.services.ClientService;
+
 import javax.swing.*;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.rmi.AccessException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -25,9 +26,10 @@ public class ClientServiceImpl implements ClientService {
 
     /**
      * Проверява дали дадена позиция е безопасна.
-     * @param board - дъска.
-     * @param rowI - индекс на ред.
-     * @param colI - индекс на колона.
+     *
+     * @param board     - дъска.
+     * @param rowI      - индекс на ред.
+     * @param colI      - индекс на колона.
      * @param cellValue - стойност.
      * @return true - при безопасна,false - при небезопасна
      */
@@ -39,13 +41,13 @@ public class ClientServiceImpl implements ClientService {
                 return false;
             }
         }
-        for (int rowIndex = 0; rowIndex < board.length; ++rowIndex) {
-            if (board[rowIndex][colI] == cellValue) {
+        for (int[] boardRow : board) {
+            if (boardRow[colI] == cellValue) {
                 return false;
             }
         }
 
-        int sqrt = (int)Math.sqrt(board.length);
+        int sqrt = (int) Math.sqrt(board.length);
         int boxRowStartIndex = rowI - rowI % sqrt;
         int boxColStartIndex = colI - colI % sqrt;
 
@@ -64,7 +66,8 @@ public class ClientServiceImpl implements ClientService {
 
     /**
      * Решава судоку пъзела.
-     * @param board - дъска.
+     *
+     * @param board            - дъска.
      * @param numberOfRowsCols - брой редове/колони
      * @return true - при решено судоку, false - при нерешено судоку
      */
@@ -95,8 +98,7 @@ public class ClientServiceImpl implements ClientService {
                 board[rowIndex][colIndex] = currentCellValue;
                 if (solveSudoku(board, numberOfRowsCols)) {
                     return true;
-                }
-                else {
+                } else {
                     board[rowIndex][colIndex] = 0;
                 }
             }
@@ -110,14 +112,12 @@ public class ClientServiceImpl implements ClientService {
         Player player = new Player(nickname);
         Game game = new Game();
         try {
-            Registry r = LocateRegistry.getRegistry ("localhost",1099);
+            Registry r = LocateRegistry.getRegistry("localhost", 1099);
             SudokuService server = null;
             try {
-                server = new SudokuServiceImpl(player,game);
+                server = new SudokuServiceImpl(player, game);
                 server.fillValues();
 
-            } catch (AccessException ex) {
-                logger.log(Level.SEVERE, ex.getMessage());
             } catch (IOException ex) {
                 logger.log(Level.SEVERE, ex.getMessage());
             }
@@ -131,7 +131,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public int[][] makeSolution(int[][] board, int N) throws RemoteException {
         int[][] solved = new int[N][N];
-        if(solveSudoku(board, N)) {
+        if (solveSudoku(board, N)) {
             for (int r = 0; r < N; r++) {
                 for (int d = 0; d < N; d++) {
                     solved[r][d] = board[r][d];
@@ -152,21 +152,22 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public void showMessage(String title, String message, Player player, Game game, int toatalMinutes) throws RemoteException {
+    public void showMessage(String title, String message, Player player, Game game, int totalMinutes) throws RemoteException {
         JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
-        logClientGameOutcome(player.getNickname(), game.getLevel(), game.getCurrentScore(), game.isWon(), toatalMinutes);
+        logClientGameOutcome(player.getNickname(), game.getLevel(), game.getCurrentScore(), game.isWon(), totalMinutes);
     }
 
     /**
      * Логва резултата (победа/загуба) на играта.
-     * @param nickname - никнейм.
-     * @param level - ниво на трудност.
-     * @param totalScore - краен резултат.
-     * @param isWon - дали е победа или не.
+     *
+     * @param nickname     - никнейм.
+     * @param level        - ниво на трудност.
+     * @param totalScore   - краен резултат.
+     * @param isWon        - дали е победа или не.
      * @param totalMinutes - брой на минути за решаване.
      */
     private void logClientGameOutcome(String nickname, SudokuLevel level, int totalScore, boolean isWon,
-                                     int totalMinutes) {
+                                      int totalMinutes) {
         String fileName = nickname + "_sudoku_outcome.txt";
         LocalDate currentDate = LocalDate.now();
 
