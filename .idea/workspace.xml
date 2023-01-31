@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="8d89f233-5602-488b-b3cd-b1bccbfdc7f7" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="FxmlFile" />
+        <option value="Enum" />
+        <option value="Interface" />
+        <option value="module-info" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2K0suZ0EeT5gug9dSGch3dhlrsQ" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-19&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/petya/Downloads/Week15/Week15/RMIapplication&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.CommitDialog&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\petya\OneDrive\Documents\University\2 kurs, 3 semestur\JAVA OOP\Java OOP - Code\PlaySudoku\PlaySudoku\client.app" />
+      <recent name="C:\Users\petya\OneDrive\Documents\University\2 kurs, 3 semestur\JAVA OOP\Java OOP - Code\PlaySudoku\PlaySudoku\client.app\src\sudoku" />
+      <recent name="C:\Users\petya\OneDrive\Documents\University\2 kurs, 3 semestur\JAVA OOP\Java OOP - Code\PlaySudoku\PlaySudoku\client.app\src" />
+      <recent name="C:\Users\petya\OneDrive\Documents\University\2 kurs, 3 semestur\JAVA OOP\Java OOP - Code\PlaySudoku\PlaySudoku\remote.obj\src" />
+      <recent name="C:\Users\petya\OneDrive\Documents\University\2 kurs, 3 semestur\JAVA OOP\Java OOP - Code\PlaySudoku\PlaySudoku\client.app\src\sudoku\fxmls" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.PlayerApp">
+    <configuration name="Game" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="server.entities.Game" />
+      <module name="remote.obj" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="server.entities.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PlayerApp" type="Application" factoryName="Application" singleton="false" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="sudoku.PlayerApp" />
+      <module name="client.app" />
+      <option name="PROGRAM_PARAMETERS" value="$PATH_TO_FX$" />
+      <option name="VM_PARAMETERS" value="$VM_FXML_OPTIONS$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ServerApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="server.ServerApp" />
+      <module name="remote.obj" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StartPoint" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="sudoku.controllers.StartPoint" />
+      <module name="client.app" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="sudoku.controllers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SudokuSolver" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="sudoku.SudokuSolver" />
+      <module name="client.app" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="sudoku.Test" />
+      <module name="client.app" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="sudoku.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="server.StartPoint" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="server.StartPoint" />
+      <module name="remote.obj" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.PlayerApp" />
+      <item itemvalue="Application.Game" />
+      <item itemvalue="Application.server.StartPoint" />
+      <item itemvalue="Application.ServerApp" />
+      <item itemvalue="Application.StartPoint" />
+      <item itemvalue="Application.SudokuSolver" />
+      <item itemvalue="Application.Test" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.ServerApp" />
+        <item itemvalue="Application.server.StartPoint" />
+        <item itemvalue="Application.Test" />
+        <item itemvalue="Application.SudokuSolver" />
+        <item itemvalue="Application.StartPoint" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8d89f233-5602-488b-b3cd-b1bccbfdc7f7" name="Changes" comment="" />
+      <created>1673123060680</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1673123060680</updated>
+      <workItem from="1673123062194" duration="5941000" />
+      <workItem from="1673294213112" duration="14716000" />
+      <workItem from="1673992188990" duration="67000" />
+      <workItem from="1674754671386" duration="10888000" />
+      <workItem from="1674767926256" duration="9000" />
+      <workItem from="1674816967957" duration="595000" />
+      <workItem from="1674835428856" duration="24755000" />
+      <workItem from="1674899512053" duration="40851000" />
+      <workItem from="1674942773360" duration="177000" />
+      <workItem from="1674943742715" duration="395000" />
+      <workItem from="1674969414479" duration="748000" />
+      <workItem from="1674985146873" duration="2669000" />
+      <workItem from="1675024730512" duration="2262000" />
+      <workItem from="1675028436633" duration="3832000" />
+      <workItem from="1675036188542" duration="5804000" />
+      <workItem from="1675093655481" duration="1554000" />
+      <workItem from="1675108997537" duration="13275000" />
+      <workItem from="1675162539214" duration="307000" />
+    </task>
+    <task id="LOCAL-00001" summary="RMI Server setup and design to two main windows!">
+      <created>1674862280944</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1674862280944</updated>
+    </task>
+    <task id="LOCAL-00002" summary="RMI Server setup and design to two main windows!">
+      <created>1674862471047</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1674862471047</updated>
+    </task>
+    <task id="LOCAL-00003" summary="ClientService interface implemented, connection to the server on localhost, port 1099, ordered code in packages and TODOs added!">
+      <created>1674921619730</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1674921619730</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Solving sudoku puzzles via back-tracking, Exceptions logged, generating new sudoku puzzles, switching scenes, modifying classes!">
+      <created>1674934820076</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1674934820076</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Comments about server module.">
+      <created>1674940816025</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1674940816025</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Documentation generated!">
+      <created>1674942403004</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1674942403004</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Module-info files added">
+      <created>1675112101884</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1675112101884</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Game class">
+      <created>1675116206643</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1675116206643</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Add some classes!">
+      <created>1675116351518</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1675116351518</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Undo and Redo functionality added!">
+      <created>1675122695159</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1675122695159</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="RMI Server setup and design to two main windows!" />
+    <MESSAGE value="ClientService interface implemented, connection to the server on localhost, port 1099, ordered code in packages and TODOs added!" />
+    <MESSAGE value="Solving sudoku puzzles via back-tracking, Exceptions logged, generating new sudoku puzzles, switching scenes, modifying classes!" />
+    <MESSAGE value="Comments about server module." />
+    <MESSAGE value="Documentation generated!" />
+    <MESSAGE value="Module-info files added" />
+    <MESSAGE value="Game class" />
+    <MESSAGE value="Add some classes!" />
+    <MESSAGE value="Undo and Redo functionality added!" />
+    <option name="LAST_COMMIT_MESSAGE" value="Undo and Redo functionality added!" />
+  </component>
+  <component name="XDebuggerManager">
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="javafx.scene.control.TextField" memberName="promptText" />
+      </pinned-members>
+    </pin-to-top-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
