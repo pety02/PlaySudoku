@@ -10,7 +10,7 @@ import java.rmi.RemoteException;
 /**
  * Интерфейс, който наследява тоест разширява Remote интерфейса.
  */
-public interface ClientService extends Remote {
+public interface ClientService /*extends Remote*/ {
     /**
      * Инициализира дъската за игра.
      *
@@ -50,4 +50,5 @@ public interface ClientService extends Remote {
      * @throws RemoteException
      */
     void showMessage(String title, String message, Player player, Game game, int totalMinutes) throws RemoteException;
+
 }
