@@ -1,5 +1,8 @@
 package server.services;
 
+import server.entities.Game;
+import server.entities.Player;
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
@@ -42,4 +45,12 @@ public interface SudokuService extends Remote {
      * @throws RemoteException
      */
     void removeKDigits() throws RemoteException;
+
+    void setGame(Game game) throws RemoteException;
+
+    void setPlayer(Player player) throws RemoteException;
+
+    Game getGame()throws RemoteException;
+
+    Player getPlayer()throws RemoteException;
 }

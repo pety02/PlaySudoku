@@ -1,9 +1,11 @@
 package server.entities;
 
+import java.io.Serializable;
+
 /**
  * Клас, който описва играча.
  */
-public class Player {
+public class Player implements Serializable {
     private String nickname;
     private Game[] playedGames;
     private double averageScore;

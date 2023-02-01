@@ -3,6 +3,8 @@ package sudoku.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.InputMethodEvent;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -20,6 +22,8 @@ import javax.swing.*;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Контролер на игралния прозорец.
@@ -103,13 +107,28 @@ public class PlaySudokuController {
         for (int i = 0; i < data.getKey().getBoard().length; i++) {
             GridPane innerGrid = (GridPane) sudokuGrid.getChildren().get(rowIndex);
             for (int j = 0; j < data.getKey().getBoard()[i].length; j++) {
-                ((TextField) innerGrid.getChildren().get(colIndex++))
-                        .setText(Integer.toString(data.getKey().getBoard()[i][j]));
+                if(data.getKey().getBoard()[i][j] != 0) {
+                    ((TextField) innerGrid.getChildren().get(colIndex))
+                            .setText(Integer.toString(data.getKey().getBoard()[i][j]));
+                    ((TextField) innerGrid.getChildren().get(colIndex)).setEditable(false);
+                    ((TextField) innerGrid.getChildren().get(colIndex++)).setStyle("-fx-font-weight: bold;");
                 }
             }
             colIndex = 0;
             rowIndex++;
         }
+
+        /*Timer tm = new Timer();
+        int delay = 1;
+        while(!currentGame.isWon()) {
+            tm.schedule(new TimerTask() {
+                int minutes = 0;
+                @Override
+                public void run() {
+                    timeLabel.setText(String.valueOf(minutes++));
+                }
+            }, delay * 1000L);
+        }*/
 
         nicknameLabel.setText(data.getValue().getNickname());
         scoreLabel.setText(String.valueOf(data.getKey().getCurrentScore()));
@@ -166,6 +185,11 @@ public class PlaySudokuController {
             colIndex = 0;
             rowIndex++;
         }
+    }
+
+    @FXML
+    void onInputTextChanged(KeyEvent event) {
+        ((TextField)event.getSource()).setStyle("-fx-background-color: yellow;");
     }
 
     /**

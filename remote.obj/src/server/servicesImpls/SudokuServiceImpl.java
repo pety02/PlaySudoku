@@ -14,17 +14,6 @@ public class SudokuServiceImpl extends UnicastRemoteObject implements SudokuServ
     private Player player;
 
     /**
-     * Конструктор с параметри.
-     * @param player - играч.
-     * @param game - игра.
-     * @throws RemoteException
-     */
-    public SudokuServiceImpl(Player player, Game game) throws RemoteException {
-        setPlayer(player);
-        setGame(game);
-    }
-
-    /**
      * Конструктор по подразбиране
      * @throws RemoteException
      */
@@ -34,14 +23,14 @@ public class SudokuServiceImpl extends UnicastRemoteObject implements SudokuServ
     }
 
     @Override
-    public void fillValues() {
+    public void fillValues() throws RemoteException{
         fillDiagonal();
         game.getValidator().fillRemaining(0, game.getValidator().getSqrtOfNumberOfRowsCols());
         removeKDigits();
     }
 
     @Override
-    public void fillDiagonal() {
+    public void fillDiagonal() throws RemoteException{
         for (int index = 0; index < game.getValidator().getNumberOfRowsCols();
              index = index + game.getValidator().getSqrtOfNumberOfRowsCols()) {
             fillBox(index, index);
@@ -49,7 +38,7 @@ public class SudokuServiceImpl extends UnicastRemoteObject implements SudokuServ
     }
 
     @Override
-    public void fillBox(int rowI,int colI) {
+    public void fillBox(int rowI,int colI) throws RemoteException{
         int number;
         for (int rowIndex = 0; rowIndex < game.getValidator().getSqrtOfNumberOfRowsCols(); ++rowIndex) {
             for (int colIndex = 0; colIndex < game.getValidator().getSqrtOfNumberOfRowsCols(); ++colIndex) {
@@ -63,13 +52,13 @@ public class SudokuServiceImpl extends UnicastRemoteObject implements SudokuServ
     }
 
     @Override
-    public int randomGenerator(int number)
+    public int randomGenerator(int number)throws RemoteException
     {
         return (int) Math.floor((Math.random() * number + 1));
     }
 
     @Override
-    public void removeKDigits() {
+    public void removeKDigits() throws RemoteException{
         int counter = game.getEmptyCells();
         while (counter != 0) {
             int cellId = randomGenerator(game.getValidator().getNumberOfRowsCols()
@@ -91,7 +80,7 @@ public class SudokuServiceImpl extends UnicastRemoteObject implements SudokuServ
      * Сетър за полето игра (game).
      * @param game - игра.
      */
-    public void setGame(Game game) {
+    public void setGame(Game game) throws RemoteException{
         this.game = (game != null) ? game : new Game();
     }
 
@@ -99,7 +88,7 @@ public class SudokuServiceImpl extends UnicastRemoteObject implements SudokuServ
      * Сетър за полето играч (player).
      * @param player - играч.
      */
-    public void setPlayer(Player player) {
+    public void setPlayer(Player player) throws RemoteException{
         this.player = (player != null) ? player : new Player();
     }
 
@@ -107,7 +96,7 @@ public class SudokuServiceImpl extends UnicastRemoteObject implements SudokuServ
      * Гетър за полето игра (game).
      * @return стойността на game.
      */
-    public Game getGame() {
+    public Game getGame()throws RemoteException {
         return game;
     }
 
@@ -115,7 +104,7 @@ public class SudokuServiceImpl extends UnicastRemoteObject implements SudokuServ
      * Гетър за полето играч (player).
      * @return стойността на player.
      */
-    public Player getPlayer() {
+    public Player getPlayer()throws RemoteException {
         return player;
     }
 }

@@ -1,12 +1,13 @@
 package server.entities;
 
+import java.io.Serializable;
 import java.util.Map;
 import java.util.Stack;
 
 /**
  * Клас, описващ играта като обект.
  */
-public class Game {
+public class Game implements Serializable {
     private SudokuLevel level;
     private int emptyCells;
     private int[][] board;
@@ -22,7 +23,7 @@ public class Game {
     /**
      * Вътрешен клас, който да валидира клетките на судокуто.
      */
-    public class SudokuCellsValidator {
+    public class SudokuCellsValidator implements Serializable{
         private final int numberOfRowsCols = 9;
         private final int sqrtOfNumberOfRowsCols = (int) Math.sqrt(numberOfRowsCols);
 

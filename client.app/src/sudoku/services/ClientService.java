@@ -37,7 +37,7 @@ public interface ClientService /*extends Remote*/ {
      * @param updatedGridBoard - ъпдейтната дъска за игра.
      * @throws RemoteException
      */
-    void updateGridBoard(int[][] updatedGridBoard) throws RemoteException;
+    boolean updateGridBoard(int[][] updatedGridBoard, int value, int rowIndex, int colIndex) throws RemoteException;
 
     /**
      * Показва съобщение на потреббителя за различни неща (победа/загуба).

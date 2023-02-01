@@ -2,7 +2,7 @@
 <project version="4">
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="client.app" options="--add-exports javafx.base/com.sun.javafx.collections=client.app" />
+      <module name="remote.obj" options="--add-modules java.rmi,java.logging" />
     </option>
   </component>
 </project>

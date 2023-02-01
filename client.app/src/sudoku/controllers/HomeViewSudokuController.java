@@ -31,6 +31,9 @@ import java.util.logging.Logger;
  */
 public class HomeViewSudokuController {
 
+    private Player player;
+    private Game game;
+    private final ClientService clientServiceImpl = new ClientServiceImpl();
     private final Logger logger = Logger.getLogger(HomeViewSudokuController.class.getName());
 
     @FXML
@@ -58,9 +61,8 @@ public class HomeViewSudokuController {
      * @throws RemoteException
      */
     private int[][] makeBoard(SudokuLevel level) throws RemoteException {
-        ClientService cl = new ClientServiceImpl();
 
-        return cl.initGame(level, nicknameTxtField.getText());
+        return clientServiceImpl.initGame(level, nicknameTxtField.getText());
     }
 
     /**
@@ -94,11 +96,18 @@ public class HomeViewSudokuController {
     public void onEasyGameBtnClicked(ActionEvent actionEvent) {
         try {
             int[][] b = makeBoard(SudokuLevel.EASY);
-            ClientService clientServiceImpl = new ClientServiceImpl();
+            //ClientService clientServiceImpl = new ClientServiceImpl();
+
+            int[][] sol = new int[9][9];
+            for (int i = 0; i < b.length; i++) {
+                for (int j = 0; j < b[i].length; j++) {
+                    sol[i][j] = b[i][j];
+                }
+            }
 
             Player player = new Player(nicknameTxtField.getText());
             Game game = new Game(SudokuLevel.EASY, SudokuLevel.EASY.getMaxEmptyCells(),
-                    b, clientServiceImpl.makeSolution(b, b.length), 0, player);
+                    b, clientServiceImpl.makeSolution(sol, sol.length), 0, player);
 
             Pair<Game, Player> data = new Pair<>(game, player);
             sendSudokuScene(actionEvent, data);
@@ -118,9 +127,16 @@ public class HomeViewSudokuController {
             int[][] b = makeBoard(SudokuLevel.MEDIUM);
             ClientService clientServiceImpl = new ClientServiceImpl();
 
+            int[][] sol = new int[9][9];
+            for (int i = 0; i < b.length; i++) {
+                for (int j = 0; j < b[i].length; j++) {
+                    sol[i][j] = b[i][j];
+                }
+            }
+
             Player player = new Player(nicknameTxtField.getText());
             Game game = new Game(SudokuLevel.MEDIUM, SudokuLevel.MEDIUM.getMaxEmptyCells(),
-                    b, clientServiceImpl.makeSolution(b, b.length), 0, player);
+                    b, clientServiceImpl.makeSolution(sol, sol.length), 0, player);
 
             Pair<Game, Player> data = new Pair<>(game, player);
             sendSudokuScene(event, data);
@@ -140,9 +156,16 @@ public class HomeViewSudokuController {
             int[][] b = makeBoard(SudokuLevel.HARD);
             ClientService clientServiceImpl = new ClientServiceImpl();
 
+            int[][] sol = new int[9][9];
+            for (int i = 0; i < b.length; i++) {
+                for (int j = 0; j < b[i].length; j++) {
+                    sol[i][j] = b[i][j];
+                }
+            }
+
             Player player = new Player(nicknameTxtField.getText());
             Game game = new Game(SudokuLevel.HARD, SudokuLevel.HARD.getMaxEmptyCells(),
-                    b, clientServiceImpl.makeSolution(b, b.length), 0, player);
+                    b, clientServiceImpl.makeSolution(sol, sol.length), 0, player);
 
             Pair<Game, Player> data = new Pair<>(game, player);
             sendSudokuScene(event, data);

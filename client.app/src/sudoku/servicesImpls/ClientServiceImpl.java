@@ -10,6 +10,8 @@ import sudoku.services.ClientService;
 import javax.swing.*;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.rmi.AccessException;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -107,18 +109,18 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public int[][] initGame(SudokuLevel level, String nickname) throws RemoteException {
+    public int[][] initGame(SudokuLevel level, String nickname) {
 
         Player player = new Player(nickname);
-        Game game = new Game();
+        Game game = new Game(level, level.getMaxEmptyCells(), new int[9][9], new int[9][9], 0, player);
         try {
             Registry r = LocateRegistry.getRegistry("localhost", 1099);
-            SudokuService server = null;
             try {
-                server = new SudokuServiceImpl(player, game);
+                SudokuService server = (SudokuService) r.lookup("SudokuGame");
+                server.setGame(game);
+                server.setPlayer(player);
                 server.fillValues();
-
-            } catch (IOException ex) {
+            } catch (NotBoundException | AccessException ex) {
                 logger.log(Level.SEVERE, ex.getMessage());
             }
         } catch (RemoteException ex) {
@@ -129,7 +131,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public int[][] makeSolution(int[][] board, int N) throws RemoteException {
+    public int[][] makeSolution(int[][] board, int N) {
         int[][] solved = new int[N][N];
         if (solveSudoku(board, N)) {
             for (int r = 0; r < N; r++) {
@@ -142,17 +144,19 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public void updateGridBoard(int[][] updatedGridBoard) throws RemoteException {
+    public boolean updateGridBoard(int[][] updatedGridBoard, int value, int rowIndex, int colIndex) {
         /* TODO: проверяваме дали дъската в текущото си състояние отговаря на всички
             изисквания за валиден ход и ако да връщаме дъската, ако ли не връщаме custom грешка,
             прихващаме я в контролера и индикираме грешното състояние с червен фон зад цифрата
             като даваме възможност за корекция, преповтаряйки целия процес, докато не въведем
             валидна стойност.
         */
+
+        return isSafe(updatedGridBoard, rowIndex, colIndex, value);
     }
 
     @Override
-    public void showMessage(String title, String message, Player player, Game game, int totalMinutes) throws RemoteException {
+    public void showMessage(String title, String message, Player player, Game game, int totalMinutes) {
         JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
         logClientGameOutcome(player.getNickname(), game.getLevel(), game.getCurrentScore(), game.isWon(), totalMinutes);
     }
