@@ -9,5 +9,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="remote.obj" exported="" />
     <orderEntry type="library" exported="" name="lib" level="application" />
+    <orderEntry type="library" name="JavaFX19" level="application" />
   </component>
 </module>

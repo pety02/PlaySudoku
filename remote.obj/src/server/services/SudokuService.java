@@ -15,7 +15,7 @@ public interface SudokuService extends Remote {
      * главния диагонал със случайни валидни стойности.
      * @throws RemoteException
      */
-    void fillValues() throws RemoteException;
+    int[][] fillValues() throws RemoteException;
 
     /**
      * Попълва главния диагонал на судоко пъзела със стойности.

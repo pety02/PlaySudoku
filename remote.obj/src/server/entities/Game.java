@@ -1,6 +1,7 @@
 package server.entities;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Stack;
 
@@ -328,5 +329,23 @@ public class Game implements Serializable {
             }
             System.out.println();
         }
+    }
+
+    //TODO DELETE
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Game{");
+        sb.append("level=").append(level);
+        sb.append(", emptyCells=").append(emptyCells);
+        sb.append(", board=").append(Arrays.toString(board));
+        sb.append(", solution=").append(Arrays.toString(solution));
+        sb.append(", currentScore=").append(currentScore);
+        sb.append(", isWon=").append(isWon);
+        sb.append(", player=").append(player);
+        sb.append(", undoStack=").append(undoStack);
+        sb.append(", lastTurn=").append(lastTurn);
+        sb.append(", validator=").append(validator);
+        sb.append('}');
+        return sb.toString();
     }
 }
