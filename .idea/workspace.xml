@@ -1,24 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="cf6a97df-13ae-4e8d-8d76-e38c0bb53735" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/lib.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client.app/client.app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/client.app/client.app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client.app/src/sudoku/controllers/HomeViewSudokuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/client.app/src/sudoku/controllers/HomeViewSudokuController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client.app/src/sudoku/controllers/PlaySudokuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/client.app/src/sudoku/controllers/PlaySudokuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client.app/src/sudoku/fxmls/PlaySudoku.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/client.app/src/sudoku/fxmls/PlaySudoku.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client.app/src/sudoku/services/ClientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/client.app/src/sudoku/services/ClientService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client.app/src/sudoku/servicesImpls/ClientServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/client.app/src/sudoku/servicesImpls/ClientServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/remote.obj/src/server/entities/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/remote.obj/src/server/entities/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/remote.obj/src/server/entities/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/remote.obj/src/server/entities/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/remote.obj/src/server/services/SudokuService.java" beforeDir="false" afterPath="$PROJECT_DIR$/remote.obj/src/server/services/SudokuService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/remote.obj/src/server/servicesImpls/SudokuServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/remote.obj/src/server/servicesImpls/SudokuServiceImpl.java" afterDir="false" />
     </list>
@@ -43,14 +34,19 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/petya/Downloads/Week15/Week15/RMIapplication",
+    "last_opened_file_path": "C:/Users/Sybatron/Documents/repos/FMI/Course2/JavaOOP/CourseProject/MultipleChoiceTestGenerator",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.2"
+    "project.structure.side.proportion": "0.2",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RunManager" selected="Application.PlayerApp">
-    <configuration name="PlayerApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="PlayerApp" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="sudoku.PlayerApp" />
       <module name="client.app" />
       <extension name="coverage">
@@ -63,7 +59,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ServerApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="ServerApp" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="server.ServerApp" />
       <module name="remote.obj" />
       <extension name="coverage">
@@ -76,12 +72,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.PlayerApp" />
-        <item itemvalue="Application.ServerApp" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -95,10 +85,27 @@
       <workItem from="1675201564694" duration="166000" />
       <workItem from="1675201930106" duration="2370000" />
       <workItem from="1675285587432" duration="7752000" />
+      <workItem from="1675294279089" duration="4283000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/client.app/src/sudoku/controllers/PlaySudokuController.java</url>
+          <line>163</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/client.app/src/sudoku/servicesImpls/ClientServiceImpl.java</url>
+          <line>131</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

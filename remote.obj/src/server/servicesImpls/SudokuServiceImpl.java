@@ -23,10 +23,13 @@ public class SudokuServiceImpl extends UnicastRemoteObject implements SudokuServ
     }
 
     @Override
-    public void fillValues() throws RemoteException{
+    public int[][] fillValues() throws RemoteException{
+        System.out.println("HERE");
+        System.out.println(game.toString());
         fillDiagonal();
         game.getValidator().fillRemaining(0, game.getValidator().getSqrtOfNumberOfRowsCols());
         removeKDigits();
+        return game.getBoard();
     }
 
     @Override

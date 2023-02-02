@@ -119,7 +119,9 @@ public class ClientServiceImpl implements ClientService {
                 SudokuService server = (SudokuService) r.lookup("SudokuGame");
                 server.setGame(game);
                 server.setPlayer(player);
-                server.fillValues();
+                System.out.println(game);
+                //TODO Не променяш game.board, а променяш server.game.board
+                game.setBoard(server.fillValues());
             } catch (NotBoundException | AccessException ex) {
                 logger.log(Level.SEVERE, ex.getMessage());
             }

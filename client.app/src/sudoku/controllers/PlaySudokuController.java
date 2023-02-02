@@ -3,7 +3,6 @@ package sudoku.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -22,8 +21,6 @@ import javax.swing.*;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Контролер на игралния прозорец.
@@ -172,7 +169,9 @@ public class PlaySudokuController {
 
             default -> board = cl.initGame(SudokuLevel.EASY, nicknameLabel.getText());
         }
-
+        //TODO
+        // Никъде не зачистваш предишната игра преди създаването на нова
+        //  Направи си метод ClearBoard
         int rowIndex = 0, colIndex = 0;
         for (int[] boardRow : board) {
             GridPane innerGrid = (GridPane) sudokuGrid.getChildren().get(rowIndex);
@@ -212,25 +211,7 @@ public class PlaySudokuController {
                 currentGame.setLastTurn(temp);
             }
             // сетва value на позиция [rowIndex,colIndex] в grid-а на дъската
-            if(0 <= rowIndex && rowIndex <= 2 && 0 <= colIndex && colIndex <= 2) {
-                ((TextField)zeroRowZeroColGrid.getChildren().get(colIndex)).setText(String.valueOf(value));
-            } else if (0 <= rowIndex && rowIndex <= 2 && 3 <= colIndex && colIndex <= 5) {
-                ((TextField)zeroRowFirstColGrid.getChildren().get(colIndex)).setText(String.valueOf(value));
-            }  else if (0 <= rowIndex && rowIndex <= 2 && 6 <= colIndex && colIndex <= 8) {
-                ((TextField)zeroRowSecondColGrid.getChildren().get(colIndex)).setText(String.valueOf(value));
-            } else if (3 <= rowIndex && rowIndex <= 5 && 0 <= colIndex && colIndex <= 2) {
-                ((TextField)firstRowZeroColGrid.getChildren().get(colIndex)).setText(String.valueOf(value));
-            } else if (3 <= rowIndex && rowIndex <= 5 && 3 <= colIndex && colIndex <= 5) {
-                ((TextField)firstRowFirstColGrid.getChildren().get(colIndex)).setText(String.valueOf(value));
-            } else if (3 <= rowIndex && rowIndex <= 5 && 6 <= colIndex && colIndex <= 8) {
-                ((TextField)firstRowSecondColGrid.getChildren().get(colIndex)).setText(String.valueOf(value));
-            } else if (6 <= rowIndex && rowIndex <= 8 && 0 <= colIndex && colIndex <= 2) {
-                ((TextField)secondRowZeroColGrid.getChildren().get(colIndex)).setText(String.valueOf(value));
-            } else if (6 <= rowIndex && rowIndex <= 8 && 3 <= colIndex && colIndex <= 5) {
-                ((TextField)secondRowFirstColGrid.getChildren().get(colIndex)).setText(String.valueOf(value));
-            } else {
-                ((TextField)secondRowSecondColGrid.getChildren().get(colIndex)).setText(String.valueOf(value));
-            }
+            setGridValues(value, rowIndex, colIndex);
         }
     }
 
@@ -254,27 +235,58 @@ public class PlaySudokuController {
                 currentGame.getUndoStack().push(temp);
             }
             // сетва value на позиция [rowIndex,colIndex] в grid-а на дъската
-            if(0 <= rowIndex && rowIndex <= 2 && 0 <= colIndex && colIndex <= 2) {
-                ((TextField)zeroRowZeroColGrid.getChildren().get(colIndex)).setText(String.valueOf(value));
-            } else if (0 <= rowIndex && rowIndex <= 2 && 3 <= colIndex && colIndex <= 5) {
-                ((TextField)zeroRowFirstColGrid.getChildren().get(colIndex)).setText(String.valueOf(value));
-            }  else if (0 <= rowIndex && rowIndex <= 2 && 6 <= colIndex && colIndex <= 8) {
-                ((TextField)zeroRowSecondColGrid.getChildren().get(colIndex)).setText(String.valueOf(value));
-            } else if (3 <= rowIndex && rowIndex <= 5 && 0 <= colIndex && colIndex <= 2) {
-                ((TextField)firstRowZeroColGrid.getChildren().get(colIndex)).setText(String.valueOf(value));
-            } else if (3 <= rowIndex && rowIndex <= 5 && 3 <= colIndex && colIndex <= 5) {
-                ((TextField)firstRowFirstColGrid.getChildren().get(colIndex)).setText(String.valueOf(value));
-            } else if (3 <= rowIndex && rowIndex <= 5 && 6 <= colIndex && colIndex <= 8) {
-                ((TextField)firstRowSecondColGrid.getChildren().get(colIndex)).setText(String.valueOf(value));
-            } else if (6 <= rowIndex && rowIndex <= 8 && 0 <= colIndex && colIndex <= 2) {
-                ((TextField)secondRowZeroColGrid.getChildren().get(colIndex)).setText(String.valueOf(value));
-            } else if (6 <= rowIndex && rowIndex <= 8 && 3 <= colIndex && colIndex <= 5) {
-                ((TextField)secondRowFirstColGrid.getChildren().get(colIndex)).setText(String.valueOf(value));
-            } else {
-                ((TextField)secondRowSecondColGrid.getChildren().get(colIndex)).setText(String.valueOf(value));
-            }
+            setGridValues(value, rowIndex, colIndex);
         }
     }
+
+    private void setGridValues(int value, int rowIndex, int colIndex) {
+
+        if(isInSpecificRange(rowIndex,0,2,colIndex,0,2)) {
+            setGridCellValue(zeroRowZeroColGrid, colIndex,value );
+        } else if (isInSpecificRange(rowIndex,0,2, colIndex,3,5)) {
+            setGridCellValue(zeroRowFirstColGrid, colIndex, value);
+        }  else if (isInSpecificRange(rowIndex,0,2, colIndex,6,8)) {
+            setGridCellValue(zeroRowSecondColGrid, colIndex, value);
+        } else if (isInSpecificRange(rowIndex,3,5, colIndex,0,2)) {
+            setGridCellValue(firstRowZeroColGrid, colIndex, value);
+        } else if (isInSpecificRange(rowIndex,3,5, colIndex,3,5)) {
+            setGridCellValue(firstRowFirstColGrid, colIndex, value);
+        } else if (isInSpecificRange(rowIndex,3,5, colIndex,6,8)) {
+            setGridCellValue(firstRowSecondColGrid, colIndex, value);
+        } else if (isInSpecificRange(rowIndex,6,8, colIndex,0,2)) {
+            setGridCellValue(secondRowZeroColGrid, colIndex, value);
+        } else if (isInSpecificRange(rowIndex,6,8, colIndex,3,5)) {
+            setGridCellValue(secondRowFirstColGrid, colIndex, value);
+        } else {
+            setGridCellValue(secondRowSecondColGrid, colIndex, value);
+        }
+    }
+
+    /**
+     *
+     * @param zeroRowZeroColGrid
+     * @param colIndex
+     * @param value
+     */
+    private void setGridCellValue(GridPane zeroRowZeroColGrid, int colIndex, int value) {
+        ((TextField) zeroRowZeroColGrid.getChildren().get(colIndex)).setText(Integer.toString(value));
+    }
+
+    /**
+     *
+     * @param rowIndex
+     * @param rowMin
+     * @param rowMax
+     * @param colIndex
+     * @param colMin
+     * @param colMax
+     * @return
+     */
+    private static boolean isInSpecificRange(int rowIndex, int rowMin, int rowMax, int colIndex, int colMin, int colMax) {
+        return (rowMin <= rowIndex && rowIndex <= rowMax)
+                && (colMin <= colIndex && colIndex <= colMax);
+    }
+
 
     /**
      * Инициализира контролера.
