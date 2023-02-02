@@ -35,7 +35,7 @@ public class ClientServiceImpl implements ClientService {
      * @param cellValue - стойност.
      * @return true - при безопасна,false - при небезопасна
      */
-    private boolean isSafe(int[][] board,
+    public boolean isSafe(int[][] board,
                            int rowI, int colI,
                            int cellValue) {
         for (int colIndex = 0; colIndex < board.length; ++colIndex) {
@@ -120,7 +120,6 @@ public class ClientServiceImpl implements ClientService {
                 server.setGame(game);
                 server.setPlayer(player);
                 System.out.println(game);
-                //TODO Не променяш game.board, а променяш server.game.board
                 game.setBoard(server.fillValues());
             } catch (NotBoundException | AccessException ex) {
                 logger.log(Level.SEVERE, ex.getMessage());
@@ -147,13 +146,6 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public boolean updateGridBoard(int[][] updatedGridBoard, int value, int rowIndex, int colIndex) {
-        /* TODO: проверяваме дали дъската в текущото си състояние отговаря на всички
-            изисквания за валиден ход и ако да връщаме дъската, ако ли не връщаме custom грешка,
-            прихващаме я в контролера и индикираме грешното състояние с червен фон зад цифрата
-            като даваме възможност за корекция, преповтаряйки целия процес, докато не въведем
-            валидна стойност.
-        */
-
         return isSafe(updatedGridBoard, rowIndex, colIndex, value);
     }
 
@@ -189,5 +181,9 @@ public class ClientServiceImpl implements ClientService {
         } catch (IOException ioEx) {
             logger.log(Level.SEVERE, ioEx.getMessage());
         }
+    }
+
+    public boolean canSolve(int[][] board, int N) {
+        return solveSudoku(board, N);
     }
 }
