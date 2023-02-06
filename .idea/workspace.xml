@@ -3,10 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="cf6a97df-13ae-4e8d-8d76-e38c0bb53735" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client.app/src/sudoku/controllers/HomeViewSudokuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/client.app/src/sudoku/controllers/HomeViewSudokuController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client.app/src/sudoku/controllers/PlaySudokuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/client.app/src/sudoku/controllers/PlaySudokuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client.app/src/sudoku/fxmls/PlaySudoku.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/client.app/src/sudoku/fxmls/PlaySudoku.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client.app/src/sudoku/servicesImpls/ClientServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/client.app/src/sudoku/servicesImpls/ClientServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/remote.obj/src/server/entities/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/remote.obj/src/server/entities/Game.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,10 +80,23 @@
       <workItem from="1675201564694" duration="166000" />
       <workItem from="1675201930106" duration="2370000" />
       <workItem from="1675285587432" duration="7752000" />
+      <workItem from="1675713301299" duration="10930000" />
     </task>
+    <task id="LOCAL-00001" summary="Filling sudoku boards fixed! Found some bugs and added TODOs for them! Process of solving sudoku puzzles started!">
+      <created>1675302931409</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1675302931409</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Filling sudoku boards fixed! Found some bugs and added TODOs for them! Process of solving sudoku puzzles started!" />
+    <option name="LAST_COMMIT_MESSAGE" value="Filling sudoku boards fixed! Found some bugs and added TODOs for them! Process of solving sudoku puzzles started!" />
   </component>
 </project>

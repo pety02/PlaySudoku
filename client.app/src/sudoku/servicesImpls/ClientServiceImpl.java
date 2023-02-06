@@ -1,5 +1,6 @@
 package sudoku.servicesImpls;
 
+import javafx.application.Platform;
 import server.entities.Game;
 import server.entities.Player;
 import server.entities.SudokuLevel;
@@ -125,7 +126,8 @@ public class ClientServiceImpl implements ClientService {
                 logger.log(Level.SEVERE, ex.getMessage());
             }
         } catch (RemoteException ex) {
-            logger.log(Level.SEVERE, ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error in connecting with the server!");
+            Platform.exit();
         }
 
         return game.getBoard();
