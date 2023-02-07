@@ -115,6 +115,8 @@ public class PlaySudokuController {
                 if(board[i][j] == 0) {
                     ((TextField) grid.getChildren().get(index))
                             .setText("");
+                    ((TextField) grid.getChildren().get(index)).setEditable(true);
+                    ((TextField) grid.getChildren().get(index)).setStyle("-fx-font-weight: none;");
                 }
                 index++;
             }
@@ -156,7 +158,7 @@ public class PlaySudokuController {
                 }
                 seconds++;
 
-                if (minutes>0 && minutes % 5 == 0) {
+                if (minutes>0 && minutes % 5 == 0 && seconds == 0) {
                     int answer = JOptionPane.showOptionDialog(null, "Do you still playing?", "Playing status",
                             JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                             new Object[] { "Yes", "No" }, JOptionPane.YES_OPTION);
@@ -200,7 +202,6 @@ public class PlaySudokuController {
      */
     @FXML
     void onNewGameBtnClicked(MouseEvent event) throws RemoteException {
-        // TODO: да изчиствам дъската преди да генерирам нова
         ClientService cl = new ClientServiceImpl();
         int[][] board;
         switch (sudokuLevelLbl.getText()) {
@@ -210,18 +211,43 @@ public class PlaySudokuController {
             default -> board = cl.initGame(SudokuLevel.EASY, nicknameLabel.getText());
         }
 
-        int rowIndex = 0, colIndex = 0;
-        for (int[] boardRow : board) {
-            GridPane innerGrid = (GridPane) sudokuGrid.getChildren().get(rowIndex);
-            for (int boardCol : boardRow) {
-                if (boardCol != 0) {
-                    ((TextField) innerGrid.getChildren().get(colIndex)).setText(Integer.toString(boardCol));
-                }
-                colIndex++;
+        final int boardSize = 9;
+        int i = 0;
+        for (int j = 0; j < boardSize; j+=3) {
+            for (int k = 0; k < boardSize; k+=3) {
+                GridPane innerGrid = (GridPane) sudokuGrid.getChildren().get(i);
+                fillBox(board, innerGrid, j, j+2, k, k+2);
+                i++;
             }
-            colIndex = 0;
-            rowIndex++;
         }
+
+        Timer myTimer = new Timer();
+        myTimer.scheduleAtFixedRate(new TimerTask() {
+            int minutes = 0;
+            int seconds = 0;
+            @Override
+            public void run() {
+                if(seconds == 60) {
+                    minutes += 1;
+                    seconds=0;
+                }
+                if(minutes >= 10 && seconds >= 10) {
+                    timeLabel.setText(String.format("Time: %d:%d", minutes, seconds));
+                } else {
+                    timeLabel.setText(String.format("Time: 0%d:0%d", minutes, seconds));
+                }
+                seconds++;
+
+                if (minutes>0 && minutes % 5 == 0) {
+                    int answer = JOptionPane.showOptionDialog(null, "Do you still playing?", "Playing status",
+                            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                            new Object[] { "Yes", "No" }, JOptionPane.YES_OPTION);
+                    if(answer == JOptionPane.NO_OPTION) {
+                        this.cancel();
+                    }
+                }
+            }
+        }, 0, 1000);
     }
 
     @FXML
@@ -231,6 +257,7 @@ public class PlaySudokuController {
         int value = (node.getText().matches("[1-9](1,)")) ? Integer.parseInt(node.getText()) : 0;
         int rowIndex = GridPane.getRowIndex(node);
         int colIndex = GridPane.getColumnIndex(node);
+        currentGame.setLastTurn(new GameTurn(value,rowIndex, colIndex));
         ClientServiceImpl cl = new ClientServiceImpl();
         if(cl.isSafe(board, rowIndex, colIndex, value)) {
             currentGame.setBoard(board);

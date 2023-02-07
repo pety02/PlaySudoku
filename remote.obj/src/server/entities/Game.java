@@ -317,6 +317,7 @@ public class Game implements Serializable {
 
     public void setLastTurn(GameTurn lastTurn) {
         this.lastTurn = lastTurn;
+        undoStack.push(this.lastTurn);
     }
 
     /**
