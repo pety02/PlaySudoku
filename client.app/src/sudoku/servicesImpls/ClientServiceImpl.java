@@ -5,7 +5,6 @@ import server.entities.Game;
 import server.entities.Player;
 import server.entities.SudokuLevel;
 import server.services.SudokuService;
-import server.servicesImpls.SudokuServiceImpl;
 import sudoku.services.ClientService;
 
 import javax.swing.*;
@@ -152,7 +151,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public void showMessage(String title, String message, Player player, Game game, int totalMinutes) {
+    public void showMessage(String title, String message, Player player, Game game, String totalMinutes) {
         JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
         logClientGameOutcome(player.getNickname(), game.getLevel(), game.getCurrentScore(), game.isWon(), totalMinutes);
     }
@@ -167,7 +166,7 @@ public class ClientServiceImpl implements ClientService {
      * @param totalMinutes - брой на минути за решаване.
      */
     private void logClientGameOutcome(String nickname, SudokuLevel level, int totalScore, boolean isWon,
-                                      int totalMinutes) {
+                                      String totalMinutes) {
         String fileName = nickname + "_sudoku_outcome.txt";
         LocalDate currentDate = LocalDate.now();
 

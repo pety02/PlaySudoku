@@ -298,7 +298,8 @@ public class Game implements Serializable {
      * @param currentScore - текущ резултат.
      */
     public void setCurrentScore(int currentScore) {
-        this.currentScore = Math.max(0, currentScore); }
+        this.currentScore = currentScore;
+    }
 
     /**
      * Сетър за състояние (победа/загуба).

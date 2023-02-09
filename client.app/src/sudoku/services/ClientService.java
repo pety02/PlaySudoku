@@ -4,7 +4,6 @@ import server.entities.Game;
 import server.entities.Player;
 import server.entities.SudokuLevel;
 
-import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 /**
@@ -49,6 +48,6 @@ public interface ClientService /*extends Remote*/ {
      * @param totalMinutes - минути, за които е решено судокуто.
      * @throws RemoteException
      */
-    void showMessage(String title, String message, Player player, Game game, int totalMinutes) throws RemoteException;
+    void showMessage(String title, String message, Player player, Game game, String totalMinutes) throws RemoteException;
 
 }

@@ -8,17 +8,17 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sudoku.controllers.PlaySudokuController">
-   <Text fx:id="nicknameLabel" layoutX="16.0" layoutY="27.0" text="Nickname" />
-   <Text fx:id="scoreLabel" layoutX="12.0" layoutY="48.0" text="Score:" />
-   <Text fx:id="timeLabel" layoutX="13.0" layoutY="72.0" text="Time:" />
-   <Text fx:id="sudokuLevelLbl" layoutX="819.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-   <Button fx:id="newGameButton" layoutX="15.0" layoutY="561.0" mnemonicParsing="false" onMouseClicked="#onNewGameBtnClicked" text="New Game" />
-   <Button fx:id="redoButton" layoutX="942.0" layoutY="561.0" mnemonicParsing="false" onMouseClicked="#onRedoBtnClicked" text="Redo" />
-   <Button fx:id="helpButton" layoutX="944.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#onHelpBtnClicked" text="Help" />
-   <Button fx:id="undoButton" layoutX="892.0" layoutY="561.0" mnemonicParsing="false" onMouseClicked="#onUndoBtnClicked" text="Undo" />
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sudoku.controllers.PlaySudokuController">
+   <Text fx:id="nicknameLabel" layoutX="14.0" layoutY="26.0" text="Nickname" />
+   <Text fx:id="scoreLabel" layoutX="15.0" layoutY="47.0" text="Score:" />
+   <Text fx:id="timeLabel" layoutX="16.0" layoutY="71.0" text="Time:" />
+   <Text fx:id="sudokuLevelLbl" layoutX="860.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sudoku Level" />
+   <Button fx:id="newGameButton" layoutX="14.0" layoutY="585.0" mnemonicParsing="false" onMouseClicked="#onNewGameBtnClicked" text="New Game" />
+   <Button fx:id="redoButton" layoutX="944.0" layoutY="598.0" mnemonicParsing="false" onMouseClicked="#onRedoBtnClicked" text="Redo" />
+   <Button fx:id="helpButton" layoutX="945.0" layoutY="9.0" mnemonicParsing="false" onMouseClicked="#onHelpBtnClicked" text="Help" />
+   <Button fx:id="undoButton" layoutX="872.0" layoutY="598.0" mnemonicParsing="false" onMouseClicked="#onUndoBtnClicked" text="Undo" />
 
-   <GridPane fx:id="sudokuGrid" gridLinesVisible="true" layoutX="18.0" layoutY="-1.0" prefHeight="600.0" prefWidth="600.0" AnchorPane.leftAnchor="200.0">
+   <GridPane fx:id="sudokuGrid" gridLinesVisible="true" layoutX="18.0" layoutY="-1.0" prefHeight="600.0" prefWidth="600.0" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="10.0">
       <columnConstraints>
          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -239,4 +239,13 @@
          </GridPane>
       </children>
    </GridPane>
+   <Button fx:id="onesBtn" layoutX="206.0" layoutY="627.0" mnemonicParsing="false" onMouseClicked="#onOnesBtnClicked" prefHeight="47.0" prefWidth="46.0" text="1" />
+   <Button fx:id="fivesBtn" layoutX="477.0" layoutY="627.0" mnemonicParsing="false" onMouseClicked="#onFivesBtnClicked" prefHeight="47.0" prefWidth="46.0" text="5" />
+   <Button fx:id="twoesBtn" layoutX="275.0" layoutY="627.0" mnemonicParsing="false" onMouseClicked="#onTwoesBtnClicked" prefHeight="47.0" prefWidth="46.0" text="2" />
+   <Button fx:id="foursBtn" layoutX="408.0" layoutY="627.0" mnemonicParsing="false" onMouseClicked="#onFoursBtnClicked" prefHeight="47.0" prefWidth="46.0" text="4" />
+   <Button fx:id="ninesBtn" layoutX="742.0" layoutY="627.0" mnemonicParsing="false" onMouseClicked="#onNinesBtnClicked" prefHeight="47.0" prefWidth="46.0" text="9" />
+   <Button fx:id="sixsBtn" layoutX="543.0" layoutY="627.0" mnemonicParsing="false" onMouseClicked="#onSixsBtnClicked" prefHeight="47.0" prefWidth="46.0" text="6" />
+   <Button fx:id="sevensBtn" layoutX="611.0" layoutY="627.0" mnemonicParsing="false" onMouseClicked="#onSevensBtnClicked" prefHeight="47.0" prefWidth="46.0" text="7" />
+   <Button fx:id="eightsBtn" layoutX="674.0" layoutY="627.0" mnemonicParsing="false" onMouseClicked="#onEightsBtnClicked" prefHeight="47.0" prefWidth="46.0" text="8" />
+   <Button fx:id="threesBtn" layoutX="343.0" layoutY="627.0" mnemonicParsing="false" onMouseClicked="#onThreesBtnClicked" prefHeight="47.0" prefWidth="46.0" text="3" />
 </AnchorPane>

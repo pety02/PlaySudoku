@@ -1,5 +1,6 @@
 package sudoku.controllers;
 
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
@@ -98,6 +99,33 @@ public class PlaySudokuController {
     @FXML
     private GridPane zeroRowZeroColGrid;
 
+    private Button eightsBtn;
+
+    @FXML
+    private Button fivesBtn;
+
+    @FXML
+    private Button foursBtn;
+
+    @FXML
+    private Button ninesBtn;
+
+    @FXML
+    private Button onesBtn;
+
+    @FXML
+    private Button sevensBtn;
+
+    @FXML
+    private Button sixsBtn;
+
+    @FXML
+    private Button threesBtn;
+
+    @FXML
+    private Button twoesBtn;
+
+
     private Player currentPlayer;
 
     private Game currentGame;
@@ -171,6 +199,66 @@ public class PlaySudokuController {
         nicknameLabel.setText(data.getValue().getNickname());
         scoreLabel.setText(String.valueOf(data.getKey().getCurrentScore()));
         sudokuLevelLbl.setText(String.valueOf(data.getKey().getLevel()));
+    }
+
+    private void onNumberBtnClicked(int number) {
+        int boardSize = 9;
+        for (int i = 0; i < boardSize; ++i) {
+            GridPane innerGrid = (GridPane) sudokuGrid.getChildren().get(i);
+            for (int j = 0; j < boardSize; ++j) {
+                TextField txtField = (TextField) innerGrid.getChildren().get(j);
+                if (txtField.getText().equals(String.valueOf(number))) {
+                    txtField.setStyle("-fx-background-color: yellow;");
+                } else {
+                    txtField.setStyle("-fx-background-color: white;");
+                }
+            }
+        }
+    }
+
+    @FXML
+    void onEightsBtnClicked(MouseEvent event) {
+        onNumberBtnClicked(8);
+    }
+
+    @FXML
+    void onFivesBtnClicked(MouseEvent event) {
+        onNumberBtnClicked(5);
+    }
+
+    @FXML
+    void onFoursBtnClicked(MouseEvent event) {
+        onNumberBtnClicked(4);
+    }
+
+    @FXML
+    void onNinesBtnClicked(MouseEvent event) {
+        onNumberBtnClicked(9);
+    }
+
+    @FXML
+    void onOnesBtnClicked(MouseEvent event) {
+        onNumberBtnClicked(1);
+    }
+
+    @FXML
+    void onSevensBtnClicked(MouseEvent event) {
+        onNumberBtnClicked(7);
+    }
+
+    @FXML
+    void onSixsBtnClicked(MouseEvent event) {
+        onNumberBtnClicked(6);
+    }
+
+    @FXML
+    void onThreesBtnClicked(MouseEvent event) {
+        onNumberBtnClicked(3);
+    }
+
+    @FXML
+    void onTwoesBtnClicked(MouseEvent event) {
+        onNumberBtnClicked(2);
     }
 
     /**
@@ -254,47 +342,55 @@ public class PlaySudokuController {
     void onInputTextChanged(KeyEvent event) {
         // TODO: да дебъгна за NullPointerException и/или други бъгове
         TextField node = (TextField)event.getSource();
-        int value = (node.getText().matches("[1-9](1,)")) ? Integer.parseInt(node.getText()) : 0;
-        int rowIndex = GridPane.getRowIndex(node);
-        int colIndex = GridPane.getColumnIndex(node);
-        currentGame.setLastTurn(new GameTurn(value,rowIndex, colIndex));
-        ClientServiceImpl cl = new ClientServiceImpl();
-        if(cl.isSafe(board, rowIndex, colIndex, value)) {
-            currentGame.setBoard(board);
-            node.setEditable(false);
-            node.setStyle("-fx-font-weight: bold; -fx-background-color: white;");
-        } else {
-            node.setEditable(true);
-            node.setStyle("-fx-font-weight: none; -fx-background-color: red;");
-        }
 
-        int[][] boardToBeSolved = new int[9][9];
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[i].length; j++) {
-                boardToBeSolved[i][j] = board[i][j];
+        if(node.getText().matches("/^\\d$/")) {
+            int value = Integer.parseInt(node.getText());
+            int rowIndex = GridPane.getRowIndex(node);
+            int colIndex = GridPane.getColumnIndex(node);
+            currentGame.setLastTurn(new GameTurn(value, rowIndex, colIndex));
+            ClientServiceImpl cl = new ClientServiceImpl();
+            if (cl.isSafe(board, rowIndex, colIndex, value)) {
+                currentGame.setCurrentScore(5);
+                scoreLabel.setText(String.valueOf(currentGame.getCurrentScore()));
+                currentGame.setBoard(board);
+                node.setEditable(false);
+                node.setStyle("-fx-font-weight: bold; -fx-background-color: white;");
+            } else {
+                currentGame.setCurrentScore(-5);
+                scoreLabel.setText(String.valueOf(currentGame.getCurrentScore()));
+                node.setEditable(true);
+                node.setStyle("-fx-font-weight: none; -fx-background-color: red;");
             }
-        }
 
-        boolean canBeSolved = cl.canSolve(boardToBeSolved, boardToBeSolved.length);
-        if(canBeSolved && currentGame.getBoard() == currentGame.getSolution()) {
-            currentGame.setWon();
-            double score = currentGame.getCurrentScore();
-            int minutes = Integer.parseInt(timeLabel.getText());
-            String title = "Congratulations, You won!";
-            String message = String.format("Congratulations, You won!\n\tNickname: %s\n\tTotal score: %.2f\n\tTime: %d minutes",
-                    currentPlayer.getNickname(),
-                    score,
-                    minutes);
-            cl.showMessage(title, message, currentPlayer, currentGame, minutes);
-        } else if(!canBeSolved) {
-            double score = currentGame.getCurrentScore();
-            int minutes = Integer.parseInt(timeLabel.getText());
-            String title = "Sorry, You fail!";
-            String message = String.format("Sorry, You fail!\n\tNickname: %s\n\tTotal score: %.2f\n\tTime: %d minutes",
-                    currentPlayer.getNickname(),
-                    score,
-                    minutes);
-            cl.showMessage(title, message, currentPlayer, currentGame, minutes);
+            int[][] boardToBeSolved = new int[9][9];
+            for (int i = 0; i < board.length; i++) {
+                for (int j = 0; j < board[i].length; j++) {
+                    boardToBeSolved[i][j] = board[i][j];
+                }
+            }
+
+            boolean canBeSolved = cl.canSolve(boardToBeSolved, boardToBeSolved.length);
+
+            if (canBeSolved && currentGame.getBoard() == currentGame.getSolution()) {
+                currentGame.setWon();
+                double score = currentGame.getCurrentScore();
+                String time = timeLabel.getText();
+                String title = "Congratulations, You won!";
+                String message = String.format("Congratulations, You won!\n\tNickname: %s\n\tTotal score: %.2f\n\tTime: %s",
+                        currentPlayer.getNickname(),
+                        score,
+                        time);
+                cl.showMessage(title, message, currentPlayer, currentGame, time);
+            } else if (!canBeSolved) {
+                double score = currentGame.getCurrentScore();
+                String time = timeLabel.getText();
+                String title = "Sorry, You fail!";
+                String message = String.format("Sorry, You fail!\n\tNickname: %s\n\tTotal score: %.2f\n\tTime: %s",
+                        currentPlayer.getNickname(),
+                        score,
+                        time);
+                cl.showMessage(title, message, currentPlayer, currentGame, time);
+            }
         }
     }
 
@@ -387,21 +483,34 @@ public class PlaySudokuController {
      */
     @FXML
     void initialize() {
+        assert eightsBtn != null : "fx:id=\"eightsBtn\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
         assert firstRowFirstColGrid != null : "fx:id=\"firstRowFirstColGrid\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
         assert firstRowSecondColGrid != null : "fx:id=\"firstRowSecondColGrid\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
         assert firstRowZeroColGrid != null : "fx:id=\"firstRowZeroColGrid\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
-        assert helpButton != null : "fx:id=\"helpBtn\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
-        assert newGameButton != null : "fx:id=\"newGameBtn\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
-        assert nicknameLabel != null : "fx:id=\"nicknameLbl\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
-        assert redoButton != null : "fx:id=\"redoBtn\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
-        assert scoreLabel != null : "fx:id=\"scoreLbl\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
+        assert fivesBtn != null : "fx:id=\"fivesBtn\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
+        assert foursBtn != null : "fx:id=\"foursBtn\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
+        assert helpButton != null : "fx:id=\"helpButton\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
+        assert newGameButton != null : "fx:id=\"newGameButton\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
+        assert nicknameLabel != null : "fx:id=\"nicknameLabel\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
+        assert ninesBtn != null : "fx:id=\"ninesBtn\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
+        assert onesBtn != null : "fx:id=\"onesBtn\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
+        assert pane != null : "fx:id=\"pane\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
+        assert redoButton != null : "fx:id=\"redoButton\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
+        assert scoreLabel != null : "fx:id=\"scoreLabel\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
         assert secondRowFirstColGrid != null : "fx:id=\"secondRowFirstColGrid\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
         assert secondRowSecondColGrid != null : "fx:id=\"secondRowSecondColGrid\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
         assert secondRowZeroColGrid != null : "fx:id=\"secondRowZeroColGrid\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
-        assert timeLabel != null : "fx:id=\"timeLbl\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
-        assert undoButton != null : "fx:id=\"undoBtn\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
+        assert sevensBtn != null : "fx:id=\"sevensBtn\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
+        assert sixsBtn != null : "fx:id=\"sixsBtn\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
+        assert sudokuGrid != null : "fx:id=\"sudokuGrid\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
+        assert sudokuLevelLbl != null : "fx:id=\"sudokuLevelLbl\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
+        assert threesBtn != null : "fx:id=\"threesBtn\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
+        assert timeLabel != null : "fx:id=\"timeLabel\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
+        assert twoesBtn != null : "fx:id=\"twoesBtn\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
+        assert undoButton != null : "fx:id=\"undoButton\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
         assert zeroRowFirstColGrid != null : "fx:id=\"zeroRowFirstColGrid\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
         assert zeroRowSecondColGrid != null : "fx:id=\"zeroRowSecondColGrid\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
         assert zeroRowZeroColGrid != null : "fx:id=\"zeroRowZeroColGrid\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
+
     }
 }

@@ -27,7 +27,7 @@ public class PlayerApp extends Application {
 
         stage.setTitle("Play Sudoku");
         stage.sizeToScene();
-        stage.resizableProperty().setValue(Boolean.FALSE);
+        stage.resizableProperty().setValue(Boolean.TRUE);
         stage.setScene(scene);
 
         stage.show();
