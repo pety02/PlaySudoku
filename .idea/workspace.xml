@@ -5,13 +5,14 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client.app/src/sudoku/controllers/PlaySudokuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/client.app/src/sudoku/controllers/PlaySudokuController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client.app/src/sudoku/fxmls/PlaySudoku.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/client.app/src/sudoku/fxmls/PlaySudoku.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client.app/src/sudoku/servicesImpls/ClientServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/client.app/src/sudoku/servicesImpls/ClientServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/remote.obj/src/server/entities/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/remote.obj/src/server/entities/Game.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FormatOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -24,19 +25,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/petya/Downloads/Week15/Week15/RMIapplication&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/petya/Downloads/Week15/Week15/RMIapplication",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "actions.on.save"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Application.PlayerApp">
-    <configuration name="PlayerApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="PlayerApp" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="sudoku.PlayerApp" />
       <module name="client.app" />
       <extension name="coverage">
@@ -49,7 +53,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ServerApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="ServerApp" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="server.ServerApp" />
       <module name="remote.obj" />
       <extension name="coverage">
@@ -62,12 +66,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.PlayerApp" />
-        <item itemvalue="Application.ServerApp" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -84,7 +82,7 @@
       <workItem from="1675713301299" duration="13686000" />
       <workItem from="1675801764596" duration="2256000" />
       <workItem from="1675897292997" duration="5701000" />
-      <workItem from="1675935676113" duration="16304000" />
+      <workItem from="1675935676113" duration="20028000" />
     </task>
     <task id="LOCAL-00001" summary="Filling sudoku boards fixed! Found some bugs and added TODOs for them! Process of solving sudoku puzzles started!">
       <created>1675302931409</created>
@@ -114,7 +112,14 @@
       <option name="project" value="LOCAL" />
       <updated>1675903077656</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Code updated!">
+      <created>1675954024895</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1675954024895</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -125,6 +130,11 @@
     <MESSAGE value="Filling sudoku board bugs fixed! Timer created!" />
     <MESSAGE value="NewGame generation and filling sudoku puzzle correctly!" />
     <MESSAGE value="Numbers buttons functionality added!" />
-    <option name="LAST_COMMIT_MESSAGE" value="Numbers buttons functionality added!" />
+    <MESSAGE value="Code updated!" />
+    <option name="LAST_COMMIT_MESSAGE" value="Code updated!" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

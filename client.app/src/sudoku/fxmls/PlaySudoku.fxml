@@ -43,8 +43,8 @@
             </rowConstraints>
             <children>
                <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" />
-               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="2" />
                <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="1" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="2" />
                <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.rowIndex="1" />
                <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
