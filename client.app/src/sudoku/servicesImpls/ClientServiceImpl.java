@@ -36,8 +36,8 @@ public class ClientServiceImpl implements ClientService {
      * @return true - при безопасна,false - при небезопасна
      */
     public boolean isSafe(int[][] board,
-                           int rowI, int colI,
-                           int cellValue) {
+                          int rowI, int colI,
+                          int cellValue) {
         for (int colIndex = 0; colIndex < board.length; ++colIndex) {
             if (board[rowI][colIndex] == cellValue || board[rowI][colIndex] < 0 || board[rowI][colIndex] > 9) {
                 return false;
@@ -172,10 +172,10 @@ public class ClientServiceImpl implements ClientService {
 
         try {
             FileWriter writer = new FileWriter(fileName);
-            writer.write(String.format("""
+            writer.append(String.format("""
                             \t%s
                             \tNickname: %s, SudokuLevel: %s, TotalScore: %d,
-                            \tIsWon: %s, Minutes: %d
+                            \tIsWon: %s, Minutes: %s
                             """, currentDate, nickname,
                     level, totalScore, isWon, totalMinutes));
             writer.close();

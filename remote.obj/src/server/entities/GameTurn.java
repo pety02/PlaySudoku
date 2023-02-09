@@ -1,14 +1,19 @@
 package server.entities;
 
+import java.io.Serializable;
+
 public class GameTurn {
     private int value;
     private int rowIndex;
     private int colIndex;
 
-    public GameTurn(int value, int rowIndex, int colIndex) {
+    private int score;
+
+    public GameTurn(int value, int rowIndex, int colIndex, int score) {
         setValue(value);
         setRowIndex(rowIndex);
         setColIndex(colIndex);
+        setScore(score);
     }
 
     public int getValue() {
@@ -33,5 +38,13 @@ public class GameTurn {
 
     public void setColIndex(int colIndex) {
         this.colIndex = colIndex;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }
