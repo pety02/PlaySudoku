@@ -13,7 +13,7 @@ public class Game implements Serializable {
     private int emptyCells;
     private int[][] board;
     private int[][] solution;
-    private int currentScore;
+    private int currentScore = 0;
     private boolean isWon;
     private Player player;
 
@@ -298,7 +298,7 @@ public class Game implements Serializable {
      * @param currentScore - текущ резултат.
      */
     public void setCurrentScore(int currentScore) {
-        this.currentScore = currentScore;
+        this.currentScore += currentScore;
     }
 
     /**

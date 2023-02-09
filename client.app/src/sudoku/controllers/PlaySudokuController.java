@@ -1,13 +1,8 @@
 package sudoku.controllers;
 
-import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -28,8 +23,6 @@ import java.rmi.RemoteException;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * Контролер на игралния прозорец.
@@ -132,6 +125,8 @@ public class PlaySudokuController {
 
     private int[][] board;
 
+    private Timer myTimer = new Timer();
+
     private void fillBox(int[][] board, GridPane grid, int rowStInd, int rowEndInd, int colStInd, int colEndInd) {
         int index = 0;
         for (int i = rowStInd; i <= rowEndInd; i++) {
@@ -139,16 +134,51 @@ public class PlaySudokuController {
                 ((TextField) grid.getChildren().get(index))
                         .setText(Integer.toString(board[i][j]));
                 ((TextField) grid.getChildren().get(index)).setEditable(false);
-                ((TextField) grid.getChildren().get(index)).setStyle("-fx-font-weight: bold;");
+                grid.getChildren().get(index).setStyle("-fx-font-weight: bold;");
                 if(board[i][j] == 0) {
                     ((TextField) grid.getChildren().get(index))
                             .setText("");
                     ((TextField) grid.getChildren().get(index)).setEditable(true);
-                    ((TextField) grid.getChildren().get(index)).setStyle("-fx-font-weight: none;");
+                    grid.getChildren().get(index).setStyle("-fx-font-weight: none;");
                 }
                 index++;
             }
         }
+    }
+
+    private void timerTick() {
+        myTimer = new Timer();
+        myTimer.scheduleAtFixedRate(new TimerTask() {
+            int minutes = 0;
+            int seconds = 0;
+
+            boolean hasBeenOpened = false;
+            @Override
+            public void run() {
+                if(seconds == 60) {
+                    minutes += 1;
+                    seconds = 0;
+
+                    hasBeenOpened = false;
+                }
+                if(minutes >= 10 && seconds >= 10) {
+                    timeLabel.setText(String.format("Time: %d:%d", minutes, seconds));
+                } else {
+                    timeLabel.setText(String.format("Time: 0%d:0%d", minutes, seconds));
+                }
+                seconds++;
+
+                if (minutes > 0 && minutes % 5 == 0 && !hasBeenOpened) {
+                    int answer = JOptionPane.showOptionDialog(null, "Do you still playing?", "Playing status",
+                            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                            new Object[] { "Yes", "No" }, JOptionPane.YES_OPTION);
+                    if(answer == JOptionPane.NO_OPTION) {
+                        this.cancel();
+                    }
+                    hasBeenOpened = true;
+                }
+            }
+        }, 0, 1000);
     }
 
     void receive(Stage s) {
@@ -158,6 +188,14 @@ public class PlaySudokuController {
         currentGame = data.getKey();
 
         board = currentGame.getBoard();
+
+        // DEBUGGING
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                System.out.print(board[i][j] + " ");
+            }
+            System.out.println();
+        }
 
         final int boardSize = 9;
         int i = 0;
@@ -169,33 +207,8 @@ public class PlaySudokuController {
             }
         }
 
-        Timer myTimer = new Timer();
-        myTimer.scheduleAtFixedRate(new TimerTask() {
-            int minutes = 0;
-            int seconds = 0;
-            @Override
-            public void run() {
-                if(seconds == 60) {
-                    minutes += 1;
-                    seconds=0;
-                }
-                if(minutes >= 10 && seconds >= 10) {
-                    timeLabel.setText(String.format("Time: %d:%d", minutes, seconds));
-                } else {
-                    timeLabel.setText(String.format("Time: 0%d:0%d", minutes, seconds));
-                }
-                seconds++;
+        timerTick();
 
-                if (minutes>0 && minutes % 5 == 0 && seconds == 0) {
-                    int answer = JOptionPane.showOptionDialog(null, "Do you still playing?", "Playing status",
-                            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                            new Object[] { "Yes", "No" }, JOptionPane.YES_OPTION);
-                    if(answer == JOptionPane.NO_OPTION) {
-                        this.cancel();
-                    }
-                }
-            }
-        }, 0, 1000);
         nicknameLabel.setText(data.getValue().getNickname());
         scoreLabel.setText(String.valueOf(data.getKey().getCurrentScore()));
         sudokuLevelLbl.setText(String.valueOf(data.getKey().getLevel()));
@@ -292,12 +305,30 @@ public class PlaySudokuController {
     void onNewGameBtnClicked(MouseEvent event) throws RemoteException {
         ClientService cl = new ClientServiceImpl();
         int[][] board;
-        switch (sudokuLevelLbl.getText()) {
-            case "MEDIUM" -> board = cl.initGame(SudokuLevel.MEDIUM, nicknameLabel.getText());
-            case "HARD" -> board = cl.initGame(SudokuLevel.HARD, nicknameLabel.getText());
 
-            default -> board = cl.initGame(SudokuLevel.EASY, nicknameLabel.getText());
+        currentGame = new Game();
+        currentGame.setPlayer(currentPlayer);
+
+        switch (sudokuLevelLbl.getText()) {
+            case "MEDIUM" -> {
+                board = cl.initGame(SudokuLevel.MEDIUM, nicknameLabel.getText());
+                currentGame.setLevel(SudokuLevel.MEDIUM);
+                currentGame.setEmptyCells(SudokuLevel.MEDIUM.getMaxEmptyCells());
+            }
+            case "HARD" -> {
+                board = cl.initGame(SudokuLevel.HARD, nicknameLabel.getText());
+                currentGame.setLevel(SudokuLevel.HARD);
+                currentGame.setEmptyCells(SudokuLevel.HARD.getMaxEmptyCells());
+            }
+
+            default -> {
+                board = cl.initGame(SudokuLevel.EASY, nicknameLabel.getText());
+                currentGame.setLevel(SudokuLevel.EASY);
+                currentGame.setEmptyCells(SudokuLevel.EASY.getMaxEmptyCells());
+            }
         }
+
+        scoreLabel.setText(String.valueOf(currentGame.getCurrentScore()));
 
         final int boardSize = 9;
         int i = 0;
@@ -309,88 +340,86 @@ public class PlaySudokuController {
             }
         }
 
-        Timer myTimer = new Timer();
-        myTimer.scheduleAtFixedRate(new TimerTask() {
-            int minutes = 0;
-            int seconds = 0;
-            @Override
-            public void run() {
-                if(seconds == 60) {
-                    minutes += 1;
-                    seconds=0;
-                }
-                if(minutes >= 10 && seconds >= 10) {
-                    timeLabel.setText(String.format("Time: %d:%d", minutes, seconds));
-                } else {
-                    timeLabel.setText(String.format("Time: 0%d:0%d", minutes, seconds));
-                }
-                seconds++;
-
-                if (minutes>0 && minutes % 5 == 0) {
-                    int answer = JOptionPane.showOptionDialog(null, "Do you still playing?", "Playing status",
-                            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                            new Object[] { "Yes", "No" }, JOptionPane.YES_OPTION);
-                    if(answer == JOptionPane.NO_OPTION) {
-                        this.cancel();
-                    }
-                }
-            }
-        }, 0, 1000);
+        myTimer.cancel();
+        timerTick();
     }
 
     @FXML
     void onInputTextChanged(KeyEvent event) {
         // TODO: да дебъгна за NullPointerException и/или други бъгове
-        TextField node = (TextField)event.getSource();
+        TextField node = (TextField) event.getSource();
 
-        if(node.getText().matches("/^\\d$/")) {
-            int value = Integer.parseInt(node.getText());
-            int rowIndex = GridPane.getRowIndex(node);
-            int colIndex = GridPane.getColumnIndex(node);
-            currentGame.setLastTurn(new GameTurn(value, rowIndex, colIndex));
-            ClientServiceImpl cl = new ClientServiceImpl();
-            if (cl.isSafe(board, rowIndex, colIndex, value)) {
-                currentGame.setCurrentScore(5);
-                scoreLabel.setText(String.valueOf(currentGame.getCurrentScore()));
-                currentGame.setBoard(board);
-                node.setEditable(false);
-                node.setStyle("-fx-font-weight: bold; -fx-background-color: white;");
-            } else {
-                currentGame.setCurrentScore(-5);
-                scoreLabel.setText(String.valueOf(currentGame.getCurrentScore()));
-                node.setEditable(true);
-                node.setStyle("-fx-font-weight: none; -fx-background-color: red;");
-            }
+        char[] text = node.getText().toCharArray();
+        if(text.length != 1 || (text[0] < '1' || text[0] > '9')) {
+            node.setText("");
+            return;
+        }
 
-            int[][] boardToBeSolved = new int[9][9];
-            for (int i = 0; i < board.length; i++) {
-                for (int j = 0; j < board[i].length; j++) {
-                    boardToBeSolved[i][j] = board[i][j];
+        int value = Integer.parseInt(node.getText());
+
+        int sqrt = (int) Math.sqrt(board.length);
+        GridPane innerGrid = (GridPane) node.getParent();
+        Integer rowGridIndex = (GridPane.getRowIndex(innerGrid) != null) ? GridPane.getRowIndex(innerGrid) : 0;
+        Integer colGridIndex = (GridPane.getColumnIndex(innerGrid) != null) ? GridPane.getColumnIndex(innerGrid) : 0;
+
+        int rowIndex = 0, colIndex = 0;
+        for (int i = 0; i < sqrt; i++) {
+            for (int j = 0; j < sqrt; j++) {
+                if(rowGridIndex == i && colGridIndex == j) {
+                    Integer txtFieldRowIndex = (GridPane.getRowIndex(node) != null) ? GridPane.getRowIndex(node) : 0;
+                    Integer txtFieldColIndex = (GridPane.getColumnIndex(node) != null) ? GridPane.getColumnIndex(node) : 0;
+                    rowIndex = rowGridIndex * sqrt + txtFieldRowIndex;
+                    colIndex = colGridIndex * sqrt + txtFieldColIndex;
                 }
             }
+        }
 
-            boolean canBeSolved = cl.canSolve(boardToBeSolved, boardToBeSolved.length);
+        currentGame.setLastTurn(new GameTurn(value, rowIndex, colIndex));
 
-            if (canBeSolved && currentGame.getBoard() == currentGame.getSolution()) {
-                currentGame.setWon();
-                double score = currentGame.getCurrentScore();
-                String time = timeLabel.getText();
-                String title = "Congratulations, You won!";
-                String message = String.format("Congratulations, You won!\n\tNickname: %s\n\tTotal score: %.2f\n\tTime: %s",
-                        currentPlayer.getNickname(),
-                        score,
-                        time);
-                cl.showMessage(title, message, currentPlayer, currentGame, time);
-            } else if (!canBeSolved) {
-                double score = currentGame.getCurrentScore();
-                String time = timeLabel.getText();
-                String title = "Sorry, You fail!";
-                String message = String.format("Sorry, You fail!\n\tNickname: %s\n\tTotal score: %.2f\n\tTime: %s",
-                        currentPlayer.getNickname(),
-                        score,
-                        time);
-                cl.showMessage(title, message, currentPlayer, currentGame, time);
+        ClientServiceImpl cl = new ClientServiceImpl();
+        if (cl.isSafe(board, rowIndex, colIndex, value)) {
+            currentGame.setCurrentScore(5);
+            scoreLabel.setText(String.valueOf(currentGame.getCurrentScore()));
+            currentGame.setBoard(board);
+            node.setEditable(false);
+            node.setStyle("-fx-font-weight: bold; -fx-background-color: white;");
+        } else {
+            currentGame.setCurrentScore(-5);
+            scoreLabel.setText(String.valueOf(currentGame.getCurrentScore()));
+            node.setEditable(true);
+            node.setStyle("-fx-font-weight: none; -fx-background-color: red;");
+        }
+
+        int[][] boardToBeSolved = new int[9][9];
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                boardToBeSolved[i][j] = board[i][j];
             }
+        }
+
+        boolean canBeSolved = cl.canSolve(boardToBeSolved, boardToBeSolved.length);
+
+        if(!canBeSolved || currentGame.getCurrentScore() <= -15) {
+            double score = currentGame.getCurrentScore();
+            String time = timeLabel.getText();
+            String title = "Sorry, You fail!";
+            String message = String.format("Sorry, You fail!\n\tNickname: %s\n\tTotal score: %.2f\n\tTime: %s",
+                    currentPlayer.getNickname(),
+                    score,
+                    time);
+            cl.showMessage(title, message, currentPlayer, currentGame, time);
+        }
+
+        if (canBeSolved && currentGame.getBoard() == currentGame.getSolution()) {
+            currentGame.setWon();
+            double score = currentGame.getCurrentScore();
+            String time = timeLabel.getText();
+            String title = "Congratulations, You won!";
+            String message = String.format("Congratulations, You won!\n\tNickname: %s\n\tTotal score: %.2f\n\tTime: %s",
+                    currentPlayer.getNickname(),
+                    score,
+                    time);
+            cl.showMessage(title, message, currentPlayer, currentGame, time);
         }
     }
 

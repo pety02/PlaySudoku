@@ -3,10 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="cf6a97df-13ae-4e8d-8d76-e38c0bb53735" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client.app/src/sudoku/PlayerApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/client.app/src/sudoku/PlayerApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client.app/src/sudoku/controllers/PlaySudokuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/client.app/src/sudoku/controllers/PlaySudokuController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client.app/src/sudoku/fxmls/PlaySudoku.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/client.app/src/sudoku/fxmls/PlaySudoku.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client.app/src/sudoku/services/ClientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/client.app/src/sudoku/services/ClientService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client.app/src/sudoku/servicesImpls/ClientServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/client.app/src/sudoku/servicesImpls/ClientServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/remote.obj/src/server/entities/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/remote.obj/src/server/entities/Game.java" afterDir="false" />
     </list>
@@ -85,7 +83,8 @@
       <workItem from="1675285587432" duration="7752000" />
       <workItem from="1675713301299" duration="13686000" />
       <workItem from="1675801764596" duration="2256000" />
-      <workItem from="1675897292997" duration="5644000" />
+      <workItem from="1675897292997" duration="5701000" />
+      <workItem from="1675935676113" duration="16304000" />
     </task>
     <task id="LOCAL-00001" summary="Filling sudoku boards fixed! Found some bugs and added TODOs for them! Process of solving sudoku puzzles started!">
       <created>1675302931409</created>
@@ -108,7 +107,14 @@
       <option name="project" value="LOCAL" />
       <updated>1675730264071</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Numbers buttons functionality added!">
+      <created>1675903077656</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1675903077656</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -118,6 +124,7 @@
     <MESSAGE value="Filling sudoku boards fixed! Found some bugs and added TODOs for them! Process of solving sudoku puzzles started!" />
     <MESSAGE value="Filling sudoku board bugs fixed! Timer created!" />
     <MESSAGE value="NewGame generation and filling sudoku puzzle correctly!" />
-    <option name="LAST_COMMIT_MESSAGE" value="NewGame generation and filling sudoku puzzle correctly!" />
+    <MESSAGE value="Numbers buttons functionality added!" />
+    <option name="LAST_COMMIT_MESSAGE" value="Numbers buttons functionality added!" />
   </component>
 </project>

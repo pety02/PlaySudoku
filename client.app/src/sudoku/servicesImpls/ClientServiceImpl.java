@@ -44,7 +44,7 @@ public class ClientServiceImpl implements ClientService {
             }
         }
         for (int[] boardRow : board) {
-            if (boardRow[colI] == cellValue) {
+            if (boardRow[colI] == cellValue || boardRow[colI] < 0 || boardRow[colI] > 9) {
                 return false;
             }
         }

@@ -42,15 +42,15 @@
                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="1" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="2" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.rowIndex="1" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.rowIndex="2" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="2" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="1" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.rowIndex="1" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.rowIndex="2" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             </children>
          </GridPane>
          <GridPane fx:id="zeroRowFirstColGrid" prefHeight="600.0" prefWidth="600.0" GridPane.columnIndex="1">
@@ -65,15 +65,15 @@
                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="1" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="2" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.rowIndex="1" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.rowIndex="2" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="1" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="2" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.rowIndex="1" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.rowIndex="2" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             </children>
          </GridPane>
          <GridPane fx:id="zeroRowSecondColGrid" prefHeight="600.0" prefWidth="600.0" GridPane.columnIndex="2">
@@ -88,15 +88,15 @@
                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="1" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="2" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.rowIndex="1" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.rowIndex="2" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="1" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="2" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.rowIndex="1" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.rowIndex="2" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             </children>
          </GridPane>
          <GridPane fx:id="firstRowZeroColGrid" prefHeight="600.0" prefWidth="600.0" GridPane.rowIndex="1">
@@ -111,15 +111,15 @@
                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="1" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="2" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.rowIndex="1" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.rowIndex="2" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="1" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="2" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.rowIndex="1" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.rowIndex="2" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             </children>
          </GridPane>
          <GridPane fx:id="firstRowFirstColGrid" prefHeight="600.0" prefWidth="600.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -134,15 +134,15 @@
                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="1" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="2" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.rowIndex="1" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.rowIndex="2" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="1" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="2" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.rowIndex="1" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.rowIndex="2" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             </children>
          </GridPane>
          <GridPane fx:id="firstRowSecondColGrid" prefHeight="600.0" prefWidth="600.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
@@ -157,15 +157,15 @@
                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="1" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="2" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.rowIndex="1" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.rowIndex="2" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="1" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="2" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.rowIndex="1" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.rowIndex="2" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             </children>
          </GridPane>
          <GridPane fx:id="secondRowZeroColGrid" prefHeight="600.0" prefWidth="600.0" GridPane.rowIndex="2">
@@ -180,15 +180,15 @@
                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="1" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="2" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.rowIndex="1" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.rowIndex="2" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="1" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="2" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.rowIndex="1" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.rowIndex="2" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             </children>
          </GridPane>
          <GridPane fx:id="secondRowFirstColGrid" prefHeight="600.0" prefWidth="600.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
@@ -203,15 +203,15 @@
                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="1" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="2" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.rowIndex="1" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.rowIndex="2" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="1" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="2" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.rowIndex="1" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.rowIndex="2" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" style="-fx-background-color: green;" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             </children>
          </GridPane>
          <GridPane fx:id="secondRowSecondColGrid" prefHeight="600.0" prefWidth="600.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
@@ -226,15 +226,15 @@
                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="1" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="2" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.rowIndex="1" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.rowIndex="2" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-               <TextField alignment="CENTER" onKeyPressed="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="1" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="2" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.rowIndex="1" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.rowIndex="2" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+               <TextField alignment="CENTER" onKeyReleased="#onInputTextChanged" prefHeight="65.0" prefWidth="66.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             </children>
          </GridPane>
       </children>
