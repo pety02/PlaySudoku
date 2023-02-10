@@ -1,5 +1,6 @@
 package sudoku.controllers;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -151,7 +152,7 @@ public class PlaySudokuController {
                 currentGame.setEmptyCells(SudokuLevel.EASY.getMaxEmptyCells());
             }
         }
-        scoreLabel.setText(String.valueOf(currentGame.getCurrentScore()));
+        scoreLabel.setText(String.valueOf(String.format("Score: %d", currentGame.getCurrentScore())));
 
         fillSudokuGrid(board);
 
@@ -203,22 +204,21 @@ public class PlaySudokuController {
             }
         }
 
-        currentGame.addLastTurn(new GameTurn(value, rowIndex, colIndex, Integer.parseInt(scoreLabel.getText())));
-        System.out.printf("Last Turn Row - Last Turn Col: %d %d", rowIndex, colIndex);
+        currentGame.addLastTurn(new GameTurn(value, rowIndex, colIndex, Integer.parseInt(scoreLabel.getText().substring(7))));
         ClientServiceImpl cl = new ClientServiceImpl();
         if (cl.isSafe(board, rowIndex, colIndex, value)) {
             correctValues++;
             currentGame.setCurrentScore(5);
-            scoreLabel.setText(String.valueOf(currentGame.getCurrentScore()));
+            scoreLabel.setText(String.valueOf(String.format("Score: %d", currentGame.getCurrentScore())));
             currentGame.setBoard(board);
             node.setEditable(false);
             currentGame.getUndoStack().pop();
-            node.setBackground(Background.fill(Paint.valueOf("white")));
+            node.setStyle("-fx-background-color: white;");
         } else {
             currentGame.setCurrentScore(-5);
-            scoreLabel.setText(String.valueOf(currentGame.getCurrentScore()));
+            scoreLabel.setText(String.valueOf(String.format("Score: %d", currentGame.getCurrentScore())));
             node.setEditable(true);
-            node.setBackground(Background.fill(Paint.valueOf("red")));
+            node.setStyle("-fx-background-color: red;");
         }
 
         int[][] boardToBeSolved = new int[9][9];
@@ -285,7 +285,7 @@ public class PlaySudokuController {
         int rowIndex = firstRedo.getRowIndex();
         int colIndex = firstRedo.getColIndex();
         currentGame.clearRedoStack();
-        scoreLabel.setText(Integer.toString(firstRedo.getScore()));
+        scoreLabel.setText(String.valueOf(String.format("Score: %d", firstRedo.getScore())));
 
         setCells(value, rowIndex, colIndex);
         setCells(0, firstRedo.getRowIndex(), firstRedo.getColIndex());
@@ -305,7 +305,7 @@ public class PlaySudokuController {
             int value = prevTurn.getValue();
             int rowIndex = prevTurn.getRowIndex();
             int colIndex = prevTurn.getColIndex();
-            scoreLabel.setText(Integer.toString(prevTurn.getScore()));
+            scoreLabel.setText(String.valueOf(String.format("Score: %d", prevTurn.getScore())));
 
             setCells(value, rowIndex, colIndex);
             setCells(0, currentTurn.getRowIndex(), currentTurn.getColIndex());
@@ -395,6 +395,7 @@ public class PlaySudokuController {
                             new Object[]{"Yes", "No"}, JOptionPane.YES_OPTION);
                     if (answer == JOptionPane.NO_OPTION) {
                         this.cancel();
+                        Platform.exit();
                     }
                     hasBeenOpened = true;
                 }
@@ -420,7 +421,7 @@ public class PlaySudokuController {
         timerTick();
 
         nicknameLabel.setText(data.getValue().getNickname());
-        scoreLabel.setText(String.valueOf(data.getKey().getCurrentScore()));
+        scoreLabel.setText(String.valueOf(String.format("Score: %d", data.getKey().getCurrentScore())));
         sudokuLevelLbl.setText(String.valueOf(data.getKey().getLevel()));
     }
 
