@@ -24,17 +24,7 @@ import java.util.logging.Logger;
  */
 public class ClientServiceImpl implements ClientService {
 
-    private final Logger logger = Logger.getLogger(ClientServiceImpl.class.getName());
-
-    /**
-     * Проверява дали дадена позиция е безопасна.
-     *
-     * @param board     - дъска.
-     * @param rowI      - индекс на ред.
-     * @param colI      - индекс на колона.
-     * @param cellValue - стойност.
-     * @return true - при безопасна,false - при небезопасна
-     */
+    @Override
     public boolean isSafe(int[][] board,
                           int rowI, int colI,
                           int cellValue) {
@@ -64,48 +54,6 @@ public class ClientServiceImpl implements ClientService {
         }
 
         return true;
-    }
-
-    /**
-     * Решава судоку пъзела.
-     *
-     * @param board            - дъска.
-     * @param numberOfRowsCols - брой редове/колони
-     * @return true - при решено судоку, false - при нерешено судоку
-     */
-    private boolean solveSudoku(
-            int[][] board, int numberOfRowsCols) {
-        int rowIndex = -1;
-        int colIndex = -1;
-        boolean isEmptyCell = true;
-        for (int rowI = 0; rowI < numberOfRowsCols; rowI++) {
-            for (int colI = 0; colI < numberOfRowsCols; colI++) {
-                if (board[rowI][colI] == 0) {
-                    rowIndex = rowI;
-                    colIndex = colI;
-
-                    isEmptyCell = false;
-                    break;
-                }
-            }
-            if (!isEmptyCell) {
-                break;
-            }
-        }
-        if (isEmptyCell) {
-            return true;
-        }
-        for (int currentCellValue = 1; currentCellValue <= numberOfRowsCols; currentCellValue++) {
-            if (isSafe(board, rowIndex, colIndex, currentCellValue)) {
-                board[rowIndex][colIndex] = currentCellValue;
-                if (solveSudoku(board, numberOfRowsCols)) {
-                    return true;
-                } else {
-                    board[rowIndex][colIndex] = 0;
-                }
-            }
-        }
-        return false;
     }
 
     @Override
@@ -156,6 +104,11 @@ public class ClientServiceImpl implements ClientService {
         logClientGameOutcome(player.getNickname(), game.getLevel(), game.getCurrentScore(), game.isWon(), totalMinutes);
     }
 
+    @Override
+    public boolean canSolve(int[][] board, int boarsSize) {
+        return solveSudoku(board, boarsSize);
+    }
+
     /**
      * Логва резултата (победа/загуба) на играта.
      *
@@ -184,7 +137,47 @@ public class ClientServiceImpl implements ClientService {
         }
     }
 
-    public boolean canSolve(int[][] board, int N) {
-        return solveSudoku(board, N);
+    /**
+     * Решава судоку пъзела.
+     *
+     * @param board            - дъска.
+     * @param numberOfRowsCols - брой редове/колони
+     * @return true - при решено судоку, false - при нерешено судоку
+     */
+    private boolean solveSudoku(
+            int[][] board, int numberOfRowsCols) {
+        int rowIndex = -1;
+        int colIndex = -1;
+        boolean isEmptyCell = true;
+        for (int rowI = 0; rowI < numberOfRowsCols; rowI++) {
+            for (int colI = 0; colI < numberOfRowsCols; colI++) {
+                if (board[rowI][colI] == 0) {
+                    rowIndex = rowI;
+                    colIndex = colI;
+
+                    isEmptyCell = false;
+                    break;
+                }
+            }
+            if (!isEmptyCell) {
+                break;
+            }
+        }
+        if (isEmptyCell) {
+            return true;
+        }
+        for (int currentCellValue = 1; currentCellValue <= numberOfRowsCols; currentCellValue++) {
+            if (isSafe(board, rowIndex, colIndex, currentCellValue)) {
+                board[rowIndex][colIndex] = currentCellValue;
+                if (solveSudoku(board, numberOfRowsCols)) {
+                    return true;
+                } else {
+                    board[rowIndex][colIndex] = 0;
+                }
+            }
+        }
+        return false;
     }
+
+    private final Logger logger = Logger.getLogger(ClientServiceImpl.class.getName());
 }

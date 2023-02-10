@@ -1,1 +1,1 @@
-moduleSearchIndex = [];updateSearchResults();
+moduleSearchIndex = [{"l":"client.app"},{"l":"remote.obj"}];updateSearchResults();

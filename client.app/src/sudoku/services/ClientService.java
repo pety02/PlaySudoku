@@ -9,7 +9,21 @@ import java.rmi.RemoteException;
 /**
  * Интерфейс, който наследява тоест разширява Remote интерфейса.
  */
-public interface ClientService /*extends Remote*/ {
+public interface ClientService {
+
+    /**
+     * Проверява дали дадена позиция е безопасна.
+     *
+     * @param board     - дъска.
+     * @param rowI      - индекс на ред.
+     * @param colI      - индекс на колона.
+     * @param cellValue - стойност.
+     * @return true - при безопасна,false - при небезопасна
+     */
+    boolean isSafe(int[][] board,
+                   int rowI, int colI,
+                   int cellValue);
+
     /**
      * Инициализира дъската за игра.
      *
@@ -50,4 +64,12 @@ public interface ClientService /*extends Remote*/ {
      */
     void showMessage(String title, String message, Player player, Game game, String totalMinutes) throws RemoteException;
 
+    /**
+     * Проверява дали може да се реши судокуто.
+     *
+     * @param board     - дъската на судокуто.
+     * @param boarsSize - размера на дъската.
+     * @return True - при възможност за решване,False - при невъзможност.
+     */
+    boolean canSolve(int[][] board, int boarsSize);
 }

@@ -13,26 +13,30 @@ public interface SudokuService extends Remote {
     /**
      * Попълва клетките на судоку пъзела, които не са по
      * главния диагонал със случайни валидни стойности.
+     *
      * @throws RemoteException
      */
     int[][] fillValues() throws RemoteException;
 
     /**
      * Попълва главния диагонал на судоко пъзела със стойности.
+     *
      * @throws RemoteException
      */
     void fillDiagonal() throws RemoteException;
 
     /**
      * Попълва определна кутия (част) от судоку пъзела с валидни стойности.
+     *
      * @param rowI - индекс на ред в дадена кутия (част) от судоку пъзела.
      * @param colI - индекс на колона в дадена кутия (част) от судоку пъзела.
      * @throws RemoteException
      */
-    void fillBox(int rowI,int colI) throws RemoteException;
+    void fillBox(int rowI, int colI) throws RemoteException;
 
     /**
      * Генерира случайни валидни стойности.
+     *
      * @param number - число, по което ще генерираме случайна стойност за дадена клетка от судоку пъзела.
      * @return Случайно генерирано число.
      * @throws RemoteException
@@ -42,15 +46,36 @@ public interface SudokuService extends Remote {
     /**
      * Премахва тоест скрива част от цифрите, за да се получи нерешен судоку
      * пъзел, който да бъде предоставен за решение.
+     *
      * @throws RemoteException
      */
     void removeKDigits() throws RemoteException;
 
+    /**
+     * Сетър за полето игра (game).
+     *
+     * @param game - игра.
+     */
     void setGame(Game game) throws RemoteException;
 
+    /**
+     * Сетър за полето играч (player).
+     *
+     * @param player - играч.
+     */
     void setPlayer(Player player) throws RemoteException;
 
-    Game getGame()throws RemoteException;
+    /**
+     * Гетър за полето игра (game).
+     *
+     * @return стойността на game.
+     */
+    Game getGame() throws RemoteException;
 
-    Player getPlayer()throws RemoteException;
+    /**
+     * Гетър за полето играч (player).
+     *
+     * @return стойността на player.
+     */
+    Player getPlayer() throws RemoteException;
 }

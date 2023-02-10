@@ -7,23 +7,11 @@ import java.util.*;
  * Клас, описващ играта като обект.
  */
 public class Game implements Serializable {
-    private SudokuLevel level;
-    private int emptyCells;
-    private int[][] board;
-    private int[][] solution;
-    private int currentScore = 0;
-    private boolean isWon;
-    private Player player;
-
-    private Stack<GameTurn> undoStack;
-    private Stack<GameTurn> redoStack;
 
     /**
      * Вътрешен клас, който да валидира клетките на судокуто.
      */
     public class SudokuCellsValidator implements Serializable {
-        private final int numberOfRowsCols = 9;
-        private final int sqrtOfNumberOfRowsCols = (int) Math.sqrt(numberOfRowsCols);
 
         /**
          * @return броят редове/колони на матрицата.
@@ -148,6 +136,9 @@ public class Game implements Serializable {
                     validator.unUsedInBox(rowI - rowI % sqrtOfNumberOfRowsCols,
                             colI - colI % sqrtOfNumberOfRowsCols, cellValue));
         }
+
+        private final int numberOfRowsCols = 9;
+        private final int sqrtOfNumberOfRowsCols = (int) Math.sqrt(numberOfRowsCols);
     }
 
     private final SudokuCellsValidator validator = new SudokuCellsValidator();
@@ -255,7 +246,11 @@ public class Game implements Serializable {
         return player;
     }
 
-
+    /**
+     * Гетър за предишния ход в игра.
+     *
+     * @return предишния ход в игра.
+     */
     public server.entities.GameTurn[] getLastUndo() {
         GameTurn[] result = new GameTurn[2];
         result[0] = null;
@@ -277,6 +272,11 @@ public class Game implements Serializable {
         return result;
     }
 
+    /**
+     * Гетър за следващия ход в игра.
+     *
+     * @return следващия ход в игра.
+     */
     public GameTurn getFirstRedo() {
         if (redoStack.isEmpty()) {
             return null;
@@ -288,10 +288,18 @@ public class Game implements Serializable {
         return prevRedoTurn;
     }
 
+    /**
+     * Гетър за стек от предишни ходове.
+     *
+     * @return стек от предишни ходове.
+     */
     public Stack<GameTurn> getUndoStack() {
         return undoStack;
     }
 
+    /**
+     * Изчиства стека от следващи ходове.
+     */
     public void clearRedoStack() {
         redoStack.clear();
     }
@@ -372,15 +380,13 @@ public class Game implements Serializable {
         undoStack.push(lastTurn);
     }
 
-    /**
-     * Принтира дъската на судокуто.
-     */
-    public void printSudokuBoard() {
-        for (int i = 0; i < validator.numberOfRowsCols; i++) {
-            for (int j = 0; j < validator.numberOfRowsCols; j++) {
-                System.out.print(board[i][j] + " ");
-            }
-            System.out.println();
-        }
-    }
+    private SudokuLevel level;
+    private int emptyCells;
+    private int[][] board;
+    private int[][] solution;
+    private int currentScore = 0;
+    private boolean isWon;
+    private Player player;
+    private final Stack<GameTurn> undoStack;
+    private final Stack<GameTurn> redoStack;
 }

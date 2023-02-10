@@ -4,7 +4,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
@@ -30,273 +29,83 @@ import java.util.Timer;
  */
 public class PlaySudokuController {
 
+    /**
+     * Метод при натискане на бутон 8.
+     */
     @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
-
-    @FXML
-    private AnchorPane pane;
-
-    @FXML
-    private GridPane sudokuGrid;
-
-    @FXML
-    private GridPane firstRowFirstColGrid;
-
-    @FXML
-    private GridPane firstRowSecondColGrid;
-
-    @FXML
-    private GridPane firstRowZeroColGrid;
-
-    @FXML
-    private Button helpButton;
-
-    @FXML
-    private Button newGameButton;
-
-    @FXML
-    private Text nicknameLabel;
-
-    @FXML
-    private Button redoButton;
-
-    @FXML
-    private Text scoreLabel;
-
-    @FXML
-    private Text sudokuLevelLbl;
-
-    @FXML
-    private GridPane secondRowFirstColGrid;
-
-    @FXML
-    private GridPane secondRowSecondColGrid;
-
-    @FXML
-    private GridPane secondRowZeroColGrid;
-
-    @FXML
-    private Text timeLabel;
-
-    @FXML
-    private Button undoButton;
-
-    @FXML
-    private GridPane zeroRowFirstColGrid;
-
-    @FXML
-    private GridPane zeroRowSecondColGrid;
-
-    @FXML
-    private GridPane zeroRowZeroColGrid;
-
-    private Button eightsBtn;
-
-    @FXML
-    private Button fivesBtn;
-
-    @FXML
-    private Button foursBtn;
-
-    @FXML
-    private Button ninesBtn;
-
-    @FXML
-    private Button onesBtn;
-
-    @FXML
-    private Button sevensBtn;
-
-    @FXML
-    private Button sixsBtn;
-
-    @FXML
-    private Button threesBtn;
-
-    @FXML
-    private Button twoesBtn;
-
-
-    private Player currentPlayer;
-
-    private Game currentGame;
-
-    private int[][] board;
-
-    private int correctValues = 0;
-    private Timer myTimer = new Timer();
-
-    private void fillBox(int[][] board, GridPane grid, int rowStInd, int rowEndInd, int colStInd, int colEndInd) {
-        int index = 0;
-        for (int i = rowStInd; i <= rowEndInd; i++) {
-            for (int j = colStInd; j <= colEndInd; j++) {
-                TextField cell = ((TextField) grid.getChildren().get(index));
-                cell.setText(Integer.toString(board[i][j]));
-                cell.setEditable(false);
-                cell.setStyle("-fx-font-weight: bold;");
-                if (board[i][j] == 0) {
-                    cell.setText("");
-                    cell.setEditable(true);
-                    cell.setStyle("-fx-font-weight: none;");
-                }
-                index++;
-            }
-        }
-    }
-
-    private void fillBoxSolution(int[][] board, GridPane grid, int rowStInd, int rowEndInd, int colStInd, int colEndInd) {
-        int index = 0;
-        for (int i = rowStInd; i <= rowEndInd; i++) {
-            for (int j = colStInd; j <= colEndInd; j++) {
-                TextField cell = ((TextField) grid.getChildren().get(index));
-                cell.setText(Integer.toString(board[i][j]));
-                cell.setEditable(false);
-                cell.setStyle("-fx-font-weight: bold;");
-                index++;
-            }
-        }
-    }
-
-    private void timerTick() {
-        myTimer = new Timer();
-        myTimer.scheduleAtFixedRate(new TimerTask() {
-            int minutes = 0;
-            int seconds = 0;
-
-            boolean hasBeenOpened = false;
-
-            @Override
-            public void run() {
-                if (seconds == 60) {
-                    minutes += 1;
-                    seconds = 0;
-
-                    hasBeenOpened = false;
-                }
-                if (minutes >= 10 && seconds >= 10) {
-                    timeLabel.setText(String.format("Time: %d:%d", minutes, seconds));
-                } else {
-                    timeLabel.setText(String.format("Time: 0%d:0%d", minutes, seconds));
-                }
-                seconds++;
-
-                if (minutes > 0 && minutes % 5 == 0 && !hasBeenOpened) {
-                    int answer = JOptionPane.showOptionDialog(null, "Do you still playing?", "Playing status",
-                            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                            new Object[]{"Yes", "No"}, JOptionPane.YES_OPTION);
-                    if (answer == JOptionPane.NO_OPTION) {
-                        this.cancel();
-                    }
-                    hasBeenOpened = true;
-                }
-            }
-        }, 0, 1000);
-    }
-
-    void print(int[][] board) {
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[i].length; j++) {
-                System.out.print(board[i][j] + " ");
-            }
-            System.out.println();
-        }
-    }
-
-    void receive(Stage s) {
-        Pair<Game, Player> data = (Pair<Game, Player>) s.getUserData();
-
-        currentPlayer = data.getValue();
-        currentGame = data.getKey();
-
-        board = currentGame.getBoard();
-
-        final int boardSize = 9;
-        int i = 0;
-        for (int j = 0; j < boardSize; j += 3) {
-            for (int k = 0; k < boardSize; k += 3) {
-                GridPane innerGrid = (GridPane) sudokuGrid.getChildren().get(i);
-                fillBox(board, innerGrid, j, j + 2, k, k + 2);
-                i++;
-            }
-        }
-
-        timerTick();
-
-        nicknameLabel.setText(data.getValue().getNickname());
-        scoreLabel.setText(String.valueOf(data.getKey().getCurrentScore()));
-        sudokuLevelLbl.setText(String.valueOf(data.getKey().getLevel()));
-    }
-
-    private void onNumberBtnClicked(int number) {
-        int boardSize = 9;
-        for (int i = 0; i < boardSize; ++i) {
-            GridPane innerGrid = (GridPane) sudokuGrid.getChildren().get(i);
-            for (int j = 0; j < boardSize; ++j) {
-                TextField txtField = (TextField) innerGrid.getChildren().get(j);
-                if (txtField.getText().equals(String.valueOf(number))) {
-                    txtField.setStyle("-fx-background-color: yellow;");
-                } else {
-                    txtField.setStyle("-fx-background-color: white;");
-                }
-            }
-        }
-    }
-
-    @FXML
-    void onEightsBtnClicked(MouseEvent event) {
+    void onEightsBtnClicked() {
         onNumberBtnClicked(8);
     }
 
+    /**
+     * Метод при натискане на бутон 5.
+     */
     @FXML
-    void onFivesBtnClicked(MouseEvent event) {
+    void onFivesBtnClicked() {
         onNumberBtnClicked(5);
     }
 
+    /**
+     * Метод при натискане на бутон 4.
+     */
     @FXML
-    void onFoursBtnClicked(MouseEvent event) {
+    void onFoursBtnClicked() {
         onNumberBtnClicked(4);
     }
 
+    /**
+     * Метод при натискане на бутон 9.
+     */
     @FXML
-    void onNinesBtnClicked(MouseEvent event) {
+    void onNinesBtnClicked() {
         onNumberBtnClicked(9);
     }
 
+    /**
+     * Метод при натискане на бутон 1.
+     */
     @FXML
-    void onOnesBtnClicked(MouseEvent event) {
+    void onOnesBtnClicked() {
         onNumberBtnClicked(1);
     }
 
+    /**
+     * Метод при натискане на бутон 7.
+     */
     @FXML
-    void onSevensBtnClicked(MouseEvent event) {
+    void onSevensBtnClicked() {
         onNumberBtnClicked(7);
     }
 
+    /**
+     * Метод при натискане на бутон 6.
+     */
     @FXML
-    void onSixsBtnClicked(MouseEvent event) {
+    void onSixsBtnClicked() {
         onNumberBtnClicked(6);
     }
 
+    /**
+     * Метод при натискане на бутон 3.
+     */
     @FXML
-    void onThreesBtnClicked(MouseEvent event) {
+    void onThreesBtnClicked() {
         onNumberBtnClicked(3);
     }
 
+    /**
+     * Метод при натискане на бутон 2.
+     */
     @FXML
-    void onTwoesBtnClicked(MouseEvent event) {
+    void onTwoesBtnClicked() {
         onNumberBtnClicked(2);
     }
 
     /**
      * Отваря инструкциите на играта.
-     *
-     * @param event - събитие.
      */
     @FXML
-    void onHelpBtnClicked(MouseEvent event) {
+    void onHelpBtnClicked() {
         String title = "Помощ";
         String message = """
                 Правила на играта:
@@ -314,11 +123,10 @@ public class PlaySudokuController {
     /**
      * Създава нова игра от същата трудност.
      *
-     * @param event - събитие.
      * @throws RemoteException
      */
     @FXML
-    void onNewGameBtnClicked(MouseEvent event) throws RemoteException {
+    void onNewGameBtnClicked() throws RemoteException {
         ClientService cl = new ClientServiceImpl();
         int[][] board;
 
@@ -343,36 +151,35 @@ public class PlaySudokuController {
                 currentGame.setEmptyCells(SudokuLevel.EASY.getMaxEmptyCells());
             }
         }
-
-        print(board);
-
         scoreLabel.setText(String.valueOf(currentGame.getCurrentScore()));
 
-        final int boardSize = 9;
-        int i = 0;
-        for (int j = 0; j < boardSize; j += 3) {
-            for (int k = 0; k < boardSize; k += 3) {
-                GridPane innerGrid = (GridPane) sudokuGrid.getChildren().get(i);
-                fillBox(board, innerGrid, j, j + 2, k, k + 2);
-                i++;
-            }
-        }
+        fillSudokuGrid(board);
 
         myTimer.cancel();
         timerTick();
     }
 
+    /**
+     * Прави всички текстови кутии в един грид нередактирируеми.
+     *
+     * @param grid - текущ грид.
+     */
     private void makeNotEditable(GridPane grid) {
         grid.getChildren().forEach(tf -> ((TextField) tf).setEditable(Boolean.FALSE));
     }
 
+    /**
+     * Задава логиката на играта. Позволява на играч да играе.
+     *
+     * @param event - събитие.
+     */
     @FXML
     void onInputTextChanged(KeyEvent event) {
         TextField node = (TextField) event.getSource();
 
         char[] text = node.getText().toCharArray();
         if (text.length != 1 || (text[0] < '1' || text[0] > '9')) {
-            node.setText(node.getText().toString().replaceAll("0", ""));
+            node.setText(node.getText().replaceAll("0", ""));
             return;
         }
 
@@ -380,15 +187,15 @@ public class PlaySudokuController {
 
         int sqrt = (int) Math.sqrt(board.length);
         GridPane innerGrid = (GridPane) node.getParent();
-        Integer rowGridIndex = (GridPane.getRowIndex(innerGrid) != null) ? GridPane.getRowIndex(innerGrid) : 0;
-        Integer colGridIndex = (GridPane.getColumnIndex(innerGrid) != null) ? GridPane.getColumnIndex(innerGrid) : 0;
+        int rowGridIndex = (GridPane.getRowIndex(innerGrid) != null) ? GridPane.getRowIndex(innerGrid) : 0;
+        int colGridIndex = (GridPane.getColumnIndex(innerGrid) != null) ? GridPane.getColumnIndex(innerGrid) : 0;
 
         int rowIndex = 0, colIndex = 0;
         for (int i = 0; i < sqrt; i++) {
             for (int j = 0; j < sqrt; j++) {
                 if (rowGridIndex == i && colGridIndex == j) {
-                    Integer txtFieldRowIndex = (GridPane.getRowIndex(node) != null) ? GridPane.getRowIndex(node) : 0;
-                    Integer txtFieldColIndex = (GridPane.getColumnIndex(node) != null) ? GridPane.getColumnIndex(node) : 0;
+                    int txtFieldRowIndex = (GridPane.getRowIndex(node) != null) ? GridPane.getRowIndex(node) : 0;
+                    int txtFieldColIndex = (GridPane.getColumnIndex(node) != null) ? GridPane.getColumnIndex(node) : 0;
                     rowIndex = rowGridIndex * sqrt + txtFieldRowIndex;
                     colIndex = colGridIndex * sqrt + txtFieldColIndex;
                     System.out.printf("Row - Col: %d %d%n", rowIndex, colIndex);
@@ -468,34 +275,27 @@ public class PlaySudokuController {
 
     /**
      * Премества един ход напред.
-     *
-     * @param event - събитие.
      */
     @FXML
-    void onRedoBtnClicked(MouseEvent event) {
+    void onRedoBtnClicked() {
 
-        GameTurn[] lastUndo = currentGame.getLastUndo();
-        if (Arrays.stream(lastUndo)
-                .allMatch(Objects::nonNull)) {
-            GameTurn prevTurn = lastUndo[0];
-            int value = prevTurn.getValue();
-            int rowIndex = prevTurn.getRowIndex();
-            int colIndex = prevTurn.getColIndex();
-            currentGame.clearRedoStack();
-            scoreLabel.setText(Integer.toString(prevTurn.getScore()));
+        GameTurn firstRedo = currentGame.getFirstRedo();
 
-            setCells(value, rowIndex, colIndex);
-            setCells(0, prevTurn.getRowIndex(), prevTurn.getColIndex());
-        }
+        int value = firstRedo.getValue();
+        int rowIndex = firstRedo.getRowIndex();
+        int colIndex = firstRedo.getColIndex();
+        currentGame.clearRedoStack();
+        scoreLabel.setText(Integer.toString(firstRedo.getScore()));
+
+        setCells(value, rowIndex, colIndex);
+        setCells(0, firstRedo.getRowIndex(), firstRedo.getColIndex());
     }
 
     /**
      * Връща един ход назад.
-     *
-     * @param event - събитие.
      */
     @FXML
-    void onUndoBtnClicked(MouseEvent event) {
+    void onUndoBtnClicked() {
 
         GameTurn[] lastUndo = currentGame.getLastUndo();
         if (Arrays.stream(lastUndo)
@@ -512,6 +312,162 @@ public class PlaySudokuController {
         }
     }
 
+    /**
+     * Запълва един грид със стойности от генерираното вече судоку.
+     *
+     * @param board     - дъска.
+     * @param grid      - грид.
+     * @param rowStInd  - начален индекс за редовете.
+     * @param rowEndInd - краен индекс за редовете.
+     * @param colStInd  - начален индекс за колоните.
+     * @param colEndInd - краен индекс за колоните.
+     */
+    private void fillBox(int[][] board, GridPane grid, int rowStInd, int rowEndInd, int colStInd, int colEndInd) {
+        int index = 0;
+        for (int i = rowStInd; i <= rowEndInd; i++) {
+            for (int j = colStInd; j <= colEndInd; j++) {
+                TextField cell = ((TextField) grid.getChildren().get(index));
+                cell.setText(Integer.toString(board[i][j]));
+                cell.setEditable(false);
+                cell.setStyle("-fx-font-weight: bold;");
+                if (board[i][j] == 0) {
+                    cell.setText("");
+                    cell.setEditable(true);
+                    cell.setStyle("-fx-font-weight: none;");
+                }
+                index++;
+            }
+        }
+    }
+
+    /**
+     * Запълва судоку грида с примерно решение на пъзела в случая на загуба.
+     *
+     * @param board     - дъска.
+     * @param grid      - грид.
+     * @param rowStInd  - начален индекз за реодвете.
+     * @param rowEndInd - краен индекс за редовете.
+     * @param colStInd  - начален индекс за колоните.
+     * @param colEndInd - краен индекс за колоните.
+     */
+    private void fillBoxSolution(int[][] board, GridPane grid, int rowStInd, int rowEndInd, int colStInd, int colEndInd) {
+        int index = 0;
+        for (int i = rowStInd; i <= rowEndInd; i++) {
+            for (int j = colStInd; j <= colEndInd; j++) {
+                TextField cell = ((TextField) grid.getChildren().get(index));
+                cell.setText(Integer.toString(board[i][j]));
+                cell.setEditable(false);
+                cell.setStyle("-fx-font-weight: bold;");
+                index++;
+            }
+        }
+    }
+
+    /**
+     * Създава и стартира теймер, който на всеки 5 минути прави запитване към играча дали още играе.
+     */
+    private void timerTick() {
+        myTimer = new Timer();
+        myTimer.scheduleAtFixedRate(new TimerTask() {
+            int minutes = 0;
+            int seconds = 0;
+
+            boolean hasBeenOpened = false;
+
+            @Override
+            public void run() {
+                if (seconds == 60) {
+                    minutes += 1;
+                    seconds = 0;
+
+                    hasBeenOpened = false;
+                }
+                if (minutes >= 10 && seconds >= 10) {
+                    timeLabel.setText(String.format("Time: %d:%d", minutes, seconds));
+                } else {
+                    timeLabel.setText(String.format("Time: 0%d:0%d", minutes, seconds));
+                }
+                seconds++;
+
+                if (minutes > 0 && minutes % 5 == 0 && !hasBeenOpened) {
+                    int answer = JOptionPane.showOptionDialog(null, "Do you still playing?", "Playing status",
+                            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                            new Object[]{"Yes", "No"}, JOptionPane.YES_OPTION);
+                    if (answer == JOptionPane.NO_OPTION) {
+                        this.cancel();
+                    }
+                    hasBeenOpened = true;
+                }
+            }
+        }, 0, 1000);
+    }
+
+    /**
+     * Приема информация от HomeViewSudokuController-а при инициализация на нова игра.
+     *
+     * @param s - сцена.
+     */
+    void receive(Stage s) {
+        Pair<Game, Player> data = (Pair<Game, Player>) s.getUserData();
+
+        currentPlayer = data.getValue();
+        currentGame = data.getKey();
+
+        board = currentGame.getBoard();
+
+        fillSudokuGrid(board);
+
+        timerTick();
+
+        nicknameLabel.setText(data.getValue().getNickname());
+        scoreLabel.setText(String.valueOf(data.getKey().getCurrentScore()));
+        sudokuLevelLbl.setText(String.valueOf(data.getKey().getLevel()));
+    }
+
+    /**
+     * Запълва даден судоку грид със стойности.
+     *
+     * @param board - дъска.
+     */
+    private void fillSudokuGrid(int[][] board) {
+        final int boardSize = board.length;
+        int i = 0;
+        for (int j = 0; j < boardSize; j += 3) {
+            for (int k = 0; k < boardSize; k += 3) {
+                GridPane innerGrid = (GridPane) sudokuGrid.getChildren().get(i);
+                fillBox(board, innerGrid, j, j + 2, k, k + 2);
+                i++;
+            }
+        }
+    }
+
+    /**
+     * Променя фона на клетките, в които се намира дадена цифра.
+     *
+     * @param number - число (цифра).
+     */
+    private void onNumberBtnClicked(int number) {
+        int boardSize = 9;
+        for (int i = 0; i < boardSize; ++i) {
+            GridPane innerGrid = (GridPane) sudokuGrid.getChildren().get(i);
+            for (int j = 0; j < boardSize; ++j) {
+                TextField txtField = (TextField) innerGrid.getChildren().get(j);
+                if (txtField.getText().equals(String.valueOf(number))) {
+                    txtField.setStyle("-fx-background-color: yellow;");
+                } else {
+                    txtField.setStyle("-fx-background-color: white;");
+                }
+            }
+        }
+    }
+
+    /**
+     * При undo или redo функционалностите поставя дадена стойност в определна от нейните индекси клетка.
+     *
+     * @param value    - стойност.
+     * @param rowIndex - индекс на ред.
+     * @param colIndex - индекс на колона.
+     */
     private void setCells(int value, int rowIndex, int colIndex) {
         String valueToChange = value != 0 ? Integer.toString(value) : "";
         int innerGridIndex = (colIndex / 3) + (rowIndex / 3 * 3);
@@ -561,6 +517,105 @@ public class PlaySudokuController {
         assert zeroRowFirstColGrid != null : "fx:id=\"zeroRowFirstColGrid\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
         assert zeroRowSecondColGrid != null : "fx:id=\"zeroRowSecondColGrid\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
         assert zeroRowZeroColGrid != null : "fx:id=\"zeroRowZeroColGrid\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
-
     }
+
+    @FXML
+    private ResourceBundle resources;
+
+    @FXML
+    private URL location;
+
+    @FXML
+    private AnchorPane pane;
+
+    @FXML
+    private GridPane sudokuGrid;
+
+    @FXML
+    private GridPane firstRowFirstColGrid;
+
+    @FXML
+    private GridPane firstRowSecondColGrid;
+
+    @FXML
+    private GridPane firstRowZeroColGrid;
+
+    @FXML
+    private Button helpButton;
+
+    @FXML
+    private Button newGameButton;
+
+    @FXML
+    private Text nicknameLabel;
+
+    @FXML
+    private Button redoButton;
+
+    @FXML
+    private Text scoreLabel;
+
+    @FXML
+    private Text sudokuLevelLbl;
+
+    @FXML
+    private GridPane secondRowFirstColGrid;
+
+    @FXML
+    private GridPane secondRowSecondColGrid;
+
+    @FXML
+    private GridPane secondRowZeroColGrid;
+
+    @FXML
+    private Text timeLabel;
+
+    @FXML
+    private Button undoButton;
+
+    @FXML
+    private GridPane zeroRowFirstColGrid;
+
+    @FXML
+    private GridPane zeroRowSecondColGrid;
+
+    @FXML
+    private GridPane zeroRowZeroColGrid;
+
+    @FXML
+    private Button eightsBtn;
+
+    @FXML
+    private Button fivesBtn;
+
+    @FXML
+    private Button foursBtn;
+
+    @FXML
+    private Button ninesBtn;
+
+    @FXML
+    private Button onesBtn;
+
+    @FXML
+    private Button sevensBtn;
+
+    @FXML
+    private Button sixsBtn;
+
+    @FXML
+    private Button threesBtn;
+
+    @FXML
+    private Button twoesBtn;
+
+
+    private Player currentPlayer;
+
+    private Game currentGame;
+
+    private int[][] board;
+
+    private int correctValues = 0;
+    private Timer myTimer = new Timer();
 }

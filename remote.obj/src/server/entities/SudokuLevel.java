@@ -7,11 +7,10 @@ public enum SudokuLevel {
     EASY(0, 20),
     MEDIUM(0, 40),
     HARD(0, 60);
-    private final int minEmptyCells;
-    private final int maxEmptyCells;
 
     /**
      * Гетър за минималния брой празни клетки според нивото на трудност.
+     *
      * @return минималния брой празни клетки според нивото на трудност.
      */
     public int getMinEmptyCells() {
@@ -20,6 +19,7 @@ public enum SudokuLevel {
 
     /**
      * Гетър за максималния брой празни клетки според нивото на трудност.
+     *
      * @return максималния брой празни клетки според нивото на трудност.
      */
     public int getMaxEmptyCells() {
@@ -28,6 +28,7 @@ public enum SudokuLevel {
 
     /**
      * Конструктор с параметри.
+     *
      * @param minEmptyCells - минимален брой празни клетки.
      * @param maxEmptyCells - максимален брой бразни клетки.
      */
@@ -35,4 +36,7 @@ public enum SudokuLevel {
         this.minEmptyCells = minEmptyCells;
         this.maxEmptyCells = maxEmptyCells;
     }
+
+    private final int minEmptyCells;
+    private final int maxEmptyCells;
 }

@@ -7,7 +7,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -19,7 +18,6 @@ import server.entities.SudokuLevel;
 import sudoku.services.ClientService;
 import sudoku.servicesImpls.ClientServiceImpl;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.rmi.RemoteException;
@@ -33,62 +31,6 @@ import java.util.logging.Logger;
  */
 public class HomeViewSudokuController {
 
-    private Player player;
-    private Game game;
-    private final ClientService clientServiceImpl = new ClientServiceImpl();
-    private final Logger logger = Logger.getLogger(HomeViewSudokuController.class.getName());
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
-
-    @FXML
-    private Button easyGameBtn;
-
-    @FXML
-    private Button hardGameBtn;
-
-    @FXML
-    private Button mediumGameBtn;
-
-    @FXML
-    private TextField nicknameTxtField;
-
-    /**
-     * Създава дъска и инициализира нейните стойности според нивото на трудност на предстоящата игра.
-     *
-     * @param level - ниво на трудност.
-     * @throws RemoteException
-     */
-    private int[][] makeBoard(SudokuLevel level) throws RemoteException {
-
-        return clientServiceImpl.initGame(level, nicknameTxtField.getText());
-    }
-
-    /**
-     * Инициализира сцената със судоку пъзела.
-     *
-     * @param actionEvent - събитие.
-     */
-    private void sendSudokuScene(Event actionEvent, Pair<Game, Player> data) {
-        Stage s = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/sudoku/fxmls/PlaySudoku.fxml"));
-            Parent root = loader.load();
-            Scene sc = new Scene(root);
-            s.setUserData(data);
-            if (loader.getController().getClass() == PlaySudokuController.class) {
-                ((PlaySudokuController) loader.getController()).receive(s);
-            }
-
-            s.setScene(sc);
-        } catch (IOException e) {
-            logger.log(Level.SEVERE, LocalDate.now() + e.getMessage());
-        }
-    }
-
     /**
      * Инициализира EASY Game.
      *
@@ -98,7 +40,6 @@ public class HomeViewSudokuController {
     public void onEasyGameBtnClicked(ActionEvent actionEvent) {
         try {
             int[][] b = makeBoard(SudokuLevel.EASY);
-            //ClientService clientServiceImpl = new ClientServiceImpl();
 
             int[][] sol = new int[9][9];
             for (int i = 0; i < b.length; i++) {
@@ -177,6 +118,39 @@ public class HomeViewSudokuController {
     }
 
     /**
+     * Създава дъска и инициализира нейните стойности според нивото на трудност на предстоящата игра.
+     *
+     * @param level - ниво на трудност.
+     * @throws RemoteException
+     */
+    private int[][] makeBoard(SudokuLevel level) throws RemoteException {
+
+        return clientServiceImpl.initGame(level, nicknameTxtField.getText());
+    }
+
+    /**
+     * Инициализира сцената със судоку пъзела.
+     *
+     * @param actionEvent - събитие.
+     */
+    private void sendSudokuScene(Event actionEvent, Pair<Game, Player> data) {
+        Stage s = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/sudoku/fxmls/PlaySudoku.fxml"));
+            Parent root = loader.load();
+            Scene sc = new Scene(root);
+            s.setUserData(data);
+            if (loader.getController().getClass() == PlaySudokuController.class) {
+                ((PlaySudokuController) loader.getController()).receive(s);
+            }
+
+            s.setScene(sc);
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, LocalDate.now() + e.getMessage());
+        }
+    }
+
+    /**
      * Инициализира контролера.
      */
     @FXML
@@ -186,4 +160,24 @@ public class HomeViewSudokuController {
         assert mediumGameBtn != null : "fx:id=\"mediumGameBtn\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
         assert nicknameTxtField != null : "fx:id=\"nicknameTxtField\" was not injected: check your FXML file 'PlaySudoku.fxml'.";
     }
+
+    private final ClientService clientServiceImpl = new ClientServiceImpl();
+    private final Logger logger = Logger.getLogger(HomeViewSudokuController.class.getName());
+    @FXML
+    private ResourceBundle resources;
+
+    @FXML
+    private URL location;
+
+    @FXML
+    private Button easyGameBtn;
+
+    @FXML
+    private Button hardGameBtn;
+
+    @FXML
+    private Button mediumGameBtn;
+
+    @FXML
+    private TextField nicknameTxtField;
 }
