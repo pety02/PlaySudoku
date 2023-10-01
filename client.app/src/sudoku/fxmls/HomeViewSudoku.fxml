@@ -37,7 +37,7 @@
             <Font name="Bodoni MT Bold" size="14.0"/>
         </font>
     </Button>
-    <Button fx:id="hardGameBtn" focusTraversable="false" mnemonicParsing="false" onMouseClicked="#onHardGameBtnClicked"
+    <Button fx:id="hardGameBtn" focusTraversable="false" mnemonicParsing="false" onAction="#onHardGameBtnClicked"
             prefHeight="42.0" prefWidth="441.0" text="Hard Game" GridPane.columnIndex="1" GridPane.rowIndex="2">
         <GridPane.margin>
             <Insets top="-50.0"/>
@@ -47,7 +47,7 @@
         </font>
     </Button>
     <Button fx:id="mediumGameBtn" focusTraversable="false" mnemonicParsing="false"
-            onMouseClicked="#onMediumGameBtnClicked" prefHeight="39.0" prefWidth="441.0" text="Medium Game"
+            onAction="#onMediumGameBtnClicked" prefHeight="39.0" prefWidth="441.0" text="Medium Game"
             GridPane.columnIndex="1" GridPane.rowIndex="2">
         <GridPane.margin>
             <Insets top="-150.0"/>

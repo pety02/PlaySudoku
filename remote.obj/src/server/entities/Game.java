@@ -1,256 +1,252 @@
 package server.entities;
 
+import server.services.SudokuService;
+import server.servicesImpls.SudokuServiceImpl;
+
 import java.io.Serializable;
+import java.rmi.RemoteException;
 import java.util.*;
 
-/**
- * Клас, описващ играта като обект.
- */
 public class Game implements Serializable {
+    private SudokuLevel level;
+    private int emptyCells;
+    private SudokuBoard board;
+    private SudokuBoard solution;
+    private int currentScore = 0;
+    private boolean isWon;
+    private Player player;
+    private final Stack<GameTurn> undoStack = new Stack<>();
+    private final Stack<GameTurn> redoStack = new Stack<>();
 
-    /**
-     * Вътрешен клас, който да валидира клетките на судокуто.
-     */
-    public class SudokuCellsValidator implements Serializable {
+    private SudokuService solver;
 
-        /**
-         * @return броят редове/колони на матрицата.
-         */
+    private class SudokuCellsValidator implements Serializable {
+        private final int numberOfRowsCols = 9;
+        private final int sqrtOfNumberOfRowsCols = (int) Math.sqrt(numberOfRowsCols);
+
         public int getNumberOfRowsCols() {
             return numberOfRowsCols;
         }
 
-        /**
-         * @return корен квадратен от броя редове/колони на матрицата.
-         */
         public int getSqrtOfNumberOfRowsCols() {
             return sqrtOfNumberOfRowsCols;
         }
 
-        /**
-         * Проверява дали дадена стойност не е използвана вече в определна кутя (част) от судоко пъзела.
-         *
-         * @param rowsStart - стартов индекс за редовете.
-         * @param colsStart - стартов индекс за колоните.
-         * @param cellValue - стойност, която трябва да бъде проверена.
-         * @return true - при вече използвана стойнсот, false - при вссе още не използвана стойнсот.
-         */
-        public boolean unUsedInBox(int rowsStart, int colsStart, int cellValue) {
-            for (int rowsIndex = 0; rowsIndex < sqrtOfNumberOfRowsCols; ++rowsIndex) {
-                for (int colsIndex = 0; colsIndex < sqrtOfNumberOfRowsCols; colsIndex++) {
-                    if (board[rowsStart + rowsIndex][colsStart + colsIndex] == cellValue) {
-                        return false;
+        public boolean unUsedInBox(SudokuBoard.SudokuGrid[][] grids, int cellValue) {
+            int rowIndex = 0, colIndex = 0;
+            int gridColIndex = 0;
+            for (SudokuBoard.SudokuGrid[] rowOfGrids : grids) {
+                for (SudokuBoard.SudokuGrid currentGrid : rowOfGrids) {
+                    while (gridColIndex < currentGrid.getGrid()[gridColIndex].length) {
+                        int currentValue = currentGrid.getGrid()[rowIndex][colIndex++];
+                        if (currentValue == cellValue) {
+                            return false;
+                        }
+                        gridColIndex++;
                     }
+                    rowIndex++;
                 }
             }
             return true;
         }
 
-        /**
-         * Проверява дали дадена стойност не е използвана вече в определен ред от судоко пъзела.
-         *
-         * @param rowI      - индекс на реда.
-         * @param cellValue - стойност, която трябва да бъде проверена.
-         * @return true - при вече използвана стойнсот, false - при вссе още не използвана стойнсот.
-         */
-        public boolean unUsedInRow(int rowI, int cellValue) {
-            for (int j = 0; j < numberOfRowsCols; j++) {
-                if (board[rowI][j] == cellValue) {
+        public boolean unUsedInRow(int row, int cellValue) {
+            for (int colIndex = 0; colIndex < numberOfRowsCols; colIndex++) {
+                if (board.getCellValue(row, colIndex) == cellValue) {
                     return false;
                 }
             }
             return true;
         }
 
-        /**
-         * Проверява дали дадена стойност не е използвана вече в определена колона от судоко пъзела.
-         *
-         * @param colI      - индек на колона.
-         * @param cellValue - стойност, която трябва да бъде проверена.
-         * @return true - при вече използвана стойнсот, false - при вссе още не използвана стойнсот.
-         */
-        public boolean unUsedInCol(int colI, int cellValue) {
-            for (int i = 0; i < numberOfRowsCols; i++) {
-                if (board[i][colI] == cellValue) {
+        public boolean unUsedInCol(int col, int cellValue) {
+            for (int rowIndex = 0; rowIndex < numberOfRowsCols; rowIndex++) {
+                if (board.getCellValue(rowIndex, col) == cellValue) {
                     return false;
                 }
             }
             return true;
         }
 
-        /**
-         * Запълва незапъленената част на судоко пъзела.
-         *
-         * @param rowI - индекс на ред.
-         * @param colI - индекс на колона.
-         * @return true - при успешно запълване, false - при неуспешно запълване.
-         */
-        public boolean fillRemaining(int rowI, int colI) {
-            if (colI >= numberOfRowsCols && rowI < numberOfRowsCols - 1) {
-                rowI += 1;
-                colI = 0;
+        public boolean CheckIfSafe(SudokuBoard.SudokuGrid[][] box, int rowI, int colI, int cellValue) {
+            return validator.CheckIfSafe(box, rowI, colI, cellValue);
+        }
+
+        public boolean isValidRowCol(int[] row) {
+            boolean isValid = false;
+            if (row.length != numberOfRowsCols) {
+                return false;
             }
-            if (rowI >= numberOfRowsCols && colI >= numberOfRowsCols) {
-                return true;
+            int[] possibleValues = new int[numberOfRowsCols];
+            {
+                int index = 1;
+                while (index <= numberOfRowsCols) {
+                    possibleValues[index - 1] = index;
+                    index++;
+                }
             }
-            if (rowI < sqrtOfNumberOfRowsCols) {
-                if (colI < sqrtOfNumberOfRowsCols) {
-                    colI = sqrtOfNumberOfRowsCols;
+            for (int rowIndex : row) {
+                int possibleValueIndex = 0;
+                while (possibleValueIndex < numberOfRowsCols) {
+                    if (possibleValues[possibleValueIndex] != 0 && rowIndex
+                            == possibleValues[possibleValueIndex]) {
+                        possibleValues[possibleValueIndex] = 0;
+                        isValid = true;
+                    } else {
+                        isValid = false;
+                    }
+                    possibleValueIndex++;
                 }
-            } else if (rowI < numberOfRowsCols - sqrtOfNumberOfRowsCols) {
-                if (colI == (rowI / sqrtOfNumberOfRowsCols) * sqrtOfNumberOfRowsCols) {
-                    colI += sqrtOfNumberOfRowsCols;
-                }
-            } else {
-                if (colI == numberOfRowsCols - sqrtOfNumberOfRowsCols) {
-                    rowI += 1;
-                    colI = 0;
-                    if (rowI >= numberOfRowsCols) {
-                        return true;
+            }
+            return isValid;
+        }
+
+        public boolean isValidBox(int[][] box) {
+            boolean isValid = false;
+            if (box.length != numberOfRowsCols || box[0].length != numberOfRowsCols) {
+                return false;
+            }
+            int[] possibleValues = new int[numberOfRowsCols];
+            for (int index = 1; index <= numberOfRowsCols; index++) {
+                possibleValues[index - 1] = index;
+            }
+            int possibleValuesIndex = 0;
+            for (int[] row : box) {
+                for (int cell : row) {
+                    if (possibleValues[possibleValuesIndex] != 0 && cell == possibleValues[possibleValuesIndex]) {
+                        possibleValues[possibleValuesIndex] = 0;
+                        isValid = true;
+                    } else {
+                        isValid = false;
                     }
                 }
             }
-            for (int cellValue = 1; cellValue <= numberOfRowsCols; ++cellValue) {
-                if (CheckIfSafe(rowI, colI, cellValue)) {
-                    board[rowI][colI] = cellValue;
-                    if (fillRemaining(rowI, colI + 1)) {
-                        return true;
-                    }
-                    board[rowI][colI] = 0;
-                }
-            }
-            return false;
+            return isValid;
         }
-
-        /**
-         * Проверява дали е възможно поставянето на дадена стойнсот в клетка с определени координати.
-         *
-         * @param rowI      - индекс на ред.
-         * @param colI      - индекс на колона.
-         * @param cellValue - стойнност.
-         * @return true - при възможност, false - при невъзможност.
-         */
-        public boolean CheckIfSafe(int rowI, int colI, int cellValue) {
-            return (validator.unUsedInRow(rowI, cellValue) &&
-                    validator.unUsedInCol(colI, cellValue) &&
-                    validator.unUsedInBox(rowI - rowI % sqrtOfNumberOfRowsCols,
-                            colI - colI % sqrtOfNumberOfRowsCols, cellValue));
-        }
-
-        private final int numberOfRowsCols = 9;
-        private final int sqrtOfNumberOfRowsCols = (int) Math.sqrt(numberOfRowsCols);
     }
 
     private final SudokuCellsValidator validator = new SudokuCellsValidator();
 
-    /**
-     * Конструктор с параметри.
-     *
-     * @param level        - ниво на трудност.
-     * @param emptyCells   - брой празни клетки.
-     * @param board        - дъска.
-     * @param solution     - решение.
-     * @param currentScore - текущ резултат.
-     * @param player       - играч.
-     */
-    public Game(SudokuLevel level, int emptyCells, int[][] board, int[][] solution,
+    private int[][] getCellsValues(SudokuBoard board) {
+        int boardSize = board.getBoardSize() * board.getBoardSize();
+        int[][] cellsValues = new int[boardSize][boardSize];
+
+        for (int rowIndex = 0; rowIndex < boardSize; rowIndex++) {
+            for (int colIndex = 0; colIndex < boardSize; colIndex++) {
+                cellsValues[rowIndex][colIndex] = board.getCellValue(rowIndex, colIndex);
+            }
+        }
+
+        return cellsValues;
+    }
+
+    private boolean validateSudokuSolution(int[][] solutionValues) {
+        boolean isValidSolution = true;
+
+        for (int[] currentRow : solutionValues) {
+            if (isValidRowCol(currentRow)) {
+                isValidSolution = false;
+                break;
+            }
+            int[] currentColumn = new int[solutionValues.length];
+            System.arraycopy(currentRow, 0, currentColumn, 0, currentRow.length);
+            if (isValidRowCol(currentColumn)) {
+                isValidSolution = false;
+                break;
+            }
+        }
+
+        int boxSize = (int) Math.sqrt(solutionValues.length);
+        int boxesCount = solutionValues.length;
+        int[][][] currentBox = new int[boxesCount][boxSize][boxSize];
+        int boxIndex = 0;
+        while (boxIndex < boxesCount) {
+            for (int rowIndex = 0; rowIndex < solutionValues.length; rowIndex++) {
+                for (int colIndex = 0; colIndex < solutionValues[rowIndex].length; colIndex++) {
+                    currentBox[boxIndex][rowIndex / boxSize][colIndex / boxSize] =
+                            board.getCellValue(rowIndex, colIndex);
+                }
+            }
+            boxIndex++;
+        }
+
+        for (int[][] box : currentBox) {
+            isValidSolution = isValidBox(box);
+            if (!isValidSolution) {
+                break;
+            }
+        }
+
+        return isValidSolution;
+    }
+
+    public Game(SudokuLevel level, int emptyCells, SudokuBoard gameBoard, SudokuBoard solution,
                 int currentScore, Player player) {
         setLevel(level);
         setEmptyCells(emptyCells);
-        setBoard(board);
+        setGameBoard(gameBoard);
         setSolution(solution);
 
         setCurrentScore(currentScore);
         setWon();
         setPlayer(player);
-        undoStack = new Stack<>();
-        redoStack = new Stack<>();
     }
 
-    /**
-     * Конструктор без параметри.
-     */
+    public Game(SudokuLevel level, int emptyCells, SudokuBoard gameBoard, SudokuService solver, SudokuBoard solution,
+                int currentScore, Player player) {
+        this(level, emptyCells, gameBoard, solution, currentScore, player);
+        setSolver(solver);
+    }
+
     public Game() {
+        /*SudokuService s;
+        try {
+            s = new SudokuServiceImpl();
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }*/
         setLevel(SudokuLevel.EASY);
-        setEmptyCells(level.getMaxEmptyCells());
-        setBoard(new int[9][9]);
-        setSolution(new int[9][9]);
-
+        setEmptyCells(SudokuLevel.EASY.getMaxEmptyCells());
+        setGameBoard(new SudokuBoard());
+        //setSolver(s);
+        setSolution(new SudokuBoard());
         setCurrentScore(0);
-        setWon();
         setPlayer(new Player());
-        undoStack = new Stack<>();
-        redoStack = new Stack<>();
+        setWon();
     }
 
-    /**
-     * Гетър за ниво на трудност.
-     *
-     * @return ниво на трудност.
-     */
+    public Game(Game game) {
+        this(game.level, game.emptyCells, game.board, game.solver, game.solution, game.currentScore, game.player);
+    }
+
     public SudokuLevel getLevel() {
         return level;
     }
 
-    /**
-     * Гетър за брой празни клетки.
-     *
-     * @return брой празни клетки.
-     */
     public int getEmptyCells() {
         return emptyCells;
     }
 
-    /**
-     * Гетър за игрална дъска.
-     *
-     * @return игрална дъска.
-     */
-    public int[][] getBoard() {
-        return board;
+    public SudokuBoard getGameBoard() {
+        return new SudokuBoard(board);
     }
 
-    /**
-     * Гетър за решение на судоку пъзела.
-     *
-     * @return решение на судоку пъзела.
-     */
-    public int[][] getSolution() {
-        return solution;
+    public SudokuBoard getSolution() {
+        return new SudokuBoard(solution);
     }
 
-    /**
-     * Гетър за текущ резултат.
-     *
-     * @return текущ резултат.
-     */
     public int getCurrentScore() {
         return currentScore;
     }
 
-    /**
-     * Гетър за състояние (победа/загуба).
-     *
-     * @return състояние.
-     */
     public boolean isWon() {
         return isWon;
     }
 
-    /**
-     * Гетър за играч.
-     *
-     * @return играч.
-     */
     public Player getPlayer() {
-        return player;
+        return new Player(player);
     }
 
-    /**
-     * Гетър за предишния ход в игра.
-     *
-     * @return предишния ход в игра.
-     */
     public server.entities.GameTurn[] getLastUndo() {
         GameTurn[] result = new GameTurn[2];
         result[0] = null;
@@ -272,11 +268,6 @@ public class Game implements Serializable {
         return result;
     }
 
-    /**
-     * Гетър за следващия ход в игра.
-     *
-     * @return следващия ход в игра.
-     */
     public GameTurn getFirstRedo() {
         if (redoStack.isEmpty()) {
             return null;
@@ -288,105 +279,91 @@ public class Game implements Serializable {
         return prevRedoTurn;
     }
 
-    /**
-     * Гетър за стек от предишни ходове.
-     *
-     * @return стек от предишни ходове.
-     */
     public Stack<GameTurn> getUndoStack() {
         return undoStack;
     }
 
-    /**
-     * Изчиства стека от следващи ходове.
-     */
+    public int getRowsCols() {
+        return validator.getNumberOfRowsCols();
+    }
+
+    public boolean isUnusedInRow(int row, int cellValue) {
+        return validator.unUsedInRow(row, cellValue);
+    }
+
+    public boolean isUnusedInCol(int col, int cellValue) {
+        return validator.unUsedInCol(col, cellValue);
+    }
+
+    public boolean isUnusedInBox(SudokuBoard.SudokuGrid[][] box, int value) {
+        return validator.unUsedInBox(box, value);
+    }
+
+    public boolean isValidRowCol(int[] values) {
+        return !validator.isValidRowCol(values);
+    }
+
+    public boolean isValidBox(int[][] values) {
+        return validator.isValidBox(values);
+    }
+
+    public boolean isSafePosition(SudokuBoard.SudokuGrid[][] box, int rowI, int colI, int cellValue) {
+        return validator.CheckIfSafe(box, rowI, colI, cellValue);
+    }
+
+    public int getSqrtOfRowsCols() {
+        return validator.getSqrtOfNumberOfRowsCols();
+    }
+
     public void clearRedoStack() {
         redoStack.clear();
     }
 
-    /**
-     * Гетър за валидатор на клетките на судокуто.
-     *
-     * @return валидатор.
-     */
-    public SudokuCellsValidator getValidator() {
-        return validator;
-    }
-
-    /**
-     * Сетър за ниво на трудност.
-     *
-     * @param level - ниво на трудност.
-     */
     public void setLevel(SudokuLevel level) {
         this.level = (level == SudokuLevel.EASY || level == SudokuLevel.MEDIUM || level == SudokuLevel.HARD)
                 ? level : SudokuLevel.EASY;
     }
 
-    /**
-     * Сетър за брой празни клетки.
-     *
-     * @param emptyCells - брой ппразни клетки.
-     */
     public void setEmptyCells(int emptyCells) {
         this.emptyCells = (level.getMinEmptyCells() <= emptyCells && emptyCells <= level.getMaxEmptyCells())
                 ? emptyCells : level.getMinEmptyCells();
     }
 
-    /**
-     * Сетър за дъска.
-     *
-     * @param board - игрална дъска.
-     */
-    public void setBoard(int[][] board) {
-        this.board = (board != null) ? board : new int[9][9];
+    public void setGameBoard(SudokuBoard gameBoard) {
+        this.board = Objects.requireNonNullElseGet(board, SudokuBoard::new);
     }
 
-    /**
-     * Сетър за решение.
-     *
-     * @param solution - решение на судоку пъзела.
-     */
-    public void setSolution(int[][] solution) {
-        this.solution = (solution != null) ? solution : new int[9][9];
+    public void setSolution(SudokuBoard solution) {
+        int[][] cellsValues = getCellsValues(solution);
+        this.solution = (validateSudokuSolution(cellsValues)) ? solution : new SudokuBoard();
     }
 
-    /**
-     * Сетър за текущ резултат.
-     *
-     * @param currentScore - текущ резултат.
-     */
     public void setCurrentScore(int currentScore) {
         this.currentScore += currentScore;
     }
 
-    /**
-     * Сетър за състояние (победа/загуба).
-     */
     public void setWon() {
         this.isWon = (board == solution);
     }
 
-    /**
-     * Сетър за играч.
-     *
-     * @param player - играч.
-     */
     public void setPlayer(Player player) {
-        this.player = (player != null) ? player : new Player();
+        this.player = Objects.requireNonNullElseGet(player, Player::new);
+    }
+
+    public SudokuService getSolver() {
+        return solver;
+    }
+
+    public void setSolver(SudokuService solver) {
+        this.solver = solver;
     }
 
     public void addLastTurn(GameTurn lastTurn) {
         undoStack.push(lastTurn);
     }
 
-    private SudokuLevel level;
-    private int emptyCells;
-    private int[][] board;
-    private int[][] solution;
-    private int currentScore = 0;
-    private boolean isWon;
-    private Player player;
-    private final Stack<GameTurn> undoStack;
-    private final Stack<GameTurn> redoStack;
+    public void removeLastTurn() {
+        GameTurn lastTurn = undoStack.pop();
+        redoStack.push(lastTurn);
+    }
 }

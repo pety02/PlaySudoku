@@ -3,15 +3,33 @@
   <component name="ChangeListManager">
     <list default="true" id="cf6a97df-13ae-4e8d-8d76-e38c0bb53735" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client.app/client.app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/client.app/client.app.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client.app/src/sudoku/PlayerApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/client.app/src/sudoku/PlayerApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client.app/src/sudoku/controllers/HomeViewSudokuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/client.app/src/sudoku/controllers/HomeViewSudokuController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client.app/src/sudoku/controllers/PlaySudokuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/client.app/src/sudoku/controllers/PlaySudokuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client.app/src/sudoku/fxmls/HomeViewSudoku.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/client.app/src/sudoku/fxmls/HomeViewSudoku.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client.app/src/sudoku/fxmls/PlaySudoku.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/client.app/src/sudoku/fxmls/PlaySudoku.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client.app/src/sudoku/services/ClientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/client.app/src/sudoku/services/ClientService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client.app/src/sudoku/servicesImpls/ClientServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/client.app/src/sudoku/servicesImpls/ClientServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/remote.obj/src/server/ServerApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/remote.obj/src/server/ServerApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/remote.obj/src/server/entities/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/remote.obj/src/server/entities/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/remote.obj/src/server/entities/GameTurn.java" beforeDir="false" afterPath="$PROJECT_DIR$/remote.obj/src/server/entities/GameTurn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/remote.obj/src/server/entities/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/remote.obj/src/server/entities/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/remote.obj/src/server/entities/SudokuLevel.java" beforeDir="false" afterPath="$PROJECT_DIR$/remote.obj/src/server/entities/SudokuLevel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/remote.obj/src/server/services/SudokuService.java" beforeDir="false" afterPath="$PROJECT_DIR$/remote.obj/src/server/services/SudokuService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/remote.obj/src/server/servicesImpls/SudokuServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/remote.obj/src/server/servicesImpls/SudokuServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="FormatOnSaveOptions">
     <option name="myRunOnSave" value="true" />
@@ -32,11 +50,11 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/petya/Downloads/Week15/Week15/RMIapplication&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/petya/OneDrive/Documents/University/2 kurs, 3 semestur/JAVA OOP/PlaySudoku/PlaySudoku&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;actions.on.save&quot;
   }
@@ -86,7 +104,21 @@
       <workItem from="1675897292997" duration="5701000" />
       <workItem from="1675935676113" duration="48623000" />
       <workItem from="1676043388265" duration="1851000" />
-      <workItem from="1676050856976" duration="2172000" />
+      <workItem from="1676050856976" duration="2353000" />
+      <workItem from="1676124342646" duration="14000" />
+      <workItem from="1676205185522" duration="93000" />
+      <workItem from="1688656142482" duration="1710000" />
+      <workItem from="1689336688524" duration="3958000" />
+      <workItem from="1694550406026" duration="9108000" />
+      <workItem from="1694610883640" duration="2309000" />
+      <workItem from="1694621832165" duration="4528000" />
+      <workItem from="1694691413752" duration="3869000" />
+      <workItem from="1694777936208" duration="2822000" />
+      <workItem from="1694863604320" duration="4326000" />
+      <workItem from="1694947373148" duration="5618000" />
+      <workItem from="1694953068722" duration="145000" />
+      <workItem from="1695116426270" duration="7218000" />
+      <workItem from="1695137590529" duration="17129000" />
     </task>
     <task id="LOCAL-00001" summary="Filling sudoku boards fixed! Found some bugs and added TODOs for them! Process of solving sudoku puzzles started!">
       <created>1675302931409</created>
@@ -144,7 +176,14 @@
       <option name="project" value="LOCAL" />
       <updated>1675989907177</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Project ended!">
+      <created>1676054776958</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1676054776958</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -159,7 +198,18 @@
     <MESSAGE value="Playing functionality added! Filling sudoku cells bug fixed!" />
     <MESSAGE value="Sudoku Game finished" />
     <MESSAGE value=" Sudoku game finished and doxygen documentation generated!" />
-    <option name="LAST_COMMIT_MESSAGE" value=" Sudoku game finished and doxygen documentation generated!" />
+    <MESSAGE value="Project ended!" />
+    <option name="LAST_COMMIT_MESSAGE" value="Project ended!" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.NullPointerException" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
